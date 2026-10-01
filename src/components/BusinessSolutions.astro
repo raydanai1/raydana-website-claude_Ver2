@@ -1,0 +1,73 @@
+---
+import { modules } from '../data/home';
+import { type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="relative isolate mt-12 overflow-hidden lg:mt-[49px] lg:h-[650px]" aria-labelledby="business-title">
+  <!-- Software screenshots + navy gradient (Figma 2:27916). -->
+  <img
+    src="/images/modules/screens.webp"
+    alt=""
+    width="1331"
+    height="1208"
+    loading="lazy"
+    class="absolute -z-20 hidden w-[665px] lg:block lg:top-[109px] rtl:lg:left-[64px] ltr:lg:right-[64px] ltr:-scale-x-100"
+  />
+  <div class="business-gradient absolute inset-0 -z-10 opacity-90"></div>
+
+  <div class="container-x py-12 lg:py-11">
+    <div class="text-center">
+      <h2 id="business-title" class="text-[20px] font-bold text-white lg:text-title-2">{t.business.title}</h2>
+      <p class="mt-2 text-[15px] font-bold text-light lg:text-title-3">{t.business.lead}</p>
+    </div>
+
+    <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:ms-5 lg:me-auto lg:mt-[22px] lg:w-[802px] lg:grid-cols-3 lg:gap-x-[21px] lg:gap-y-[19px]">
+      {
+        modules.map((m) => (
+          <li class="module glass rounded-[17px] p-[10px] lg:h-[120px]">
+            <a
+              href="#contact"
+              class="flex h-full items-center justify-between gap-2 rounded-xl bg-white px-3 py-3 shadow-card transition duration-300 hover:-translate-y-1.5"
+            >
+              <span class="min-w-0">
+                <span class="block text-[15px] font-bold leading-8 text-title lg:whitespace-nowrap">{t.business.items[m.key]}</span>
+                <span class="block text-[13px] font-medium leading-[17px] text-muted">{t.business.subsystems}</span>
+              </span>
+              {'glyph' in m ? (
+                <span class="relative size-[57px] shrink-0">
+                  <img src={m.icon} alt="" class="absolute inset-[2%_6.7%] h-[96%] w-[86.6%]" />
+                  <img src={m.glyph} alt="" class="absolute left-[17.5px] top-[15px] size-[24px]" />
+                </span>
+              ) : (
+                <img src={m.icon} alt="" width="57" height="57" class="size-[57px] shrink-0" />
+              )}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .business-gradient {
+    background-image: linear-gradient(to left, rgb(5, 30, 85) 0%, rgba(18, 60, 154, 0.38) 65.5%);
+  }
+  :global([dir='ltr']) .business-gradient {
+    background-image: linear-gradient(to right, rgb(5, 30, 85) 0%, rgba(18, 60, 154, 0.38) 65.5%);
+  }
+  @media (max-width: 1023px) {
+    .business-gradient {
+      background-image: linear-gradient(160deg, rgb(5, 30, 85) 0%, rgb(18, 60, 154) 100%);
+    }
+    :global([dir='ltr']) .business-gradient {
+      background-image: linear-gradient(160deg, rgb(5, 30, 85) 0%, rgb(18, 60, 154) 100%);
+    }
+  }
+</style>

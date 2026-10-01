@@ -1,0 +1,38 @@
+---
+/**
+ * Pill button from the Figma component set (primary/hover, secondary/hover, Button).
+ * Arrows point toward the reading end and are mirrored automatically in LTR.
+ */
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'outline' | 'white' | 'violet' | 'violet-outline';
+  class?: string;
+  arrow?: boolean;
+}
+
+const { href = '#', variant = 'primary', class: className = '', arrow = true } = Astro.props;
+
+const styles = {
+  primary: 'bg-primary text-light hover:bg-primary-dark',
+  outline: 'border border-primary text-primary hover:bg-primary/5',
+  white: 'border border-white bg-white text-primary hover:bg-light',
+  violet: 'bg-violet text-white shadow-[0_0_8px_rgba(55,183,195,0.25)] hover:brightness-110',
+  'violet-outline': 'border border-violet text-white shadow-[0_0_8px_rgba(55,183,195,0.25)] hover:bg-violet/20',
+} as const;
+
+const arrowSrc = variant === 'primary' || variant === 'violet' || variant === 'violet-outline'
+  ? '/images/header/arrow-white.svg'
+  : '/images/header/arrow-blue.svg';
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex h-12 shrink-0 items-center justify-center gap-3 rounded-full px-5 text-base font-medium leading-6 whitespace-nowrap transition duration-200 hover:-translate-y-0.5',
+    styles[variant],
+    className,
+  ]}
+>
+  <slot />
+  {arrow && <img src={arrowSrc} alt="" width="12.5" height="11" class="dir-icon h-[11px] w-[12.5px]" />}
+</a>

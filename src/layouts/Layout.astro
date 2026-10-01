@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import { localeInfo, homePath, locales, type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const { dir, htmlLang, ogLocale } = localeInfo[locale];
+const site = Astro.site ?? new URL('https://raydana.com');
+const canonical = new URL(homePath(locale), site).href;
+---
+
+<!doctype html>
+<html lang={htmlLang} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={new URL(homePath(l), site).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(homePath('fa'), site).href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0b518c" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:image" content={new URL('/images/hero/hero-bg.webp', site).href} />
+    <link rel="preload" href="/fonts/IRANSansX-Bold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/IRANSansX-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <!-- Vazirmatn is only used if IRANSansX fails to load. -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css"
+      media="print"
+      onload="this.media='all'"
+    />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-lg"
+      >{t.a11y.skip}</a
+    >
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,40 @@
+---
+import { industries } from '../data/home';
+import { type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section id="industries" class="container-x scroll-mt-28 pt-14 lg:pt-[29px]" aria-labelledby="industries-title">
+  <h2 id="industries-title" class="text-center font-bold text-title">
+    <span class="block text-[26px] leading-[44px] lg:text-title-1" dir="ltr">{t.industries.brand}</span>
+    <span class="block text-[19px] leading-9 lg:text-title-2 lg:leading-[44px]">{t.industries.title}</span>
+  </h2>
+
+  <ul class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-[39px] lg:grid-cols-[403fr_462fr_403fr] lg:gap-x-6 lg:gap-y-6">
+    {
+      industries.map((item) => (
+        <li>
+          <a
+            href="#contact"
+            class="group flex h-full flex-col gap-5 rounded-3xl border border-stroke bg-[#fafafa] p-6 shadow-industry transition duration-300 hover:-translate-y-1 hover:border-stroke-strong lg:min-h-[326px]"
+          >
+            <img src={item.icon} alt="" width="78" height="78" loading="lazy" class="size-[78px]" />
+            <span class="flex-1">
+              <span class="block text-[15px] font-bold leading-9 text-title">{t.industries.kicker}</span>
+              <span class="block text-[18px] font-bold leading-9 text-title">{t.industries.items[item.key]}</span>
+              <span class="mt-1 block text-[13px] font-medium leading-[27px] text-muted">{t.industries.text}</span>
+            </span>
+            <span class="icon-btn group-hover:bg-primary/10" aria-hidden="true">
+              <img src="/images/tools/arrow-small.svg" alt="" width="18" height="18" class="dir-icon-rev" />
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

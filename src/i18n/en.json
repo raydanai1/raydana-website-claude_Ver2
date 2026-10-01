@@ -1,0 +1,255 @@
+{
+  "meta": {
+    "title": "Raydana | CYBER ERP – Integration for Organizations and Industries",
+    "description": "Raydana CYBER ERP brings every process in your organization — from finance and HR to production, sales and supply chain — together on one integrated platform."
+  },
+  "a11y": {
+    "skip": "Skip to main content",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "search": "Search",
+    "home": "Home",
+    "language": "Change language",
+    "play": "Play the introduction video",
+    "prev": "Previous",
+    "next": "Next",
+    "slide": "Slide",
+    "more": "More"
+  },
+  "nav": {
+    "products": "Products",
+    "solutions": "Solutions & Industries",
+    "services": "Services",
+    "knowledge": "Knowledge Base",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "portal": "Customer Portal",
+    "langLabel": "En",
+    "switchTo": "فارسی"
+  },
+  "cta": {
+    "consult": "Expert Consultation",
+    "demo": "Request a Demo",
+    "learnMore": "Learn More"
+  },
+  "hero": {
+    "title": "CYBER ERP: Integration for Organizations and Industries",
+    "subtitle": "Run your organization in a more integrated, smarter and faster way",
+    "body": "CYBER ERP brings every process in your organization — from finance and human resources to production, sales and supply chain — together on one integrated platform."
+  },
+  "trusted": {
+    "brand": "CYBER ERP",
+    "title": "Trusted by major organizations and leading industries"
+  },
+  "logos": {
+    "presidency": "Presidential Office of Iran",
+    "bankPension": "Bank Employees Pension Fund",
+    "tabrizRefinery": "Tabriz Oil Refining Company",
+    "offsetPress": "Offset Press Inc.",
+    "mint": "Central Bank Banknote & Coin Printing Organization",
+    "foreignMinistry": "Ministry of Foreign Affairs",
+    "tehranRefinery": "Tehran Oil Refining Company",
+    "razavi": "Astan Quds Razavi Construction & Maintenance Organization",
+    "steelPension": "National Steel Industry Pension Fund",
+    "other": "Raydana customer"
+  },
+  "challenges": {
+    "title": "Is your organization or industry facing these challenges?",
+    "lead": "When systems don't talk to each other… every day your organization starts work on several disconnected systems",
+    "slogan": "When every department speaks its own language, decisions become slow and expensive.",
+    "items": {
+      "islands": "Isolated systems",
+      "integration": "Disconnected processes and systems",
+      "waste": "Wasted time",
+      "visibility": "No real-time view of performance",
+      "excel": "Heavy reliance on Excel files",
+      "lateReports": "Late financial reports",
+      "humanError": "Human error and rework",
+      "warehouseView": "No real-time view of inventory",
+      "forms": "Scattered forms",
+      "separate": "Separate software tools",
+      "slowDecision": "Slow management decisions",
+      "slowReports": "Slow, opaque reporting",
+      "mismatch": "Inconsistent data",
+      "siloed": "Siloed processes between departments",
+      "scattered": "Scattered and conflicting data across departments",
+      "finance": "Lack of financial transparency",
+      "management": "Lack of management transparency",
+      "nonIntegrated": "No integration",
+      "warehouse": "Poor coordination with the warehouse"
+    }
+  },
+  "transform": {
+    "title": "How do Cyber ERP solutions transform your organization?",
+    "leadBrand": "CyberERP is more than software",
+    "lead": "“It is the operational brain and shared language of every department.”",
+    "body": "Cyber ERP is an integrated enterprise resource planning system that connects every key process on one central platform — so your organization runs with more transparency, fewer human errors, faster reporting and quicker management.",
+    "imageAlt": "3D cubes representing the integrated Cyber ERP modules",
+    "items": {
+      "integrated": {
+        "title": "Integrated, smart and transparent",
+        "text": "Modules are fully connected, giving real-time access to the status, statistics and reports of every department"
+      },
+      "process": {
+        "title": "Process-driven",
+        "text": "Enter data only once — the same information flows across the whole organization."
+      },
+      "custom": {
+        "title": "Unlimited customization",
+        "text": "One integrated system: standard at the core, flexible in execution, fully customizable"
+      },
+      "growth": {
+        "title": "Keeps pace with your business",
+        "text": "Supporting today's growth, ready for tomorrow's needs"
+      },
+      "web": {
+        "title": "Web-based",
+        "text": "The system is available anytime, anywhere — your data is always at hand"
+      },
+      "cloud": {
+        "title": "Cloud option",
+        "text": "Lower infrastructure and server maintenance costs."
+      }
+    }
+  },
+  "deploy": {
+    "cloud": {
+      "title": "Cloud Infrastructure Services",
+      "subtitle": "(Cyber Cloud ERP)",
+      "alt": "Cloud infrastructure and data servers"
+    },
+    "onPremise": {
+      "title": "On-Premise Installation",
+      "subtitle": "(On-Premise ERP)",
+      "alt": "On-premise servers with backup"
+    }
+  },
+  "business": {
+    "title": "CYBER ERP Business Solutions",
+    "lead": "“Every part of your organization, connected to one smart core”",
+    "imageAlt": "Screens from the Cyber ERP software",
+    "subsystems": "Subsystems",
+    "items": {
+      "warehouse": "Warehouse",
+      "finance": "Finance",
+      "hr": "Human Resources",
+      "maintenance": "Maintenance & Repair",
+      "purchase": "Purchasing",
+      "production": "Production Management",
+      "sales": "Orders & Sales",
+      "quality": "Quality Control",
+      "accounting": "Accounting"
+    }
+  },
+  "tools": {
+    "title": "CYBER ERP Complementary Tools",
+    "lead": "Smarter than ever: an intelligent ecosystem that accelerates your digital transformation",
+    "body": "ERP forms the core of your organization's management, but digital transformation needs more tools. That is why CYBER ERP offers a set of complementary solutions alongside the main system, so processes, data and decisions are managed on one smart, coordinated platform.",
+    "imageAlt": "ERP complementary tools ecosystem: BI, AI, e-forms, BPMS, report builder and AR",
+    "items": {
+      "bi": "Business Intelligence",
+      "bpms": "Business Process Management",
+      "ai": "Artificial Intelligence",
+      "eform": "Electronic Form Builder",
+      "rb": "Report Builder",
+      "ar": "Augmented Reality Solutions"
+    }
+  },
+  "ctaStrip": {
+    "text": "“You can implement exactly the modules your organization needs.”"
+  },
+  "demo": {
+    "title": "ERP Preview",
+    "subtitle": "What is ERP? | A complete introduction to Raydana's enterprise resource planning software",
+    "body": "From the CEO's dashboard to the smallest operational process, your organization's information is available in one integrated, analyzable environment.",
+    "imageAlt": "Cyber ERP sign-in screen",
+    "soon": "The introduction video will be available here soon."
+  },
+  "industries": {
+    "brand": "Cyber ERP",
+    "title": "Solutions for organizations and businesses",
+    "kicker": "Solution for",
+    "text": "Transparency, control and productivity at enterprise scale by integrating processes and departments",
+    "items": {
+      "government": "Government & Public Organizations",
+      "large": "Large Industries",
+      "oil": "Oil, Gas & Petrochemicals",
+      "pension": "Pension Funds",
+      "international": "International",
+      "sme": "Small & Medium Enterprises"
+    }
+  },
+  "banner": {
+    "text": "Transparency, control and productivity at enterprise scale by integrating processes and departments"
+  },
+  "process": {
+    "title": "Cyber ERP Implementation Process",
+    "start": {
+      "title": "Pre-launch",
+      "text": "Project kick-off meeting / high-level assessment of the organization / project planning"
+    },
+    "end": "Final Delivery",
+    "steps": {
+      "s1": { "title": "Current-state assessment", "sub": "(As-Is Analysis)" },
+      "s2": { "title": "Future-state analysis & design", "sub": "(To-Be Analysis)" },
+      "s3": { "title": "Customization & development", "sub": "(Development & Customization)" },
+      "s4": { "title": "Installation & setup", "sub": "(Installation & Data Convert)" },
+      "s5": { "title": "Training & rollout", "sub": "Training & Implementation" },
+      "s6": { "title": "Parallel run", "sub": "Parallel execution" },
+      "s7": { "title": "Go live", "sub": "Go Live" },
+      "s8": { "title": "Warranty services", "sub": "Warranty service" },
+      "s9": { "title": "Support & maintenance", "sub": "Support and maintenance services" }
+    }
+  },
+  "customers": {
+    "title": "Proud to work with you",
+    "wallAlt": "Raydana customer logos: the Presidential Office, Ministry of Foreign Affairs, Tehran and Tabriz oil refineries, pension funds and more"
+  },
+  "testimonials": {
+    "items": {
+      "presidency": {
+        "org": "Presidential Office of Iran",
+        "person": "Eng. Ghasemi Panah (CEO)",
+        "quote": "This platform lets developers and businesses deploy their applications and services on a secure, stable foundation without worrying about managing infrastructure servers. With powerful yet simple tools, it delivers an enjoyable experience for developers."
+      }
+    }
+  },
+  "knowledge": {
+    "title": "Knowledge Base",
+    "items": {
+      "news": { "title": "Latest science news", "text": "Stay up to date with the latest in ERP" },
+      "articles": { "title": "Scientific & technical articles", "text": "Hundreds of expert articles on software development and ERP" },
+      "events": { "title": "Latest events", "text": "Stay up to date with Raydana events" }
+    }
+  },
+  "footer": {
+    "about": "Raydana Engineering was founded in 2000 to build modern integrated enterprise systems. Our drive to make information technology more than just a comprehensive software system led us to create localized, web-based software that lets managers and users improve their business from anywhere, at any time.",
+    "linksTitle": "Raydana CYBER ERP",
+    "links": {
+      "products": "Products",
+      "services": "Services",
+      "industries": "Industry Solutions",
+      "about": "About Us",
+      "contact": "Contact Us",
+      "standards": "Standards & Regulations",
+      "knowledge": "Knowledge Base"
+    },
+    "certsTitle": "Certificates",
+    "certs": {
+      "knowledgeBased": "Industrial knowledge-based company",
+      "rating": "IT company rating & qualification"
+    },
+    "contactTitle": "Contact Information",
+    "address": "No. 11, Start of 13th St., Ghandi (Palizi) St., North Sohrevardi, Tehran, Iran",
+    "phoneLabel": "Phone:",
+    "phone": "+98 21 8854 8802",
+    "faxLabel": "Fax:",
+    "fax": "+98 21 8854 8676",
+    "emailLabel": "Email:",
+    "email": "info@raydana.com",
+    "productsButton": "Products",
+    "badgesAlt": "Trust seals and licenses",
+    "copyright": "All rights reserved. © Raydana."
+  }
+}

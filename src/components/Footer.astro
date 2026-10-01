@@ -1,0 +1,140 @@
+---
+import Logo from './ui/Logo.astro';
+import Button from './ui/Button.astro';
+import { footerCerts, footerLinks } from '../data/home';
+import { type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const contacts = [
+  { icon: 'icon-location.svg', label: '', value: t.footer.address, href: undefined },
+  { icon: 'icon-phone.svg', label: t.footer.phoneLabel, value: t.footer.phone, href: 'tel:+982188548802' },
+  { icon: 'icon-fax.svg', label: t.footer.faxLabel, value: t.footer.fax, href: undefined },
+  { icon: 'icon-mail.svg', label: t.footer.emailLabel, value: t.footer.email, href: `mailto:${t.footer.email}` },
+];
+
+// Left-to-right order as in Figma; the glyphs are one overlay image spanning all three circles.
+const socials = [
+  { name: 'Instagram', bg: 'social-1.svg', x: 0 },
+  { name: 'LinkedIn', bg: 'social-2.svg', x: 40 },
+  { name: 'YouTube', bg: 'social-3.svg', x: 80 },
+];
+---
+
+<footer id="footer" class="mt-16 scroll-mt-24 bg-title text-white lg:mt-[50px]">
+  <div class="container-x pb-6 pt-12 lg:pt-[63px]">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[312fr_190fr_300fr_312fr] lg:gap-x-12 xl:gap-x-[70px]">
+      <!-- About -->
+      <div>
+        <Logo variant="footer" />
+        <p class="mt-6 text-justify text-[13px] font-medium leading-7">{t.footer.about}</p>
+        <div class="mt-6 flex items-center gap-5" aria-label={t.footer.badgesAlt} role="img">
+          <img src="/images/footer/badge-1.png" alt="" width="78" height="74" loading="lazy" class="h-[52px] w-auto" />
+          <img src="/images/footer/badge-2.png" alt="" width="70" height="70" loading="lazy" class="h-[52px] w-auto" />
+          <img src="/images/footer/badge-3.png" alt="" width="95" height="58" loading="lazy" class="h-[42px] w-auto" />
+        </div>
+      </div>
+
+      <!-- Links -->
+      <nav aria-labelledby="footer-links-title">
+        <h2 id="footer-links-title" class="footer-heading" dir="auto">{t.footer.linksTitle}</h2>
+        <ul class="mt-5 space-y-[6px]">
+          {
+            footerLinks.map((key) => (
+              <li>
+                <a href="#" class="flex items-center gap-4 py-0.5 text-sm font-bold leading-[30px] hover:text-[#9ccfff]">
+                  <img src="/images/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
+                  {t.footer.links[key]}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Certificates -->
+      <div>
+        <h2 class="footer-heading">{t.footer.certsTitle}</h2>
+        <ul class="mt-5 space-y-[13px]">
+          {
+            footerCerts.map((key) => (
+              <li class="flex items-center gap-4 text-sm leading-[30px]">
+                <img src="/images/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
+                {t.footer.certs[key]}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div id="contact" class="scroll-mt-28">
+        <h2 class="footer-heading">{t.footer.contactTitle}</h2>
+        <ul class="mt-5 space-y-[22px]">
+          {
+            contacts.map((c) => (
+              <li class="flex items-start gap-3">
+                <span class="relative mt-0.5 flex size-7 shrink-0 items-center justify-center">
+                  <img src="/images/footer/icon-bg.svg" alt="" class="absolute inset-0 size-full" />
+                  <img src={`/images/footer/${c.icon}`} alt="" class="relative size-[18px]" />
+                </span>
+                <span class="text-sm font-bold leading-[29px]">
+                  {c.label && <span>{c.label} </span>}
+                  {c.href ? (
+                    <a href={c.href} class="hover:text-[#9ccfff]" dir="ltr">
+                      {c.value}
+                    </a>
+                  ) : (
+                    <span dir={c.label ? 'ltr' : undefined}>{c.value}</span>
+                  )}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <Button href="#transform" class="mt-6">{t.footer.productsButton}</Button>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/30 pt-5 sm:flex-row lg:mt-[33px]">
+      <p class="flex items-center gap-3 text-center text-[13px] leading-6">
+        <img src="/images/footer/copyright.svg" alt="" width="16" height="16" />
+        {t.footer.copyright}
+      </p>
+      <div class="relative h-7 w-[108px]" dir="ltr">
+        {
+          socials.map((s) => (
+            <a href="#" aria-label={s.name} class="absolute top-0 block size-7 transition hover:scale-110" style={`left:${s.x}px`}>
+              <img src={`/images/footer/${s.bg}`} alt="" width="28" height="28" class="size-full" />
+            </a>
+          ))
+        }
+        <img src="/images/footer/social-glyphs.svg" alt="" class="pointer-events-none absolute left-[7px] top-[6px] h-[15px] w-[94px]" />
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-heading {
+    position: relative;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 30px;
+    text-transform: uppercase;
+  }
+  .footer-heading::after {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: 0;
+    width: 53px;
+    height: 2px;
+    background: var(--color-primary);
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+/** Raydana logo, assembled from the Figma vector parts (header = dark text, footer = white text). */
+interface Props {
+  variant?: 'header' | 'footer';
+  class?: string;
+}
+const { variant = 'header', class: className = '' } = Astro.props;
+---
+
+{
+  variant === 'header' ? (
+    <span class:list={['relative block h-[61px] w-[176px] shrink-0', className]} dir="ltr">
+      <img src="/images/header/logo-hex3.svg" alt="" class="absolute left-[7.5px] top-0 h-[30.24px] w-[30.5px]" />
+      <img src="/images/header/logo-hex2.svg" alt="" class="absolute left-[31.02px] top-[21.61px] h-[30.23px] w-[30.5px]" />
+      <img src="/images/header/logo-hex1.svg" alt="" class="absolute left-0 top-[30.94px] h-[30.24px] w-[30.5px]" />
+      <img src="/images/header/logo-text.svg" alt="" class="absolute left-[72.79px] top-[14.07px] h-[33.93px] w-[103.2px]" />
+    </span>
+  ) : (
+    <span class:list={['relative block h-[70px] w-[201px] shrink-0', className]} dir="ltr">
+      <img src="/images/footer/logo-hex3.svg" alt="" class="absolute left-[8.5px] top-0 h-[34.5px] w-[34.8px]" />
+      <img src="/images/footer/logo-hex2.svg" alt="" class="absolute left-[35.5px] top-[24.7px] h-[34.5px] w-[34.8px]" />
+      <img src="/images/footer/logo-hex1.svg" alt="" class="absolute left-0 top-[35.3px] h-[34.5px] w-[34.8px]" />
+      <img src="/images/footer/logo-text.svg" alt="" class="absolute left-[83.7px] top-[16.9px] h-[17.6px] w-[116.8px]" />
+      <img src="/images/footer/logo-sub.svg" alt="" class="absolute left-[84.3px] top-[40.8px] h-[12.6px] w-[116.8px]" />
+    </span>
+  )
+}

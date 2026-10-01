@@ -1,0 +1,58 @@
+---
+import { knowledgeCards } from '../data/home';
+import { type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+type CardKey = keyof typeof knowledgeCards;
+const card = (key: CardKey, size: 'sm' | 'lg') => ({ key, size, src: knowledgeCards[key], text: t.knowledge.items[key] });
+---
+
+<section id="knowledge" class="container-x scroll-mt-28 pt-12 lg:pt-[17px]" aria-labelledby="knowledge-title">
+  <h2 id="knowledge-title" class="section-title text-center">{t.knowledge.title}</h2>
+
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:mt-6 lg:grid-cols-[347fr_527fr_347fr] lg:gap-[17px]">
+    {
+      [
+        { cards: [card('news', 'sm')], tileAfter: true },
+        { cards: [card('articles', 'lg')] },
+        { cards: [card('events', 'sm')], tileBefore: true },
+      ].map((col) => (
+        <div class:list={['flex flex-col gap-[17px]', col.cards[0].size === 'lg' && 'sm:col-span-2 sm:row-start-1 lg:col-span-1 lg:row-start-auto']}>
+          {col.tileBefore && <div class="hidden h-[161px] w-[162px] self-start rounded-[27px] bg-light-4 lg:block" aria-hidden="true" />}
+          {col.cards.map((c) => (
+            <a
+              href="#knowledge"
+              class:list={[
+                'group relative block overflow-hidden rounded-3xl',
+                c.size === 'lg' ? 'aspect-square lg:aspect-[527/526]' : 'aspect-[347/348]',
+              ]}
+            >
+              <img
+                src={c.src}
+                alt=""
+                loading="lazy"
+                class="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div
+                class:list={[
+                  'absolute inset-x-0 bottom-0 bg-gradient-to-b from-[rgba(13,6,45,0)] to-[#0d062d]',
+                  c.size === 'lg' ? 'h-[40%] to-[82%]' : 'h-[45%]',
+                ]}
+              />
+              <div class="absolute inset-x-0 bottom-0 px-5 pb-5 text-light">
+                <h3 class="text-15 font-bold leading-8">{c.text.title}</h3>
+                <p class="truncate text-[13px] leading-8 lg:text-15">{c.text.text}</p>
+              </div>
+            </a>
+          ))}
+          {col.tileAfter && <div class="hidden h-[161px] w-[162px] self-end rounded-[27px] bg-light-4 lg:block" aria-hidden="true" />}
+        </div>
+      ))
+    }
+  </div>
+</section>

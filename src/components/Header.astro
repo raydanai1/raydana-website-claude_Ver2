@@ -1,0 +1,139 @@
+---
+import Logo from './ui/Logo.astro';
+import Button from './ui/Button.astro';
+import { homePath, type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const otherLocale: Locale = locale === 'fa' ? 'en' : 'fa';
+
+const navItems = [
+  { label: t.nav.products, href: '#transform' },
+  { label: t.nav.solutions, href: '#industries' },
+  { label: t.nav.services, href: '#deploy' },
+  { label: t.nav.knowledge, href: '#knowledge' },
+  { label: t.nav.about, href: '#footer' },
+  { label: t.nav.contact, href: '#contact' },
+];
+---
+
+<header class="sticky top-0 z-50 px-4 pt-4 lg:px-6 lg:pt-8" data-header>
+  <div
+    class="mx-auto flex h-[68px] max-w-[1320px] items-center justify-between gap-4 rounded-xl bg-white/80 px-4 shadow-header backdrop-blur-[50px] lg:h-[86px] lg:px-4"
+  >
+    <a href={homePath(locale)} class="flex items-center" aria-label="Raydana">
+      <Logo class="origin-[center_right] scale-[0.75] lg:scale-100 ltr:origin-[center_left]" />
+    </a>
+
+    <nav class="hidden items-center xl:flex" aria-label={t.a11y.menu}>
+      <a href={homePath(locale)} class="flex size-12 items-center justify-center rounded-lg hover:bg-light" aria-label={t.a11y.home}>
+        <img src="/images/header/home.svg" alt="" width="24" height="24" />
+      </a>
+      {
+        navItems.map((item, i) => (
+          <a
+            href={item.href}
+            class:list={[
+              'flex h-12 items-center whitespace-nowrap rounded-lg p-[11px] font-medium leading-6 text-ink transition-colors hover:text-primary ltr:px-2 ltr:text-[15px]',
+              i === navItems.length - 1 ? 'text-sm' : 'text-base',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2 lg:gap-3">
+      <button type="button" class="hidden size-12 items-center justify-center rounded-lg hover:bg-light sm:flex" aria-label={t.a11y.search}>
+        <img src="/images/header/search.svg" alt="" width="20" height="20" />
+      </button>
+      <a
+        href={homePath(otherLocale)}
+        hreflang={otherLocale}
+        class="hidden h-12 items-center gap-3 rounded-full border border-primary px-5 font-medium text-primary transition-colors hover:bg-primary/5 sm:flex"
+        aria-label={`${t.a11y.language}: ${t.nav.switchTo}`}
+      >
+        <img src="/images/header/globe.svg" alt="" width="15" height="15" />
+        <span class="text-base leading-6">{t.nav.langLabel}</span>
+        <img src="/images/header/arrow-blue.svg" alt="" width="12.5" height="11" class="dir-icon h-[11px] w-[12.5px]" />
+      </a>
+      <div class="hidden md:block"><Button href="#contact">{t.nav.portal}</Button></div>
+
+      <button
+        type="button"
+        class="flex size-11 items-center justify-center rounded-lg text-ink hover:bg-light xl:hidden"
+        aria-label={t.a11y.openMenu}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden xl:hidden" data-menu>
+    <div class="absolute inset-0 bg-dark/40 backdrop-blur-sm" data-menu-close></div>
+    <div
+      class="absolute inset-y-0 start-0 flex w-[min(86vw,360px)] flex-col gap-6 overflow-y-auto bg-white p-6 shadow-2xl"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t.a11y.menu}
+    >
+      <div class="flex items-center justify-between">
+        <Logo class="origin-[center_right] scale-[0.8] ltr:origin-[center_left]" />
+        <button type="button" class="flex size-11 items-center justify-center rounded-lg hover:bg-light" aria-label={t.a11y.closeMenu} data-menu-close>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col" aria-label={t.a11y.menu}>
+        {
+          navItems.map((item) => (
+            <a href={item.href} class="border-b border-neutral-200 py-3.5 text-base font-medium text-ink hover:text-primary" data-menu-link>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="mt-auto flex flex-col gap-3">
+        <Button href="#contact" class="w-full">{t.nav.portal}</Button>
+        <a
+          href={homePath(otherLocale)}
+          hreflang={otherLocale}
+          class="flex h-12 items-center justify-center gap-3 rounded-full border border-primary font-medium text-primary"
+        >
+          <img src="/images/header/globe.svg" alt="" width="15" height="15" />
+          {t.nav.switchTo}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  if (menu && toggle) {
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) menu.querySelector<HTMLElement>('[data-menu-close]:not(.absolute)')?.focus();
+      else toggle.focus();
+    };
+    toggle.addEventListener('click', () => setOpen(true));
+    menu.querySelectorAll('[data-menu-close], [data-menu-link]').forEach((el) => el.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.classList.contains('hidden')) setOpen(false);
+    });
+  }
+</script>

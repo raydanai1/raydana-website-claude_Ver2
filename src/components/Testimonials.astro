@@ -1,0 +1,84 @@
+---
+import { testimonials } from '../data/home';
+import { type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const single = testimonials.length < 2;
+---
+
+<section class="container-x py-10 lg:px-16 lg:py-10" aria-roledescription="carousel" aria-label={t.customers.title} data-carousel>
+  <div class="relative mx-auto max-w-[1220px] lg:h-[400px]">
+    <!-- Stacked "ghost" slides behind the active card (Figma Slide List). -->
+    <div class="pointer-events-none absolute inset-y-[80px] start-0 end-[61%] hidden rounded-[40px] bg-gradient-to-b from-[#d9e2ff] to-[#e6edff] opacity-50 lg:block" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-y-[80px] end-0 start-[61%] hidden rounded-[40px] bg-gradient-to-b from-[#d9e2ff] to-[#e6edff] opacity-50 lg:block" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-y-[40px] start-[5%] end-[42%] hidden rounded-[40px] bg-gradient-to-b from-[#e9eefe] to-[#f2f5ff] lg:block" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute inset-y-[40px] end-[5%] start-[42%] hidden rounded-[40px] bg-gradient-to-b from-[#e9eefe] to-[#f2f5ff] lg:block" aria-hidden="true"></div>
+
+    <div class="relative mx-auto h-full overflow-hidden rounded-[32px] bg-white shadow-[0_4px_20px_#e5ecff] lg:w-[800px] lg:rounded-[40px]">
+      <ul class="flex h-full transition-transform duration-500" data-track>
+        {
+          testimonials.map((item, i) => (
+            <li
+              class="flex w-full shrink-0 flex-col items-center px-6 py-8 text-center lg:px-14 lg:pt-[42px]"
+              role="group"
+              aria-roledescription={t.a11y.slide}
+              aria-label={`${i + 1} / ${testimonials.length}`}
+            >
+              <span class="relative size-[117px] shrink-0">
+                <img src="/images/testimonials/avatar-ring.svg" alt="" class="absolute inset-[-5.13%_-13.68%_-25.64%_-17.09%] h-[130.8%] w-[130.8%] max-w-none" />
+                <img src={item.logo} alt="" width="82" height="82" loading="lazy" class="absolute left-[18px] top-[22px] size-[82px] object-cover" />
+              </span>
+              <p class="mt-4 text-[18px] font-bold text-title">{t.testimonials.items[item.key].org}</p>
+              <p class="mt-2 text-15 font-bold leading-8 text-primary">{t.testimonials.items[item.key].person}</p>
+              <blockquote class="mt-2 max-w-[688px] text-[13px] leading-8 text-body">{t.testimonials.items[item.key].quote}</blockquote>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-6 flex items-center justify-center gap-2 p-2">
+    <button type="button" class="p-2 disabled:opacity-40" aria-label={t.a11y.prev} data-prev disabled={single}>
+      <img src="/images/testimonials/arrow-right.svg" alt="" width="24" height="24" class="ltr:-scale-x-100" />
+    </button>
+    <div class="flex items-center gap-2.5 p-2" data-dots>
+      {
+        testimonials.map((_, i) => (
+          <button
+            type="button"
+            class="dot size-3 rounded-full bg-[#c8c8d0] transition-all aria-[current=true]:size-4 aria-[current=true]:bg-violet"
+            aria-label={`${t.a11y.slide} ${i + 1}`}
+            aria-current={i === 0 ? 'true' : 'false'}
+            data-dot={i}
+          ></button>
+        ))
+      }
+    </div>
+    <button type="button" class="p-2 disabled:opacity-40" aria-label={t.a11y.next} data-next disabled={single}>
+      <img src="/images/testimonials/arrow-left.svg" alt="" width="24" height="24" class="ltr:-scale-x-100" />
+    </button>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    if (!track || dots.length < 2) return;
+    const rtl = document.documentElement.dir === 'rtl';
+    let index = 0;
+    const go = (i: number) => {
+      index = (i + dots.length) % dots.length;
+      track.style.transform = `translateX(${(rtl ? 100 : -100) * index}%)`;
+      dots.forEach((d, n) => d.setAttribute('aria-current', String(n === index)));
+    };
+    dots.forEach((d, n) => d.addEventListener('click', () => go(n)));
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(index - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(index + 1));
+  });
+</script>
