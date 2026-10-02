@@ -113,5 +113,12 @@ export const processSteps = [
 /** Testimonials. Add more entries (and matching text in the i18n files) to fill the carousel. */
 export const testimonials = [{ key: 'presidency', logo: img('testimonials/logo-presidency.png') }] as const;
 
+/** Knowledge-base cards (Figma 2067:3922): photo per category, linked to its category page. */
+export const knowledgeCards = {
+  news: img('news/news.webp'), // 2053:3700
+  articles: img('news/articles.webp'), // 2053:3699
+  events: img('news/events.webp'), // 2053:3698
+} as const;
+
 export const footerLinks = ['products', 'services', 'industries', 'about', 'contact', 'standards', 'knowledge'] as const;
 export const footerCerts = ['knowledgeBased', 'rating', 'rating', 'rating', 'rating'] as const;

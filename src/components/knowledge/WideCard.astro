@@ -33,7 +33,7 @@ const t = useTranslations(locale).knowledge;
     <h3 class="mt-6 text-15 font-bold leading-8 text-ink lg:mt-[34px]">
       <a href={item.href} class="after:absolute after:inset-0 after:content-[''] hover:text-primary">{item.data.title}</a>
     </h3>
-    <p class="mt-[6px] line-clamp-6 text-15 leading-8 text-body rtl:text-justify lg:line-clamp-[7]">{item.data.summary}</p>
+    <p class="mt-[6px] line-clamp-6 text-15 leading-8 text-body lg:line-clamp-[7]">{item.data.summary}</p>
     <span class="mt-4 flex lg:mt-[22px]" aria-hidden="true">
       <span class="-ms-5 inline-flex h-12 items-center gap-3 rounded-full px-5 text-base font-medium leading-6 text-primary drop-shadow-[0_0_8px_rgba(55,183,195,0.25)] transition-transform group-hover:-translate-x-1 ltr:group-hover:translate-x-1">
         {t.readMore}

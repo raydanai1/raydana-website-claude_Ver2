@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import { getKnowledgeItems, knowledgeBase, type KnowledgeItem } from '../data/knowledge';
+import { knowledgeCards } from '../data/home';
+import { knowledgeCategoryPath } from '../data/knowledge';
 import { type Locale, useTranslations } from '../i18n';
 
 interface Props {
@@ -9,57 +9,59 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-// The three newest knowledge base items: the newest in the large middle tile, then start and end tiles.
-const [newest, second, third] = await getKnowledgeItems(locale);
-type Card = { item: KnowledgeItem; size: 'sm' | 'lg' };
-const columns = [
-  { card: second && ({ item: second, size: 'sm' } as Card), tileAfter: true },
-  { card: newest && ({ item: newest, size: 'lg' } as Card) },
-  { card: third && ({ item: third, size: 'sm' } as Card), tileBefore: true },
-].filter((col) => col.card);
+type CardKey = keyof typeof knowledgeCards;
+/**
+ * Figma 2067:3922 "carts-news" (1255×594). Columns from the reading start: c1 news (347×348, top) over a pale tile,
+ * c2 articles (527×526), pale tile over c3 events (347×348, bottom). Each card links to its category page.
+ * shade = height of the dark gradient (and where it reaches full colour); text = description size.
+ */
+const cards = {
+  news: { size: 'sm', shade: 'h-[57.5%]', text: 'text-15' }, // 2067:3921, gradient 2054:3704 (200 high)
+  articles: { size: 'lg', shade: 'h-[40.5%] to-[82.2%]', text: 'text-[13px]' }, // 2067:3917, gradient 2054:3702 (213 high)
+  events: { size: 'sm', shade: 'h-[36%] to-[76.4%]', text: 'text-15' }, // 2067:3919, gradient 2054:3705 (125 high)
+} as const;
+const columns: { key: CardKey; tile?: 'before' | 'after' }[] = [{ key: 'news', tile: 'after' }, { key: 'articles' }, { key: 'events', tile: 'before' }];
 ---
 
-{
-  columns.length > 0 && (
-    <section id="knowledge" class="container-x scroll-mt-28 pt-12 lg:pt-[17px]" aria-labelledby="knowledge-title">
-      <h2 id="knowledge-title" class="section-title text-center">
-        <a href={knowledgeBase(locale)} class="hover:text-primary">{t.knowledge.title}</a>
-      </h2>
+<section id="knowledge" class="container-x scroll-mt-28 pt-12 lg:pt-[17px]" aria-labelledby="knowledge-title">
+  <h2 id="knowledge-title" class="section-title text-center">{t.knowledge.title}</h2>
 
-      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:mt-6 lg:grid-cols-[347fr_527fr_347fr] lg:gap-[17px]">
-        {columns.map(({ card, tileBefore, tileAfter }) => (
-          <div class:list={['flex flex-col gap-[17px]', card!.size === 'lg' && 'sm:col-span-2 sm:row-start-1 lg:col-span-1 lg:row-start-auto']}>
-            {tileBefore && <div class="hidden h-[161px] w-[162px] self-start rounded-[27px] bg-light-4 lg:block" aria-hidden="true" />}
+  <div class="mx-auto mt-6 grid max-w-[1255px] gap-4 sm:grid-cols-2 lg:mt-[39px] lg:grid-cols-[347fr_527fr_347fr] lg:gap-[17px]">
+    {
+      columns.map(({ key, tile }) => {
+        const card = cards[key];
+        const text = t.knowledge.homeCards[key];
+        return (
+          <div class:list={['flex flex-col gap-[17px]', card.size === 'lg' && 'sm:col-span-2 sm:row-start-1 lg:col-span-1 lg:row-start-auto']}>
+            {tile === 'before' && <div class="hidden h-[161px] w-[162px] self-start rounded-[27px] bg-light-4 lg:block" aria-hidden="true" />}
             <a
-              href={card!.item.href}
+              href={knowledgeCategoryPath(key, locale)}
               class:list={[
-                'group relative block overflow-hidden rounded-3xl',
-                card!.size === 'lg' ? 'aspect-square lg:aspect-[527/526]' : 'aspect-[347/348]',
+                'group relative block overflow-hidden rounded-3xl shadow-[0_0_0_rgba(13,6,45,0)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-12px_rgba(13,6,45,0.45)] focus-visible:outline-[3px] focus-visible:outline-offset-[3px]',
+                card.size === 'lg' ? 'aspect-square lg:aspect-[527/526]' : 'aspect-[347/348]',
               ]}
             >
-              <Image
-                src={card!.item.data.cover}
+              <img
+                src={knowledgeCards[key]}
                 alt=""
-                widths={card!.size === 'lg' ? [527, 1054] : [347, 694]}
-                sizes={card!.size === 'lg' ? '(min-width: 1024px) 527px, 100vw' : '(min-width: 1024px) 347px, 50vw'}
                 loading="lazy"
                 class="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
               />
+              <div class:list={['absolute inset-x-0 bottom-0 bg-gradient-to-b from-[rgba(13,6,45,0)] to-[#0d062d]', card.shade]} />
               <div
                 class:list={[
-                  'absolute inset-x-0 bottom-0 bg-gradient-to-b from-[rgba(13,6,45,0)] to-[#0d062d]',
-                  card!.size === 'lg' ? 'h-[40%] to-[82%]' : 'h-[45%]',
+                  'absolute inset-x-0 bottom-0 flex flex-col gap-1 pb-[13px] text-light',
+                  card.size === 'lg' ? 'px-5 lg:pe-5 lg:ps-[31px]' : 'px-5 lg:px-[18px]',
                 ]}
-              />
-              <div class="absolute inset-x-0 bottom-0 px-5 pb-5 text-light">
-                <h3 class="line-clamp-2 text-15 font-bold leading-8">{card!.item.data.title}</h3>
-                <p class="truncate text-[13px] leading-8 lg:text-15">{card!.item.data.summary}</p>
+              >
+                <h3 class="text-15 font-bold leading-8 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-8">{text.title}</h3>
+                <p class:list={['truncate leading-8', card.text]}>{text.text}</p>
               </div>
             </a>
-            {tileAfter && <div class="hidden h-[161px] w-[162px] self-end rounded-[27px] bg-light-4 lg:block" aria-hidden="true" />}
+            {tile === 'after' && <div class="hidden h-[161px] w-[162px] self-end rounded-[27px] bg-light-4 lg:block" aria-hidden="true" />}
           </div>
-        ))}
-      </div>
-    </section>
-  )
-}
+        );
+      })
+    }
+  </div>
+</section>

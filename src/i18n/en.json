@@ -218,6 +218,20 @@
   },
   "knowledge": {
     "title": "Knowledge base",
+    "homeCards": {
+      "news": {
+        "title": "Latest news",
+        "text": "Keeping you up to date with ERP news"
+      },
+      "articles": {
+        "title": "Articles",
+        "text": "Hundreds of expert articles on software development and ERP"
+      },
+      "events": {
+        "title": "Latest events",
+        "text": "Keeping you up to date with Raydana events"
+      }
+    },
     "meta": {
       "title": "Knowledge base | Raydana CYBER ERP",
       "description": "The Raydana knowledge base: the latest news, expert articles and events on ERP, enterprise software and digital transformation."
