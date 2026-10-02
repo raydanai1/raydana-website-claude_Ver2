@@ -1,0 +1,49 @@
+---
+import { cloudImages } from '../../data/cloud';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  /** Defaults to the cloud page questions. */
+  title?: string;
+  items?: readonly { q: string; a: string }[];
+  /** Section padding. */
+  spacing?: string;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).cloud.faq;
+const { title = t.title, items = t.items, spacing = 'pb-0 pt-14 lg:pt-[143px] lg:pb-[54px]' } = Astro.props;
+---
+
+<!-- Figma 2027:9478: title + four expandable rows (2015:6124). -->
+<section class:list={['bg-light', spacing]} aria-labelledby="cloud-faq-title">
+  <div class="container-x">
+    <h2 id="cloud-faq-title" class="section-title text-center">{title}</h2>
+    <div class="mx-auto mt-6 flex max-w-[975px] flex-col gap-2 lg:mt-[22px]">
+      {
+        items.map((item) => (
+          <details class="faq-item group rounded-[14.756px] border-[1.476px] border-stroke bg-white">
+            <summary class="flex min-h-[64.883px] cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 text-15 font-bold leading-8 text-body">
+              <span>{item.q}</span>
+              <img src={cloudImages.faqPlus} alt="" width="16" height="16" class="faq-icon size-4 shrink-0" />
+            </summary>
+            <p class="px-6 pb-5 text-[14px] leading-7 text-body">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary:hover {
+    color: var(--color-primary);
+  }
+  /* Open rows show a minus: keep only the horizontal bar of the plus icon. */
+  .faq-item[open] .faq-icon {
+    clip-path: inset(43.75% 0);
+  }
+</style>

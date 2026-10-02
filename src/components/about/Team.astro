@@ -1,0 +1,30 @@
+---
+import { aboutImages, team } from '../../data/about';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).about.team;
+---
+
+<!-- Figma 2015:10307: title + four people cards (305×327); avatar and name are placeholders as in Figma. -->
+<section class="container-x pt-14 lg:pt-[125px]" aria-labelledby="team-title">
+  <h2 id="team-title" class="text-center text-[20px] font-bold leading-normal text-ink md:text-title-2">{t.title}</h2>
+  <ul class="mx-auto mt-6 grid max-w-[1287px] gap-5 sm:grid-cols-2 lg:mt-[24px] lg:grid-cols-4 lg:gap-[22px]">
+    {
+      team.map((role) => (
+        <li class="mx-auto w-full max-w-[340px] rounded-[11.643px] border-[0.485px] border-stroke bg-[#fafafa] px-[12.8px] pb-5 pt-[14.7px] transition-shadow duration-300 hover:shadow-[0_7.762px_17.194px_#dbe1f6] lg:max-w-none">
+          <div class="flex aspect-[278.77/236.73] items-end justify-center overflow-hidden rounded-[9.877px] bg-light-3 px-[2%] pb-[8.9%]">
+            <img src={aboutImages.teamAvatar} alt="" width="512" height="512" loading="lazy" class="aspect-[266.97/186.41] w-full object-cover" />
+          </div>
+          <div class="mt-[21px] flex flex-wrap items-baseline justify-between gap-x-2 px-1">
+            <h3 class="text-[16.5px] font-bold leading-[1.47] text-black">{t.roles[role]}</h3>
+            <p class="shrink-0 text-sm leading-6 text-body">{t.name}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>

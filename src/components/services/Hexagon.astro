@@ -1,0 +1,14 @@
+---
+/** Small rounded hexagon used as a decoration in the process diagrams (Figma Polygon 3/6/7). */
+interface Props {
+  color: string;
+  class?: string;
+}
+const { color, class: className = '' } = Astro.props;
+---
+
+<svg viewBox="0 0 34.64 37" class={className} aria-hidden="true" fill={color}>
+  <path
+    d="M12.32 1.34a10 10 0 0 1 10 0l7.32 4.23a10 10 0 0 1 5 8.66v8.45a10 10 0 0 1-5 8.66l-7.32 4.23a10 10 0 0 1-10 0L5 31.34a10 10 0 0 1-5-8.66v-8.45a10 10 0 0 1 5-8.66z"
+  ></path>
+</svg>

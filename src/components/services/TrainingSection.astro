@@ -1,0 +1,34 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import QuoteButton from './QuoteButton.astro';
+import { serviceImages, serviceSections } from '../../data/services';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  ctaHref: string;
+}
+const { locale, ctaHref } = Astro.props;
+const s = useTranslations(locale).services;
+---
+
+<!-- Figma 2:15359 "Training & deployment" card on the tinted band 2:9424. -->
+<section id={serviceSections.training} class="scroll-mt-28 bg-tint py-10 lg:py-[59px]" aria-labelledby="training-title">
+  <div class="container-x">
+    <div class="grid overflow-hidden rounded-[18px] bg-white shadow-soft lg:min-h-[465px] lg:grid-cols-[695fr_625fr]">
+      <div class="flex flex-col px-5 pb-6 pt-8 sm:px-8 lg:px-[37px] lg:pb-[45px] lg:pt-[43px]">
+        <SectionHeading id="training-title">{s.training.title}</SectionHeading>
+        <p class="mt-5 lg:text-justify text-[14px] leading-8 text-body lg:mt-[30px] lg:text-15">{s.training.body}</p>
+        <QuoteButton href={ctaHref} class="mt-8 lg:mt-auto">{s.quote}</QuoteButton>
+      </div>
+      <img
+        src={serviceImages.training}
+        alt={s.training.imageAlt}
+        width="1250"
+        height="822"
+        loading="lazy"
+        class="order-first aspect-[625/400] size-full object-cover lg:order-none lg:aspect-auto"
+      />
+    </div>
+  </div>
+</section>

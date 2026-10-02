@@ -1,0 +1,124 @@
+---
+import { aboutImages, glanceCards, glanceStats } from '../../data/about';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).about.glance;
+---
+
+<!-- Figma 2082:3940: navy band (2015:6546), title 2015:6548, dotted map 2015:10810, cards 2030:10022, rings 2030:9897-9899 / 2030:10106. -->
+<section class="bg-ink pb-14 pt-10 text-light lg:pb-[58px] lg:pt-[45px]" aria-labelledby="glance-title" data-glance>
+  <div class="container-x">
+    <h2 id="glance-title" class="text-center text-[18px] font-bold leading-[1.47] text-white">{t.title}</h2>
+
+    <div class="relative mx-auto mt-6 max-w-[1112px] lg:mt-[38px]">
+      <!-- Dotted world map sits behind the cards and the top of the rings. -->
+      <img
+        src={aboutImages.worldMap}
+        alt=""
+        width="2052"
+        height="772"
+        loading="lazy"
+        class="pointer-events-none absolute left-[0.9%] top-[106px] hidden w-[91.4%] max-w-none select-none lg:block"
+        aria-hidden="true"
+      />
+
+      <ul class="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        {
+          glanceCards.map((key) => (
+            <li class="relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] pb-6 shadow-banner lg:min-h-[231px]">
+              <div class="flex items-center gap-1 ps-4 pt-3">
+                <span class="relative flex size-[65px] shrink-0 items-center justify-center">
+                  <img src={aboutImages.glanceHex} alt="" width="56.29" height="62.56" class="absolute h-[62.56px] w-[56.29px]" />
+                  <img src={aboutImages.glanceIcon} alt="" width="25.07" height="25.87" class="relative h-[25.87px] w-[25.07px]" />
+                </span>
+                <h3 class="text-15 font-bold leading-8 text-title">{t.cards[key].title}</h3>
+              </div>
+              <p class="mt-1 flex min-h-[70px] items-center pe-[22px] ps-[23px] text-sm leading-6 text-muted lg:mt-[16px]">
+                {t.cards[key].text}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <ul class="relative mx-auto mt-10 grid max-w-[1177px] grid-cols-2 gap-x-4 gap-y-8 lg:mt-[34px] lg:grid-cols-4 lg:gap-x-[59px] xl:-mx-[32px] xl:max-w-none">
+        {
+          glanceStats.map((stat) => (
+            <li class="flex flex-col items-center text-center">
+              <span class="relative size-[132px] shrink-0 sm:size-[176px]">
+                <img src={aboutImages.ringInner} alt="" width="152" height="152" class="absolute left-[6.82%] top-[6.82%] size-[86.36%]" />
+                <img src={stat.ring} alt="" width="175.77" height="176" class="ring-arc absolute inset-0 size-full" />
+                <span
+                  class="absolute inset-0 flex items-center justify-center text-[26px] font-bold sm:text-[32px]"
+                  style={`color:${stat.color}`}
+                  dir="ltr"
+                  data-count={stat.value}
+                  data-prefix={stat.prefix}
+                >
+                  {`${stat.prefix}${stat.value}`}
+                </span>
+              </span>
+              <p class="mt-4 w-full max-w-[255px] sm:mt-6">
+                <span class="block text-[16px] font-bold leading-8 text-light sm:text-[18px]">{t.stats[stat.key].title}</span>
+                <span class="block text-[13px] font-bold leading-7 text-light sm:text-15 sm:leading-8">{t.stats[stat.key].text}</span>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  [data-glance][data-armed] .ring-arc {
+    opacity: 0;
+    transform: rotate(-110deg);
+  }
+  [data-glance][data-armed].is-in .ring-arc {
+    opacity: 1;
+    transform: none;
+    transition:
+      transform 1.4s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s ease;
+  }
+</style>
+
+<script>
+  // Rings sweep in and the numbers count up the first time the band scrolls into view.
+  const root = document.querySelector<HTMLElement>('[data-glance]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (root && !reduced && 'IntersectionObserver' in window) {
+    const counters = [...root.querySelectorAll<HTMLElement>('[data-count]')];
+    root.dataset.armed = '';
+    counters.forEach((el) => (el.textContent = `${el.dataset.prefix ?? ''}0`));
+    const run = () => {
+      root.classList.add('is-in');
+      const start = performance.now();
+      const duration = 1600;
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        counters.forEach((el) => {
+          el.textContent = `${el.dataset.prefix ?? ''}${Math.round(Number(el.dataset.count) * eased)}`;
+        });
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          run();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(root.querySelector('[data-count]')?.closest('ul') ?? root);
+  }
+</script>

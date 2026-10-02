@@ -1,0 +1,23 @@
+---
+/**
+ * Dark navy pill used at the bottom of several cards (Figma "Img lib/Metric/Stacked Bar Chart 1").
+ * As a link it goes to the same demo target as the homepage CTA; `static` renders a plain note.
+ */
+interface Props {
+  href?: string;
+  class?: string;
+}
+const { href, class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'p';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'flex min-h-[70px] w-full items-center justify-center rounded-[50px] border-[0.35px] border-neutral-200 bg-[#0b2565] px-6 py-4 text-center text-[15px] font-bold leading-7 text-light shadow-[0_8px_8px_rgba(0,0,0,0.25)] sm:text-[16px] lg:text-title-3 lg:leading-normal',
+    href && 'transition duration-200 hover:-translate-y-0.5 hover:bg-[#0f2f7d]',
+    className,
+  ]}
+>
+  <slot />
+</Tag>

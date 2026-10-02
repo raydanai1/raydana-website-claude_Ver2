@@ -1,0 +1,104 @@
+---
+import { projectLogos } from '../../data/about';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).about.projects;
+
+// Two cycles make one set wider than the widest screen; the set is repeated once for a seamless loop.
+const set = [...projectLogos, ...projectLogos];
+---
+
+<!-- Figma 2054:3721: seven tall logo cards running past both edges of the blue band. -->
+<section class="overflow-hidden bg-title pb-14 pt-16 lg:pb-[78px] lg:pt-[128px]" aria-labelledby="projects-title">
+  <h2 id="projects-title" class="container-x text-center text-[22px] font-bold leading-normal text-white lg:text-title-2">{t.title}</h2>
+
+  <div class="projects-viewport mt-8 lg:mt-[83px]" data-projects>
+    <ul class="projects-track flex w-max">
+      {
+        [0, 1].map((copy) =>
+          set.map((logo) => (
+            <li
+              class="me-4 w-[150px] shrink-0 snap-start rounded-[14.146px] border-[0.589px] border-stroke bg-[#fafafa] p-3 md:me-6 md:h-[387px] md:w-[194px] md:p-[15px] md:pb-[17px]"
+              aria-hidden={copy === 1 ? 'true' : undefined}
+            >
+              <div class="flex h-[260px] flex-col items-center justify-center gap-3 rounded-xl bg-light-4 px-2 pb-6 md:h-full md:pb-[28px]">
+                <img
+                  src={logo.src}
+                  alt={copy === 1 ? '' : t.logos[logo.key]}
+                  width={logo.w}
+                  loading="lazy"
+                  class="h-auto max-w-[85%] mix-blend-multiply"
+                  style={`width:${logo.w}px`}
+                />
+                {'label' in logo && (
+                  <span class="w-[118px] text-center text-[12px] font-bold leading-[1.5] text-[#005087]" aria-hidden="true">
+                    {t.pensionLabel}
+                  </span>
+                )}
+              </div>
+            </li>
+          )),
+        )
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Phones and tablets: a swipeable row. */
+  .projects-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-inline: 16px;
+  }
+  .projects-viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .projects-track li[aria-hidden='true'] {
+    display: none;
+  }
+
+  /* Desktop: a slow endless loop that pauses on hover. */
+  @media (min-width: 768px) {
+    .projects-viewport {
+      overflow: hidden;
+      padding-inline: 0;
+    }
+    .projects-track li[aria-hidden='true'] {
+      display: block;
+    }
+    .projects-track {
+      --shift: -50%;
+      margin-inline-start: -35px;
+      animation: projects-loop 70s linear infinite;
+    }
+    :global([dir='rtl']) .projects-track {
+      --shift: 50%;
+    }
+    .projects-viewport:hover .projects-track,
+    .projects-viewport:focus-within .projects-track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes projects-loop {
+    to {
+      transform: translateX(var(--shift));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .projects-viewport {
+      overflow-x: auto !important;
+    }
+    .projects-track {
+      animation: none !important;
+    }
+    .projects-track li[aria-hidden='true'] {
+      display: none !important;
+    }
+  }
+</style>

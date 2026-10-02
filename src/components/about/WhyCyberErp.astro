@@ -1,0 +1,55 @@
+---
+import { whyItems } from '../../data/about';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).about.why;
+
+// Line icons drawn on the pastel hexagons (the Figma placeholders all read "BI").
+const icons: Record<(typeof whyItems)[number]['key'], string> = {
+  // One platform: a single frame holding every module.
+  platform:
+    '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 9v12"/><path d="M13 13h4M13 17h4"/>',
+  // Fitted to you: a puzzle piece.
+  fit: '<path d="M10 3h4v2a2 2 0 1 0 4 0V3h3v7h-2a2 2 0 1 0 0 4h2v7h-7v-2a2 2 0 1 0-4 0v2H3v-7h2a2 2 0 1 0 0-4H3V3h7z"/>',
+  // Beyond ERP: stacked layers.
+  beyond: '<path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="m2 13 10 5 10-5"/><path d="m2 17.5 10 5 10-5"/>',
+  // Ready for growth: rising chart.
+  growth: '<path d="M3 20h18"/><path d="m4 15 5-5 4 4 7-7"/><path d="M15 7h5v5"/>',
+};
+---
+
+<!-- Figma 2015:10341 (band), columns 2033:10156 / 2033:10157 / 2033:10159 / 2015:10359. -->
+<section class="mt-5 bg-title pt-12 text-white lg:mt-[21px] lg:pt-[62px]" aria-labelledby="why-title">
+  <div class="container-x">
+    <h2 id="why-title" class="text-center text-[22px] font-bold leading-normal lg:text-title-2">{t.title}</h2>
+    <ul class="mt-10 grid gap-10 sm:grid-cols-2 sm:gap-x-8 lg:mt-[51px] lg:grid-cols-4 lg:gap-x-8 xl:grid-cols-[285px_260px_260px_260px] xl:justify-start xl:gap-x-[40px] xl:ps-6">
+      {
+        whyItems.map((item) => (
+          <li>
+            <span class="relative flex h-[54px] w-[48.5px] items-center justify-center" aria-hidden="true">
+              <svg viewBox="4.06 13.74 48.5 54.06" class="absolute inset-0 size-full" fill={item.fill}>
+                <path d="M25.1764 14.585C27.117 13.4646 29.508 13.4646 31.4486 14.585L49.4251 24.9638C51.3657 26.0842 52.5612 28.1548 52.5612 30.3957V51.1532C52.5612 53.394 51.3657 55.4646 49.4251 56.585L31.4486 66.9638C29.508 68.0842 27.117 68.0842 25.1764 66.9638L7.19988 56.585C5.25926 55.4646 4.06379 53.394 4.06379 51.1532V30.3957C4.06379 28.1548 5.25926 26.0842 7.19988 24.9638L25.1764 14.585Z" />
+              </svg>
+              <svg
+                viewBox="0 0 24 24"
+                class="relative size-[22px]"
+                fill="none"
+                stroke={item.accent}
+                stroke-width="1.9"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={icons[item.key]}
+              />
+            </span>
+            <h3 class="mt-5 text-[18px] font-bold leading-normal text-light lg:mt-[29px]">{t.items[item.key].title}</h3>
+            <p class="mt-2 text-15 leading-8 text-white lg:mt-[14px]">{t.items[item.key].text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

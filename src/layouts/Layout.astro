@@ -1,16 +1,23 @@
 ---
 import '../styles/global.css';
-import { localeInfo, homePath, locales, type Locale, useTranslations } from '../i18n';
+import { localeInfo, pagePath, locales, type Locale, type Page, useTranslations } from '../i18n';
 
 interface Props {
   locale: Locale;
+  /** Which page this is; used for the canonical and hreflang links. */
+  page?: Page;
+  /** Page-specific title and description (defaults to the homepage meta). */
+  title?: string;
+  description?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, page = 'home' } = Astro.props;
 const t = useTranslations(locale);
+const title = Astro.props.title ?? t.meta.title;
+const description = Astro.props.description ?? t.meta.description;
 const { dir, htmlLang, ogLocale } = localeInfo[locale];
 const site = Astro.site ?? new URL('https://raydana.com');
-const canonical = new URL(homePath(locale), site).href;
+const canonical = new URL(pagePath(page, locale), site).href;
 ---
 
 <!doctype html>
@@ -18,16 +25,16 @@ const canonical = new URL(homePath(locale), site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{t.meta.title}</title>
-    <meta name="description" content={t.meta.description} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {locales.map((l) => <link rel="alternate" hreflang={l} href={new URL(homePath(l), site).href} />)}
-    <link rel="alternate" hreflang="x-default" href={new URL(homePath('fa'), site).href} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={new URL(pagePath(page, l), site).href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, 'fa'), site).href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0b518c" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={t.meta.title} />
-    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content={new URL('/images/hero/hero-bg.webp', site).href} />

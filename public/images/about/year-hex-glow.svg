@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="87.1839" height="101.797" viewBox="0 0 87.1839 101.797" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="shap2">
+<g id="Polygon 13" filter="url(#filter0_d_0_5)">
+<path d="M43.5919 16.7011L70.4828 33.7998L70.4828 67.9973L43.5919 85.096L16.7011 67.9973L16.7011 33.7998L43.5919 16.7011Z" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_5" x="4.76837e-07" y="0" width="87.1839" height="101.797" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="8.35055"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.825421 0 0 0 0 0.895252 0 0 0 0 1 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_5"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_5" result="shape"/>
+</filter>
+</defs>
+</svg>

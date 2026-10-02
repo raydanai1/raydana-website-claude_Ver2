@@ -1,0 +1,115 @@
+---
+import { benefitChecks, moduleImages } from '../../data/modules';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  items: string[];
+  /** Picture in the hexagon: chart (module page, 102:11624) or calculator (subsystem page, 119:9485). */
+  picture: 'chart' | 'calculator';
+}
+const { locale, title, items, picture } = Astro.props;
+
+/*
+ * Staggered chip rows as in Figma 102:11629 / 119:9486: rows of 2 and 3 chips alternate,
+ * each row nudged a little from the start edge; frames alternate between the clear (22%)
+ * and the white-edged (44%) glass.
+ */
+const rowSizes = [2, 3];
+const rowTops = [0, 11, 9, 12, 14];
+const rowOffsets = [2, 2, 0, 1, 1];
+const rows: { text: string; glass: number; check: string; inner: number }[][] = [];
+for (let i = 0, r = 0; i < items.length; r++) {
+  const size = rowSizes[r % rowSizes.length];
+  rows.push(
+    items.slice(i, i + size).map((text, j) => ({
+      text,
+      glass: (r + j) % 2 === 0 ? 0.22 : 0.44,
+      check: benefitChecks[(i + j) % benefitChecks.length],
+      inner: (i + j) % 3 === 1 ? 12 : 10,
+    })),
+  );
+  i += size;
+}
+
+// Picture geometry on the 417×362 Figma group (front hexagon overflows a little above and below).
+const image =
+  picture === 'chart'
+    ? { src: moduleImages.benefitsChart, x: 62.01, y: -0.17, w: 360.47, h: 367.15 }
+    : { src: moduleImages.benefitsCalculator, x: -185.6, y: -78.26, w: 636.3, h: 454.02 };
+const clipId = `benefits-hex-${picture}`;
+---
+
+<!-- Figma 102:11116 / 164:1380: radial band, title, hexagon picture (102:11619 / 119:9480), chips. -->
+<section class="benefits-band overflow-hidden pb-12 pt-10 lg:pt-[47px] xl:min-h-[524px] xl:pb-[60px]" aria-labelledby="module-benefits-title">
+  <div class="container-x">
+    <h2 id="module-benefits-title" class="text-center text-[20px] font-bold leading-normal text-title md:text-title-2">{title}</h2>
+
+    <div class="mt-8 flex flex-col items-center gap-8 lg:mt-[36px] xl:flex-row-reverse xl:items-start xl:justify-between xl:gap-6 xl:pe-[38px] xl:ps-[2px]">
+      <svg viewBox="0 -5 417 382" width="417" height="382" class="h-auto w-full max-w-[300px] shrink-0 overflow-visible sm:max-w-[360px] xl:w-[417px] xl:max-w-none" aria-hidden="true">
+        <defs>
+          <clipPath id={clipId}>
+            <path
+              transform="translate(84.85 1.22)"
+              d="M150.201 1.05868C152.646 -0.35289 155.659 -0.352893 158.104 1.05867L304.354 85.4964C306.799 86.908 308.305 89.5167 308.305 92.3398V261.215C308.305 264.038 306.799 266.647 304.354 268.059L158.104 352.496C155.659 353.908 152.646 353.908 150.202 352.496L3.95103 268.059C1.50613 266.647 0 264.038 0 261.215V92.3398C0 89.5167 1.50612 86.908 3.95102 85.4964L150.201 1.05868Z"
+            />
+          </clipPath>
+        </defs>
+        <image href={moduleImages.benefitsHexBack} x="24.25" y="1.23" width="313.5" height="359.55" />
+        <image href={moduleImages.benefitsHexFront} x="68.83" y="-4.63" width="340.34" height="381.24" />
+        <image href={image.src} x={image.x} y={image.y} width={image.w} height={image.h} preserveAspectRatio="none" clip-path={`url(#${clipId})`} />
+      </svg>
+
+      <!-- Desktop: staggered rows. Below 1280px: a plain list (2 columns from 640px). -->
+      <div class="hidden w-[818px] pt-[31px] xl:block">
+        {
+          rows.map((row, r) => (
+            <ul class="flex flex-wrap gap-y-3" style={`margin-top:${r ? rowTops[r % rowTops.length] : 0}px;padding-inline-start:${rowOffsets[r % rowOffsets.length]}px`}>
+              {row.map((chip, j) => (
+                <li class="benefit-glass rounded-[14px] p-[10px]" style={`margin-inline-start:${j ? 10 : 0}px;--glass:${chip.glass}`}>
+                  <span class="benefit-chip flex h-[55px] items-center gap-[10px] pe-4 ps-[13px]" style={`border-radius:${chip.inner}px`}>
+                    <img src={chip.check} alt="" width="26" height="26" loading="lazy" class="size-[26px] shrink-0" />
+                    <span class:list={['text-[14px] leading-6 text-ink', locale === 'fa' && 'whitespace-nowrap']}>{chip.text}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ))
+        }
+      </div>
+
+      <ul class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:hidden">
+        {
+          rows.flat().map((chip) => (
+            <li class="benefit-glass rounded-[14px] p-2" style={`--glass:${chip.glass}`}>
+              <span class="benefit-chip flex min-h-[55px] items-center gap-[10px] px-[13px] py-2" style={`border-radius:${chip.inner}px`}>
+                <img src={chip.check} alt="" width="26" height="26" loading="lazy" class="size-[26px] shrink-0" />
+                <span class="text-[14px] leading-6 text-ink">{chip.text}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Figma 2:15571: soft blue-grey radial gradient. */
+  .benefits-band {
+    background-color: #e1eaee;
+    background-image: radial-gradient(56.4% 56.5% at 49.2% 29.5%, #e1eaee 0%, #cee1ea 50.48%, #e1eaee 100%);
+  }
+  /* Glass frame: white at 22% (no edge) or 44% (white edge), blurred. */
+  .benefit-glass {
+    border: 1px solid rgba(255, 255, 255, calc((var(--glass) - 0.22) / 0.22));
+    background-color: rgba(255, 255, 255, var(--glass));
+    backdrop-filter: blur(15.5px);
+  }
+  .benefit-chip {
+    border: 1px solid #7c93e3;
+    background-color: #fff;
+    box-shadow: 0 0 40px rgba(190, 190, 223, 0.74);
+  }
+</style>

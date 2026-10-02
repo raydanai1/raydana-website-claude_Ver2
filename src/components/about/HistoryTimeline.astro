@@ -1,0 +1,179 @@
+---
+import { aboutImages, historyEntries } from '../../data/about';
+import { localizeDigits, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).about.history;
+const year = (entry: (typeof historyEntries)[number]) => localizeDigits(entry.years[locale], locale);
+
+/*
+ * Desktop stage: a 1440×660 box in Figma frame coordinates (x from the reading-start edge,
+ * y from the top of the stage, which sits 230px below the top of the section).
+ * Inline-start offsets mirror the whole timeline automatically for English.
+ */
+const lineY = 352; // centre of the dots on the main line
+const lowerY = 604; // centre of the dot on the lower return line
+const founded = historyEntries[0];
+---
+
+<!-- Figma 2015:10194 (timeline), 2006:1261 (title), 2015:10375 (intro). -->
+<section class="-mb-16 mt-14 bg-light-4 pb-14 pt-12 lg:-mb-[50px] lg:mt-[55px] lg:pb-[53px] lg:pt-[92px]" aria-labelledby="history-title">
+  <div class="container-x">
+    <h2 id="history-title" class="mx-auto max-w-[900px] text-center text-[20px] font-bold leading-normal text-ink md:text-title-2">{t.title}</h2>
+    <p class="mx-auto mt-4 max-w-[800px] text-center text-15 leading-8 text-body lg:mt-[22px]">{t.intro}</p>
+  </div>
+
+  <!-- Desktop (xl+): horizontal timeline, scaled down proportionally below 1440px. -->
+  <div class="tl-wrap relative mt-4 hidden xl:block" data-timeline>
+    <div class="tl-stage absolute top-0 h-[660px] w-[1440px]">
+      <img
+        src={aboutImages.timelinePath}
+        alt=""
+        width="1319"
+        height="252"
+        class="absolute top-[353px] h-[252px] w-[1319px] max-w-none rtl:-scale-x-100"
+        style="inset-inline-start:74px"
+        aria-hidden="true"
+      />
+
+      <!-- Founding year: hexagon badge, card and connector down to the line. -->
+      <span class="tl-dots absolute top-[180px] h-[161px]" style={`inset-inline-start:${founded.x - 2}px`} aria-hidden="true"></span>
+      <div class="absolute top-[111px] h-[75.16px] w-[80.8px]" style="inset-inline-start:92px">
+        <img src={aboutImages.yearHexGlow} alt="" width="87.18" height="101.8" class="absolute left-[-3px] top-[-14px] h-[101.8px] w-[87.18px] max-w-none" aria-hidden="true" />
+        <img src={aboutImages.yearHex} alt="" width="80.8" height="75.16" class="absolute inset-0 size-full" aria-hidden="true" />
+        <span class="absolute inset-x-0 top-[22px] text-center text-[14px] font-bold tracking-[0.56px] text-title">{year(founded)}</span>
+      </div>
+      <p
+        class="absolute top-[237px] flex h-[63px] min-w-[127px] items-center justify-center whitespace-nowrap rounded-[10px] px-3 ltr:text-sm border border-stroke-strong bg-white text-15 font-bold text-primary shadow-chip"
+        style="inset-inline-start:79px"
+      >
+        {t.founded}
+      </p>
+
+      {
+        historyEntries.slice(1).map((entry) => {
+          const dotY = 'lower' in entry ? lowerY : lineY;
+          return (
+            <>
+              {'card' in entry && (
+                <>
+                  <span
+                    class="tl-dots absolute"
+                    style={`inset-inline-start:${entry.x - 2}px; top:${entry.card.top + 40}px; height:${dotY - 11 - entry.card.top - 40}px`}
+                    aria-hidden="true"
+                  />
+                  <div
+                    class="absolute rounded-[18px] border border-stroke-strong bg-white px-[14px] pb-4 pt-[18px] shadow-chip"
+                    style={`inset-inline-start:${entry.card.start}px; top:${entry.card.top}px; width:${entry.card.w}px`}
+                  >
+                    {entry.groups.map((group, g) => (
+                      <div class:list={[g > 0 && 'mt-4']}>
+                        <p class="text-sm font-bold text-primary" dir="ltr" lang="en">
+                          <span class="block rtl:text-right">{group.label}</span>
+                        </p>
+                        <ul class="mt-2 list-disc ps-5 text-sm font-bold leading-6 text-body marker:text-[#4c6d75]">
+                          {t.items[group.items].map((item) => (
+                            <li>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+              <img
+                src={entry.dot}
+                alt=""
+                width="23.46"
+                height="22.25"
+                class="absolute h-[22.25px] w-[23.46px] -translate-x-1/2 rtl:translate-x-1/2"
+                style={`inset-inline-start:${entry.x}px; top:${dotY - 11}px`}
+                aria-hidden="true"
+              />
+              <span
+                class="absolute -translate-x-1/2 whitespace-nowrap text-[13px] font-bold tracking-[0.52px] text-title rtl:translate-x-1/2"
+                style={`inset-inline-start:${entry.x}px; top:${dotY + 22}px`}
+              >
+                {year(entry)}
+              </span>
+            </>
+          );
+        })
+      }
+      <img
+        src={founded.dot}
+        alt=""
+        width="23.46"
+        height="22.25"
+        class="absolute h-[22.25px] w-[23.46px] -translate-x-1/2 rtl:translate-x-1/2"
+        style={`inset-inline-start:${founded.x}px; top:${lineY - 11}px`}
+        aria-hidden="true"
+      />
+    </div>
+  </div>
+
+  <!-- Mobile and tablet: vertical line on the reading-start side with stacked cards. -->
+  <ol class="container-x relative mt-10 xl:hidden">
+    {
+      historyEntries.map((entry) => (
+        <li class="relative pb-8 ps-10 last:pb-0">
+          <span class="absolute bottom-0 start-[11px] top-[22px] border-s-2 border-dashed border-[#91bcd0]/60" aria-hidden="true" />
+          <img src={entry.dot} alt="" width="23.46" height="22.25" class="absolute start-0 top-0 h-[22.25px] w-[23.46px]" aria-hidden="true" />
+          <p class="text-[14px] font-bold leading-[22px] tracking-[0.52px] text-title">{year(entry)}</p>
+          {'founded' in entry && (
+            <p class="mt-3 inline-flex rounded-[10px] border border-stroke-strong bg-white px-5 py-3 text-15 font-bold text-primary shadow-chip">
+              {t.founded}
+            </p>
+          )}
+          {'card' in entry && (
+            <div class="mt-3 max-w-[420px] rounded-[18px] border border-stroke-strong bg-white px-5 pb-4 pt-4 shadow-chip">
+              {entry.groups.map((group, g) => (
+                <div class:list={[g > 0 && 'mt-4']}>
+                  <p class="text-sm font-bold text-primary" dir="ltr" lang="en">
+                    <span class="block rtl:text-right">{group.label}</span>
+                  </p>
+                  <ul class="mt-2 list-disc ps-5 text-sm font-bold leading-6 text-body marker:text-[#4c6d75]">
+                    {t.items[group.items].map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .tl-wrap {
+    --s: 1;
+    height: calc(660px * var(--s));
+    overflow: hidden;
+  }
+  .tl-stage {
+    left: 50%;
+    transform: translateX(-50%) scale(var(--s));
+    transform-origin: top center;
+  }
+  /* Dotted connector (Figma uses rows of "." in #9ec4ce). */
+  .tl-dots {
+    width: 4px;
+    background: radial-gradient(circle, #9ec4ce 1.6px, transparent 1.9px) center top / 4px 8px repeat-y;
+  }
+</style>
+
+<script>
+  // Scale the 1440px desktop stage to the available width.
+  const wrap = document.querySelector<HTMLElement>('[data-timeline]');
+  if (wrap) {
+    const fit = () => wrap.style.setProperty('--s', String(Math.min(1, wrap.clientWidth / 1440)));
+    fit();
+    new ResizeObserver(fit).observe(wrap);
+  }
+</script>

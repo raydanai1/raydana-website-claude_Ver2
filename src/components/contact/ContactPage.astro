@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import ContactHero from './ContactHero.astro';
+import ContactCards from './ContactCards.astro';
+import ContactMap from './ContactMap.astro';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Layout locale={locale} page="contact" title={t.contact.meta.title} description={t.contact.meta.description}>
+  <Header locale={locale} page="contact" />
+  <main id="main">
+    <ContactHero locale={locale} />
+    <ContactCards locale={locale} />
+    <ContactMap locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Layout>

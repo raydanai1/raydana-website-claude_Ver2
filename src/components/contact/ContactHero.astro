@@ -1,0 +1,50 @@
+---
+import DemoRequestForm from '../cloud/DemoRequestForm.astro';
+import { contactImages } from '../../data/contact';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).contact;
+---
+
+<!-- Figma 43:4756 (background + cubes 43:4755), 28:5302 / 43:4758 / 28:5395 (text), 2023:9331 (form). -->
+<section class="relative -mt-[84px] overflow-hidden bg-light-4 lg:-mt-[118px] lg:h-[679px]" aria-labelledby="contact-hero-title">
+  <!-- Cubes illustration (634×521), mirrored as in Figma; it sits behind the frosted form frame. -->
+  <img
+    src={contactImages.cubes}
+    alt=""
+    width="634"
+    height="521"
+    fetchpriority="high"
+    class="pointer-events-none absolute left-1/2 top-[130px] hidden w-[634px] max-w-none -translate-x-[301px] -scale-x-100 lg:block"
+    aria-hidden="true"
+  />
+
+  <div class="container-x relative flex flex-col gap-6 pb-12 pt-[112px] lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:pb-0 lg:pt-[124px]">
+    <div class="lg:mt-[105px] lg:w-[384px] lg:shrink-0 lg:pe-[26px] lg:box-content">
+      <h1 id="contact-hero-title" class="text-[22px] font-bold leading-[1.63] text-title sm:text-[26px] lg:text-[28px]">
+        <span class="block">{t.hero.title}</span>
+        <span class="block">{t.hero.subtitle}</span>
+      </h1>
+      <p class="mt-2 text-[14px] leading-6 text-primary lg:mt-[6px]">{t.hero.note}</p>
+    </div>
+
+    <!-- Smaller copy of the illustration between the text and the form on tablets and large phones. -->
+    <img
+      src={contactImages.cubes}
+      alt=""
+      width="634"
+      height="521"
+      loading="lazy"
+      class="mx-auto -my-4 hidden w-[360px] max-w-full -scale-x-100 sm:block lg:hidden"
+      aria-hidden="true"
+    />
+
+    <div class="relative z-10 flex justify-center lg:block">
+      <DemoRequestForm locale={locale} embedded copy={t.form} />
+    </div>
+  </div>
+</section>

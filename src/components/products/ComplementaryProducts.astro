@@ -1,0 +1,51 @@
+---
+import { complementaryProducts, productImages } from '../../data/products';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).products.complementary;
+---
+
+<!--
+  Figma 2:5414 (radial band), 2:9052 (title), 2:9350 / 2:9353 (6 product pills).
+  The band runs straight into the footer, so it cancels the footer's top margin.
+-->
+<section class="complementary-band relative -mb-16 pb-12 pt-12 lg:-mb-[50px] lg:pb-[66px] lg:pt-[58px]" aria-labelledby="products-complementary-title">
+  <div class="container-x">
+    <h2 id="products-complementary-title" class="text-center text-[20px] font-bold leading-snug text-title lg:text-title-2 lg:leading-9">{t.title}</h2>
+
+    <!-- Cards are not links yet: the product pages are not built. -->
+    <ul class="mx-auto mt-8 grid max-w-[940px] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-5 lg:mt-[35px] lg:gap-x-[38px] lg:gap-y-6">
+      {
+        complementaryProducts.map((p) => (
+          <li class="h-[97px] rounded-[17px] border-[1.2px] border-transparent bg-white/22 px-[14px] pt-[11px] backdrop-blur-[19px]">
+            <div class="flex h-[74px] items-center gap-[15px] rounded-xl border-[1.2px] border-stroke-strong bg-white pe-4 ps-[10px] shadow-[0_0_48.5px_rgba(190,190,223,0.74)]">
+              <span class="relative flex h-[65px] w-[60px] shrink-0 items-center justify-center">
+                <img src={productImages.badgeHex} alt="" width="60" height="65" class="absolute inset-0 h-[65px] w-[60px]" />
+                <span class:list={['relative font-bold text-primary-dark', 'small' in p ? 'text-15 leading-8' : 'text-title-3 leading-normal']} dir="ltr">
+                  {p.badge}
+                </span>
+              </span>
+              <span class="flex-1 text-15 font-bold leading-8 text-title">{t.items[p.key]}</span>
+              <span class="icon-btn" aria-hidden="true">
+                <img src={productImages.cardArrow} alt="" width="18" height="18" class="dir-icon-rev size-[18px]" />
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Figma 2:5414: soft radial blue-grey band at 83% opacity. */
+  .complementary-band {
+    background-color: var(--color-light);
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1440 531' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='0.83'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-0.40001 29.974 -81.286 -1.0686 708 156.82)'><stop stop-color='rgba(225,234,238,1)' offset='0'/><stop stop-color='rgba(206,225,234,1)' offset='0.50481'/><stop stop-color='rgba(225,234,238,1)' offset='1'/></radialGradient></defs></svg>");
+    background-size: 100% 100%;
+  }
+</style>

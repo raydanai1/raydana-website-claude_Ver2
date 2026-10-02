@@ -1,0 +1,206 @@
+---
+import { cloudImages } from '../../data/cloud';
+import { productIndustries } from '../../data/products';
+import { type Dictionary, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  /** Band photo, overlay and heading hexagon; default to the cloud page's. */
+  photo?: string;
+  hex?: string;
+  hexIcon?: string;
+  /** Classes of the layer over the photo. */
+  overlay?: string;
+  /** Band height from 1024px. */
+  height?: string;
+  /** Render only the glass frame and form (no band, photo or heading), e.g. inside the contact hero. */
+  embedded?: boolean;
+  /** Extra classes of the glass frame. */
+  frameClass?: string;
+  /** Text overrides for this placement (form title, field labels, mail intro …). */
+  copy?: DemoCopy;
+}
+type DemoCopy = Partial<Omit<Dictionary['cloud']['demo'], 'fields'>> & { fields?: Partial<Dictionary['cloud']['demo']['fields']> };
+const {
+  locale,
+  photo = cloudImages.demoPhoto,
+  hex = cloudImages.demoHex,
+  hexIcon = cloudImages.demoHexIcon,
+  overlay = 'bg-[rgba(64,71,89,0.65)] backdrop-blur-[2.5px]',
+  height = 'lg:min-h-[662px]',
+  embedded = false,
+  frameClass = '',
+  copy = {},
+} = Astro.props;
+const dict = useTranslations(locale);
+const t = { ...dict.cloud.demo, ...copy, fields: { ...dict.cloud.demo.fields, ...copy.fields } };
+const Wrapper = embedded ? 'div' : 'section';
+const industries = [...productIndustries.map((i) => dict.products.industries.items[i.key]), t.industryOther];
+
+const field = 'h-12 w-full rounded-lg border border-[#cbd1d7] bg-white px-[18px] text-[14px] leading-6 text-ink placeholder:text-[#cbd1d7] transition-colors focus:border-primary focus:outline-none aria-[invalid=true]:border-[#ff383c]';
+const label = 'block text-15 leading-8 text-body';
+---
+
+<!-- Figma 14:33395: band (17:33533 / 17:33534 / 17:33535), heading + hexagon (5:32848), form (2023:8803). -->
+<Wrapper
+  id={embedded ? undefined : 'demo'}
+  class:list={embedded ? 'contents' : ['relative isolate scroll-mt-24 overflow-hidden bg-[#5871af] py-12 lg:pb-10 lg:pt-0', height]}
+  aria-labelledby={embedded ? undefined : 'cloud-demo-title'}
+>
+  {!embedded && <img src={photo} alt="" width="1536" height="864" loading="lazy" class="absolute inset-0 -z-10 size-full object-cover" />}
+  {!embedded && <div class:list={['absolute inset-0 -z-10', overlay]} aria-hidden="true"></div>}
+
+  <div class:list={embedded ? 'contents' : 'container-x flex flex-col items-center gap-8 lg:flex-row lg:items-start lg:justify-center lg:gap-[113px] lg:pt-[68px]'}>
+    {!embedded && (
+    <div class="flex w-full max-w-[649px] items-start gap-[15px] lg:mt-[60px] lg:w-auto lg:max-w-none">
+      <span class="relative flex size-[44px] shrink-0 items-center justify-center lg:mt-[9px] lg:size-[56px]" aria-hidden="true">
+        <img src={hex} alt="" width="48.4974" height={hex === cloudImages.demoHex ? 56 : 53.5551} class="absolute left-[6.7%] top-1/2 h-auto w-[86.6%] -translate-y-1/2" />
+        <img src={hexIcon} alt="" width="21.5948" height="22.2914" class="relative w-[38.6%]" />
+      </span>
+      <h2 id="cloud-demo-title" class="text-[22px] font-bold leading-[1.63] text-white sm:text-[26px] lg:w-[350px] lg:text-title-1">{t.title}</h2>
+    </div>
+    )}
+
+    <!-- Glass frame (649×500) holding the white form card (602×453). -->
+    <div class:list={['w-full max-w-[649px] shrink-0 rounded-[24px] border border-white/70 bg-white/27 p-3 shadow-[0_15px_34px_rgba(9,1,69,0.1)] backdrop-blur-[7.5px] sm:p-[23px] lg:min-h-[500px] lg:w-[649px]', frameClass]}>
+      <form
+        id="demo-form"
+        class="rounded-[24px] border border-white/70 bg-white px-5 pb-6 pt-5 shadow-banner sm:px-[38px] sm:pb-[18px] sm:pt-[17px] lg:min-h-[453px]"
+        novalidate
+        data-demo-form
+        data-mail-to="info@raydana.com"
+        data-subject={t.mailSubject}
+        data-intro={t.mailIntro}
+        data-msg-required={t.required}
+        data-msg-email={t.invalidEmail}
+      >
+        <p class="text-center text-title-3 font-bold leading-normal text-title">
+          <span class="block">{t.formTitle}</span>
+          {t.formSubtitle && <span class="block">{t.formSubtitle}</span>}
+        </p>
+
+        <!-- Two columns, filled row by row (start column first), as in Figma 2023:8491. -->
+        <div class="mt-6 grid grid-cols-1 gap-x-[17px] gap-y-2 sm:grid-cols-2">
+          <div>
+            <label for="demo-lastName" class={label}>{t.fields.lastName}<span class="text-[#ff383c]">*</span></label>
+            <input id="demo-lastName" name="lastName" type="text" autocomplete="family-name" required placeholder={t.textPlaceholder || undefined} class:list={['mt-1', field]} />
+          </div>
+          <div>
+            <label for="demo-industry" class={label}>{t.fields.industry}<span class="text-[#ff383c]">*</span></label>
+            <div class="relative mt-1">
+              <select id="demo-industry" name="industry" required class:list={[field, 'demo-select appearance-none pe-10']}>
+                <option value="" disabled selected hidden>{t.textPlaceholder}</option>
+                {industries.map((name) => <option value={name}>{name}</option>)}
+              </select>
+              <img src={cloudImages.selectChevron} alt="" width="10.6203" height="6.09011" class="pointer-events-none absolute end-[18px] top-1/2 -translate-y-1/2 -rotate-90 rtl:rotate-90" />
+            </div>
+          </div>
+          <div>
+            <label for="demo-organization" class={label}>{t.fields.organization}<span class="text-[#ff383c]">*</span></label>
+            <input id="demo-organization" name="organization" type="text" autocomplete="organization" required placeholder={t.textPlaceholder || undefined} class:list={['mt-1', field]} />
+          </div>
+          <div>
+            <label for="demo-province" class={label}>{t.fields.province}<span class="text-[#ff383c]">*</span></label>
+            <div class="relative mt-1">
+              <select id="demo-province" name="province" required class:list={[field, 'demo-select appearance-none pe-10']}>
+                <option value="" disabled selected hidden>{t.provinces[0]}</option>
+                {t.provinces.map((name) => <option value={name}>{name}</option>)}
+              </select>
+              <img src={cloudImages.selectChevron} alt="" width="10.6203" height="6.09011" class="pointer-events-none absolute end-[18px] top-1/2 -translate-y-1/2 -rotate-90 rtl:rotate-90" />
+            </div>
+          </div>
+          <div>
+            <label for="demo-mobile" class={label}>{t.fields.mobile}<span class="text-[#ff383c]">*</span></label>
+            <input id="demo-mobile" name="mobile" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" required placeholder={t.mobilePlaceholder} class:list={['mt-1 text-left', field]} />
+          </div>
+          <div>
+            <label for="demo-email" class={label}>{t.fields.email}<span class="text-[#ff383c]">*</span></label>
+            <input id="demo-email" name="email" type="email" autocomplete="email" dir="ltr" required placeholder={t.emailPlaceholder} class:list={['demo-email mt-1 text-left', field]} />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="mt-6 inline-flex h-12 items-center justify-center gap-3 rounded-full bg-primary px-5 text-base font-medium leading-6 whitespace-nowrap text-light transition duration-200 hover:-translate-y-0.5 hover:bg-primary-dark"
+        >
+          {t.submit}
+          <img src={cloudImages.submitArrow} alt="" width="12.5" height="11.0459" class="dir-icon h-[11px] w-[12.5px]" />
+        </button>
+      </form>
+    </div>
+  </div>
+</Wrapper>
+
+<style>
+  /* Selects show the placeholder colour until a value is chosen. */
+  .demo-select:invalid {
+    color: #cbd1d7;
+  }
+  .demo-select option {
+    color: var(--color-ink);
+  }
+  /* Figma shows the e-mail placeholder in small capitals (DM Sans 12, uppercase). */
+  .demo-email::placeholder {
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  /* Added by the script, so not scoped. */
+  :global(.demo-error) {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #ff383c;
+  }
+</style>
+
+<script>
+  // Required-field check, then hand the request to the visitor's mail app (no backend on this static site).
+  document.querySelectorAll<HTMLFormElement>('[data-demo-form]').forEach((form) => {
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input, select'));
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const check = (el: HTMLInputElement | HTMLSelectElement) => {
+      const value = el.value.trim();
+      let message = '';
+      if (!value) message = form.dataset.msgRequired ?? '';
+      else if (el.type === 'email' && !emailPattern.test(value)) message = form.dataset.msgEmail ?? '';
+
+      const errorId = `${el.id}-error`;
+      document.getElementById(errorId)?.remove();
+      el.setAttribute('aria-invalid', String(Boolean(message)));
+      if (message) {
+        const error = document.createElement('p');
+        error.id = errorId;
+        error.className = 'demo-error';
+        error.textContent = message;
+        (el.parentElement?.tagName === 'DIV' && el.parentElement.classList.contains('relative') ? el.parentElement : el).after(error);
+        el.setAttribute('aria-describedby', errorId);
+      } else {
+        el.removeAttribute('aria-describedby');
+      }
+      return !message;
+    };
+
+    fields.forEach((el) => {
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'blur', () => {
+        if (el.getAttribute('aria-invalid') !== null) check(el);
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const invalid = fields.filter((el) => !check(el));
+      if (invalid.length) {
+        invalid[0].focus();
+        return;
+      }
+      const lines = fields.map((el) => {
+        const name = form.querySelector(`label[for="${el.id}"]`)?.firstChild?.textContent?.trim() ?? el.name;
+        return `${name}: ${el.value.trim()}`;
+      });
+      const body = [form.dataset.intro ?? '', '', ...lines].join('\n');
+      const subject = form.dataset.subject ?? '';
+      window.location.href = `mailto:${form.dataset.mailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>

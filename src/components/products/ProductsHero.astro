@@ -1,0 +1,37 @@
+---
+import Button from '../ui/Button.astro';
+import { productImages } from '../../data/products';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  ctaHref: string;
+}
+const { locale, ctaHref } = Astro.props;
+const dict = useTranslations(locale);
+const t = dict.products.hero;
+---
+
+<!-- Figma 2:5216 (background + hexagon cluster), 2:9036 / 2:9047 / 2:9402 (text), 2:9403 (buttons). -->
+<section class="relative -mt-[84px] overflow-hidden bg-light lg:-mt-[118px]" aria-labelledby="products-hero-title">
+  <div class="container-x relative pb-10 pt-[112px] lg:h-[583px] lg:pb-0 lg:pt-[168px]">
+    <div class="lg:max-w-[46%] lg:ps-[30px] xl:max-w-[550px]">
+      <h1 id="products-hero-title" class="text-[22px] font-bold leading-snug text-title lg:text-title-2 lg:leading-[42px]">{t.title}</h1>
+      <p class="mt-3 text-[16px] font-bold leading-snug text-primary lg:mt-[3px] lg:text-title-3 lg:leading-[25px]">{t.subtitle}</p>
+      <p class="mt-4 text-[14px] leading-8 text-body lg:mt-2 lg:text-15 rtl:lg:text-justify">{dict.services.hero.body}</p>
+      <div class="mt-7 flex flex-wrap gap-[10px] lg:mt-[37px]">
+        <Button href={ctaHref}>{t.consult}</Button>
+        <Button href={ctaHref} variant="outline">{t.demo}</Button>
+      </div>
+    </div>
+
+    <img
+      src={productImages.heroHexagons}
+      alt=""
+      width="663"
+      height="456"
+      fetchpriority="high"
+      class="mx-auto mt-8 w-full mix-blend-multiply max-w-[420px] lg:absolute lg:end-0 lg:top-[122px] lg:mt-0 lg:w-1/2 lg:max-w-[663px]"
+    />
+  </div>
+</section>

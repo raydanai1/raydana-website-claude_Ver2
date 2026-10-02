@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import ModuleHero from './ModuleHero.astro';
+import SubsystemIcon from './SubsystemIcon.astro';
+import Architecture from './Architecture.astro';
+import ProcessBand from './ProcessBand.astro';
+import ModuleBenefits from './ModuleBenefits.astro';
+import CloudFeatures from '../cloud/CloudFeatures.astro';
+import DemoRequestForm from '../cloud/DemoRequestForm.astro';
+import Faq from '../cloud/Faq.astro';
+import { demoOverlay, moduleImages, subsystemPage, type Module, type Subsystem } from '../../data/modules';
+import { cloudImages } from '../../data/cloud';
+import { fill, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  module: Module;
+  subsystem: Subsystem;
+}
+const { locale, module, subsystem } = Astro.props;
+const t = useTranslations(locale).modules;
+const text = subsystem[locale];
+const N = module[locale].name;
+const S = text.name;
+const page = subsystemPage(module.id, subsystem.id);
+const tabs = (subsystem.features ?? []).map((f, i) => ({ key: String(i + 1), label: f[locale].tab, items: f[locale].items }));
+const faq = (subsystem.faq ?? []).map((f) => f[locale]);
+const hasArchitecture = Boolean(subsystem.architecture?.length || subsystem.stakeholders?.length);
+---
+
+<!-- Figma «detail-product-modules-subsystems» (119:5583). -->
+<Layout locale={locale} page={page} title={fill(t.subsystemMetaTitle, { S, N })} description={text.tagline}>
+  <Header locale={locale} page={page} />
+  <main id="main">
+    <ModuleHero locale={locale} tagline={text.tagline} description={text.description} illustration={moduleImages.heroHexesSubsystem}>
+      <SubsystemIcon slot="icon" id={subsystem.id} order={subsystem.order} size={68.8} />
+      <span>{S}</span>
+      <span class="ms-2 lg:ms-[9px]">{N}</span>
+    </ModuleHero>
+    {hasArchitecture && <Architecture locale={locale} subsystem={subsystem} />}
+    {subsystem.process?.length ? <ProcessBand locale={locale} subsystem={subsystem} /> : null}
+    <ModuleBenefits locale={locale} title={fill(t.titles.subsystemBenefits, { S })} items={text.benefits} picture="calculator" />
+    {
+      tabs.length > 0 && (
+        <CloudFeatures
+          locale={locale}
+          id="subsystem"
+          title={fill(t.titles.subsystemFeatures, { S })}
+          tabs={tabs}
+          dotEnd={cloudImages.dotStart}
+          columns="md:grid-cols-2"
+          listWidth="max-w-[1133px]"
+          spacing="pb-14 pt-12 lg:pb-[82px] lg:pt-[65px]"
+        />
+      )
+    }
+    <!-- Figma 2:15572 + 2:15573: glass-cube photo under a blue radial gradient at 40%. -->
+    <DemoRequestForm
+      locale={locale}
+      photo={moduleImages.demoPhoto}
+      hex={moduleImages.demoHex}
+      hexIcon={moduleImages.demoHexIcon}
+      overlay={demoOverlay}
+      height="lg:min-h-[616px]"
+    />
+    {faq.length > 0 && <Faq locale={locale} items={faq} spacing="pb-14 pt-14 lg:pb-[150px] lg:pt-[60px]" />}
+  </main>
+  <Footer locale={locale} />
+</Layout>

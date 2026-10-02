@@ -1,0 +1,17 @@
+---
+/**
+ * Card title with the soft blue circle behind its first letters (Figma "Group" 38×38 + title 18 bold).
+ */
+import { serviceImages } from '../../data/services';
+
+interface Props {
+  id: string;
+  class?: string;
+}
+const { id, class: className = '' } = Astro.props;
+---
+
+<h2 id={id} class:list={['relative ps-5 text-title-3 font-bold leading-[1.4] text-title', className]}>
+  <img src={serviceImages.titleBadge} alt="" width="38" height="38" class="absolute -top-[9px] start-0 size-[38px]" />
+  <span class="relative"><slot /></span>
+</h2>

@@ -1,0 +1,45 @@
+---
+import Button from '../ui/Button.astro';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  tagline: string;
+  description: string;
+  /** Hexagon cluster picture (Figma «LONEZANBORI 1», 663×456). */
+  illustration: string;
+}
+const { locale, tagline, description, illustration } = Astro.props;
+const t = useTranslations(locale).modules;
+const contact = pagePath('contact', locale);
+---
+
+<!-- Figma 2:15575 / 119:5594 (background), 2:19358 / 119:9350 (title), 2:15584 (tagline), 2:15583 (text), 2:15576 (buttons), 102:11851 / 119:9592 (picture). -->
+<section class="relative -mt-[84px] overflow-hidden bg-light lg:-mt-[118px]" aria-labelledby="module-hero-title">
+  <div class="container-x relative pb-10 pt-[112px] lg:min-h-[582px] lg:pb-12 lg:pt-[154px]">
+    <div class="relative z-10 lg:max-w-[calc(100%-470px)] xl:max-w-[640px] xl:pe-[19px]">
+      <!-- Title row: the subsystem page puts its hexagon icon before the title. -->
+      <div class="flex items-center gap-[9px]">
+        <slot name="icon" />
+        <h1 id="module-hero-title" class="text-[22px] font-bold leading-normal text-title lg:text-title-2">
+          <slot />
+        </h1>
+      </div>
+      <p class="mt-3 text-[16px] font-bold leading-normal text-primary lg:mt-[28px] lg:text-title-3">{tagline}</p>
+      <p class="mt-3 text-[14px] leading-8 text-body lg:mt-[11px] lg:text-15 rtl:lg:text-justify">{description}</p>
+      <div class="mt-7 flex flex-wrap gap-[10px] lg:mt-[30px] lg:gap-[15px]">
+        <Button href={contact}>{t.consult}</Button>
+        <Button href={contact} variant="outline">{t.demo}</Button>
+      </div>
+    </div>
+
+    <img
+      src={illustration}
+      alt=""
+      width="663"
+      height="456"
+      fetchpriority="high"
+      class="relative mx-auto mt-6 h-auto w-full max-w-[480px] sm:max-w-[560px] lg:absolute lg:end-0 lg:top-[150px] lg:mt-0 lg:w-[460px] xl:end-[3px] xl:top-[124px] xl:w-[662.961px] xl:max-w-none"
+    />
+  </div>
+</section>

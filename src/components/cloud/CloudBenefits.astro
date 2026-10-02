@@ -1,0 +1,84 @@
+---
+import { bandClouds, bandLines, cloudBenefits, cloudImages } from '../../data/cloud';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).cloud.benefits;
+
+// Figma 17:33669 and its copies: the same outline drawn five times, stepping toward the start side.
+const arcs = [205, 235, 275, 325, 389];
+---
+
+<!-- Figma 5:32858: cloud photo (17:33668) + outline arcs + radial overlay (17:33526), glass cards, side clouds and grid strip (23:526). -->
+<section class="cloud-band relative isolate overflow-hidden" aria-labelledby="cloud-benefits-title">
+  <!-- Background art, laid out on the 1440px Figma frame and kept centred. -->
+  <div class="pointer-events-none absolute inset-y-0 left-1/2 -z-10 w-[1440px] -translate-x-1/2" aria-hidden="true">
+    <img src={cloudImages.bandPhoto} alt="" width="756" height="525" loading="lazy" class="absolute left-[94px] top-0 h-[525px] w-[756px] object-contain" />
+    {arcs.map((x) => <img src={cloudImages.bandArc} alt="" width="775" height="468" loading="lazy" class="absolute top-[38px] h-[468px] w-[775px]" style={`left:${x}px`} />)}
+  </div>
+  <div class="cloud-band-overlay pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute bottom-[19px] left-1/2 -z-10 h-[198px] w-[1440px] -translate-x-1/2" aria-hidden="true">
+    <img src={cloudImages.bandStrip} alt="" width="1440" height="198" loading="lazy" class="size-full" />
+  </div>
+  <!-- Outline clouds with dotted drop lines at both sides (wide screens only). -->
+  <div class="pointer-events-none absolute inset-y-0 left-1/2 -z-10 hidden w-[1440px] -translate-x-1/2 xl:block" aria-hidden="true">
+    {
+      bandClouds.map((c) => (
+        <img src={cloudImages.outlineCloud} alt="" width="78" height="53" loading="lazy" class="absolute h-auto" style={`left:${c.x}px;top:${c.y}px;width:${c.w}px`} />
+      ))
+    }
+    {
+      bandLines.map((l) => (
+        <span class="absolute block w-[1.84px] overflow-hidden" style={`left:${l.x}px;top:${l.y}px;height:${l.h}px`}>
+          <img src={cloudImages.dots} alt="" width="205.729" height="1.84216" loading="lazy" class="cloud-dots absolute left-0 top-0 max-w-none" />
+        </span>
+      ))
+    }
+  </div>
+
+  <div class="container-x pb-14 pt-12 lg:h-[548px] lg:pb-0 lg:pt-[61px]">
+    <h2 id="cloud-benefits-title" class="text-center text-[20px] font-bold leading-normal text-white md:text-title-2">{t.title}</h2>
+    <ul class="mx-auto mt-8 grid max-w-[749.4px] grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-[22.5px] md:gap-y-[22px] lg:mt-[49px]">
+      {
+        t.items.map((text, i) => {
+          const card = cloudBenefits[i];
+          return (
+            <li
+              class="relative h-[91px] rounded-[14px] border border-white/70 backdrop-blur-[15.5px]"
+              style={`background-color:rgba(255,255,255,${card.glass})`}
+            >
+              <div
+                class="absolute inset-x-[16px] inset-y-[14.5px] flex items-center gap-[8px] border border-stroke-strong bg-white pe-3 ps-[12px] shadow-[0_0_40px_rgba(190,190,223,0.74)]"
+                style={`border-radius:${card.radius}px`}
+              >
+                <img src={card.check} alt="" width={card.size} height={card.size} loading="lazy" class="shrink-0" style={`width:${card.size}px;height:${card.size}px`} />
+                <span class="text-[14px] leading-6 text-ink">{text}</span>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Figma 17:33526: radial gradient #02699C → #002035 at 44% opacity over the light page background. */
+  .cloud-band {
+    background-color: var(--color-light);
+  }
+  .cloud-band-overlay {
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1443 548' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='0.44'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-0.40084 30.934 -81.455 -1.1028 709.48 161.84)'><stop stop-color='rgba(2,105,156,1)' offset='0'/><stop stop-color='rgba(6,76,111,1)' offset='0.2524'/><stop stop-color='rgba(10,48,66,1)' offset='0.50481'/><stop stop-color='rgba(0,32,53,1)' offset='1'/></radialGradient></defs></svg>");
+    background-size: 100% 100%;
+  }
+  /* The dotted line is exported horizontally (a row of dots); turn it to run downward. */
+  .cloud-dots {
+    width: 205.729px;
+    height: 1.84216px;
+    transform-origin: 0 0;
+    transform: rotate(90deg) translateY(-1.84216px);
+  }
+</style>

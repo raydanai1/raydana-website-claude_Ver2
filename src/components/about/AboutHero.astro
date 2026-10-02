@@ -1,0 +1,63 @@
+---
+import Button from '../ui/Button.astro';
+import { aboutImages } from '../../data/about';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).about.hero;
+const contactHref = pagePath('contact', locale);
+---
+
+<!-- Figma 2015:10110 (title), 2015:6640 (text), 2015:6633 (buttons), 2015:10187 (video card). -->
+<section class="container-x pb-10 pt-6 lg:pb-[41px] lg:pt-[33px]" aria-labelledby="about-hero-title">
+  <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+    <div class="lg:max-w-[593px] xl:me-0 xl:ms-[25px] xl:pt-[3px]">
+      <h1 id="about-hero-title" class="text-[24px] font-bold leading-[1.45] text-ink sm:text-[28px] lg:text-[32px] lg:leading-[44px] xl:rtl:max-w-[440px] xl:rtl:ms-auto">
+        {t.title}
+      </h1>
+      <p class="mt-4 text-[15px] font-medium leading-[1.87] text-[#616d8f] lg:mt-[21px] lg:text-base rtl:text-justify">{t.body}</p>
+      <div class="mt-7 flex flex-wrap gap-[10px] lg:mt-[41px]">
+        <Button href={contactHref}>{t.consult}</Button>
+        <Button href={contactHref} variant="outline">{t.demo}</Button>
+      </div>
+    </div>
+
+    <!-- Video card: poster, navy overlay, play button and progress bar (no video yet). -->
+    <div
+      class="relative aspect-[648/376] w-full shrink-0 overflow-hidden rounded-[18px] border-[0.781px] border-white/70 bg-white shadow-industry lg:w-[48%] xl:w-[648px]"
+    >
+      <img
+        src={aboutImages.videoPoster}
+        alt=""
+        width="1027"
+        height="705"
+        fetchpriority="high"
+        class="absolute left-[-2.9%] top-[-25.2%] h-[131.9%] w-[111.6%] max-w-none object-cover"
+      />
+      <div class="absolute inset-0 bg-ink/72"></div>
+      <p class="absolute inset-x-6 top-[20%] -translate-y-1/2 text-center text-[14px] font-bold leading-[1.87] text-white sm:text-base">
+        {t.video}
+      </p>
+      <button
+        type="button"
+        class="absolute left-1/2 top-1/2 flex h-[58px] w-[58px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary transition hover:scale-105 hover:bg-primary-dark"
+        aria-label={t.play}
+      >
+        <img src={aboutImages.play} alt="" width="18.36" height="22.95" class="h-[23px] w-[18.4px] translate-x-[2px]" />
+      </button>
+      <div
+        class="absolute inset-x-[5%] bottom-[10.6%] h-[6px] rounded-[3px] bg-light"
+        role="progressbar"
+        aria-label={t.progress}
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="21"
+      >
+        <div class="absolute inset-y-0 left-0 w-[21.3%] rounded-[3px] bg-primary"></div>
+      </div>
+    </div>
+  </div>
+</section>

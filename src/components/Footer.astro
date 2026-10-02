@@ -2,7 +2,7 @@
 import Logo from './ui/Logo.astro';
 import Button from './ui/Button.astro';
 import { footerCerts, footerLinks } from '../data/home';
-import { type Locale, useTranslations } from '../i18n';
+import { pagePath, type Locale, useTranslations } from '../i18n';
 
 interface Props {
   locale: Locale;
@@ -10,10 +10,17 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
+// Links that have a page of their own; the rest are placeholders until those pages exist.
+const footerHrefs: Partial<Record<(typeof footerLinks)[number], string>> = {
+  products: pagePath('products', locale),
+  services: pagePath('services', locale),
+  about: pagePath('about', locale),
+  contact: pagePath('contact', locale),
+};
+
 const contacts = [
   { icon: 'icon-location.svg', label: '', value: t.footer.address, href: undefined },
-  { icon: 'icon-phone.svg', label: t.footer.phoneLabel, value: t.footer.phone, href: 'tel:+982188548802' },
-  { icon: 'icon-fax.svg', label: t.footer.faxLabel, value: t.footer.fax, href: undefined },
+  { icon: 'icon-fax.svg', label: t.footer.faxLabel, value: t.footer.fax, href: 'tel:+982188765311' },
   { icon: 'icon-mail.svg', label: t.footer.emailLabel, value: t.footer.email, href: `mailto:${t.footer.email}` },
 ];
 
@@ -46,7 +53,7 @@ const socials = [
           {
             footerLinks.map((key) => (
               <li>
-                <a href="#" class="flex items-center gap-4 py-0.5 text-sm font-bold leading-[30px] hover:text-[#9ccfff]">
+                <a href={footerHrefs[key] ?? '#'} class="flex items-center gap-4 py-0.5 text-sm font-bold leading-[30px] hover:text-[#9ccfff]">
                   <img src="/images/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
                   {t.footer.links[key]}
                 </a>
@@ -96,7 +103,7 @@ const socials = [
             ))
           }
         </ul>
-        <Button href="#transform" class="mt-6">{t.footer.productsButton}</Button>
+        <Button href={pagePath('products', locale)} class="mt-6">{t.footer.productsButton}</Button>
       </div>
     </div>
 

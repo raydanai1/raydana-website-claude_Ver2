@@ -1,0 +1,12 @@
+---
+// ERP module page (fa), e.g. /products/finance/ — one page per src/data/modules/<id>.json.
+import ModulePage from '../../components/modules/ModulePage.astro';
+import { modules, type Module } from '../../data/modules';
+
+export function getStaticPaths() {
+  return modules.map((module) => ({ params: { module: module.id }, props: { module } }));
+}
+const { module } = Astro.props as { module: Module };
+---
+
+<ModulePage locale="fa" module={module} />

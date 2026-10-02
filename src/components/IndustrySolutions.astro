@@ -1,12 +1,14 @@
 ---
 import { industries } from '../data/home';
-import { type Locale, useTranslations } from '../i18n';
+import { pagePath, type Locale, type Page, useTranslations } from '../i18n';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+// Industries with their own solution page link there; the rest still lead to the contact section.
+const industryPages: Partial<Record<string, Page>> = { oil: 'oilGas' };
 ---
 
 <section id="industries" class="container-x scroll-mt-28 pt-14 lg:pt-[29px]" aria-labelledby="industries-title">
@@ -20,7 +22,7 @@ const t = useTranslations(locale);
       industries.map((item) => (
         <li>
           <a
-            href="#contact"
+            href={industryPages[item.key] ? pagePath(industryPages[item.key]!, locale) : '#contact'}
             class="group flex h-full flex-col gap-5 rounded-3xl border border-stroke bg-[#fafafa] p-6 shadow-industry transition duration-300 hover:-translate-y-1 hover:border-stroke-strong lg:min-h-[326px]"
           >
             <img src={item.icon} alt="" width="78" height="78" loading="lazy" class="size-[78px]" />

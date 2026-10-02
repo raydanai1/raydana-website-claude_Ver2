@@ -1,0 +1,89 @@
+---
+import { moduleImages, type Subsystem } from '../../data/modules';
+import { fill, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  subsystem: Subsystem;
+}
+const { locale, subsystem } = Astro.props;
+const t = useTranslations(locale).modules.titles;
+const name = subsystem[locale].name;
+const cards = (subsystem.architecture ?? []).map((c) => c[locale]);
+const stakeholders = (subsystem.stakeholders ?? []).map((s) => s[locale]);
+
+// Two cards per row with the Figma widths (480 + 812, then 628 + 669); an odd last card spans the row.
+const rowColumns = ['lg:grid-cols-[480fr_812fr]', 'lg:grid-cols-[628fr_669fr]'];
+const rows: (typeof cards)[] = [];
+for (let i = 0; i < cards.length; i += 2) rows.push(cards.slice(i, i + 2));
+---
+
+<!-- Figma 164:1381 (title), 165:1398 / 165:1407 / 165:1416 / 165:1417 (cards), 165:1464 + 165:1482 (stakeholders). -->
+<section class="bg-light pb-14 pt-12 lg:pb-[66px] lg:pt-[102px]" aria-labelledby="architecture-title">
+  <div class="container-x">
+    {
+      cards.length > 0 && (
+        <>
+          <h2 id="architecture-title" class="section-title text-center">{fill(t.architecture, { S: name })}</h2>
+          <div class="mt-8 flex flex-col gap-4 lg:mt-[42px] lg:gap-[21px]">
+            {rows.map((row, r) => (
+              <div class:list={['grid grid-cols-1 gap-4 lg:gap-6', row.length === 2 && rowColumns[r % rowColumns.length]]}>
+                {row.map((card) => (
+                  <article class="arch-card relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] pb-6 pe-6 ps-6 pt-[26px] lg:min-h-[234px] lg:ps-[39px]">
+                    <h3 class="relative flex items-center text-[16px] font-bold leading-normal text-title lg:text-title-3">
+                      <img src={moduleImages.titleDot} alt="" width="38" height="38" class="absolute -start-[30px] top-1/2 size-[38px] -translate-y-1/2 lg:-start-[47px]" />
+                      <span class="relative ps-[11px]">{card.title}</span>
+                    </h3>
+                    <ul class="arch-list mt-[15px] text-[14px] leading-7 text-body lg:text-15 lg:leading-8">
+                      {card.items.map((item) => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    {
+      stakeholders.length > 0 && (
+        <article class:list={['arch-card relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] px-4 pb-6 pt-[26px] lg:px-[21px]', cards.length ? 'mt-4 lg:mt-[22px]' : '']}>
+          <h2 class="relative flex items-center ps-[11px] text-[16px] font-bold leading-normal text-title lg:ps-[25px] lg:text-title-3">
+            <img src={moduleImages.titleDot} alt="" width="38" height="38" class="absolute -start-[14px] top-1/2 size-[38px] -translate-y-1/2 lg:-start-[32px]" />
+            <span class="relative">{fill(t.stakeholders, { S: name })}</span>
+          </h2>
+          <ul class="mt-6 grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:mt-[23px]">
+            {stakeholders.map((s) => (
+              <li class="stakeholder rounded-xl border border-stroke bg-white px-5 pb-6 pt-[34px] text-center lg:min-h-[155px]">
+                <h3 class="text-15 font-bold leading-8 text-ink">{s.role}</h3>
+                <p class="mx-auto mt-0 max-w-[332px] text-15 leading-8 text-body">{s.text}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  /* Figma 165:1398: card shadow. */
+  .arch-card {
+    box-shadow: 0 8px 16px 0 rgba(215, 219, 240, 0.5);
+  }
+  /* Figma 165:1483: «majul cart» shadow. */
+  .stakeholder {
+    box-shadow: 0 25px 83px -7px rgba(154, 167, 193, 0.25);
+  }
+  /* Figma 165:1400: disc bullets, 22.5px indent. */
+  .arch-list {
+    list-style: disc;
+    padding-inline-start: 22.5px;
+  }
+  .arch-list li::marker {
+    color: var(--color-body);
+  }
+</style>

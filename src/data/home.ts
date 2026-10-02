@@ -60,17 +60,17 @@ export const transformCards = [
   { key: 'cloud', icon: img('solutions/icon-cloud.svg'), iconH: 113, iconTop: -31, x: 105, y: 354, w: 317 },
 ] as const;
 
-/** Business-solution modules (3×3 grid, reading order). */
+/** Business-solution modules (3×3 grid, reading order); `module` = the linked module page id. */
 export const modules = [
-  { key: 'warehouse', icon: img('modules/m-warehouse.svg') },
-  { key: 'finance', icon: img('modules/m-finance-hex.svg'), glyph: img('modules/m-finance-glyph.svg') },
-  { key: 'hr', icon: img('modules/m-hr.svg') },
-  { key: 'maintenance', icon: img('modules/m-maintenance.svg') },
-  { key: 'purchase', icon: img('modules/m-purchase.svg') },
-  { key: 'production', icon: img('modules/m-production.svg') },
-  { key: 'sales', icon: img('modules/m-sales.svg') },
-  { key: 'quality', icon: img('modules/m-quality.svg') },
-  { key: 'accounting', icon: img('modules/m-accounting.svg') },
+  { key: 'warehouse', module: 'warehouse', icon: img('modules/m-warehouse.svg') },
+  { key: 'finance', module: 'finance', icon: img('modules/m-finance-hex.svg'), glyph: img('modules/m-finance-glyph.svg') },
+  { key: 'hr', module: 'hr', icon: img('modules/m-hr.svg') },
+  { key: 'maintenance', module: 'maintenance', icon: img('modules/m-maintenance.svg') },
+  { key: 'purchase', module: 'purchasing', icon: img('modules/m-purchase.svg') },
+  { key: 'production', module: 'production-planning', icon: img('modules/m-production.svg') },
+  { key: 'sales', module: 'sales', icon: img('modules/m-sales.svg') },
+  { key: 'quality', module: 'quality-control', icon: img('modules/m-quality.svg') },
+  { key: 'accounting', module: 'accounting', icon: img('modules/m-accounting.svg') },
 ] as const;
 
 /** Complementary tools (2-column grid, reading order). */

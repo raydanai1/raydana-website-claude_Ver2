@@ -1,0 +1,51 @@
+---
+import Button from '../ui/Button.astro';
+import { cloudImages } from '../../data/cloud';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  ctaHref: string;
+}
+const { locale, ctaHref } = Astro.props;
+const t = useTranslations(locale).cloud.hero;
+---
+
+<!-- Figma 5:29111 (background), 5:32805 / 5:29122 / 5:29121 (text), 5:29114 (buttons), 102:11995 (illustration). -->
+<section class="relative -mt-[84px] overflow-hidden bg-light-4 lg:-mt-[118px]" aria-labelledby="cloud-hero-title">
+  <div class="container-x relative pb-10 pt-[112px] lg:h-[582px] lg:pb-0 lg:pt-[157px]">
+    <div class="lg:max-w-[calc(100%-470px)] xl:max-w-[637px]">
+      <div class="lg:pe-[25px]">
+        <h1 id="cloud-hero-title" class="text-[22px] font-bold leading-normal text-title lg:text-title-2">
+          <span class="block">{t.kicker}</span>
+          <span class="block">{t.title}</span>
+        </h1>
+        <p class="mt-1 text-[16px] font-bold leading-normal text-primary lg:text-title-3" dir="ltr" lang="en">
+          <span class="block rtl:text-right">{t.product}</span>
+        </p>
+        <p class="mt-3 text-[14px] leading-8 text-body lg:mt-[4px] lg:text-15 rtl:lg:text-justify">{t.body}</p>
+      </div>
+      <div class="mt-7 flex flex-wrap gap-[10px] lg:mt-[33px] lg:gap-[15px]">
+        <Button href={ctaHref}>{t.consult}</Button>
+        <Button href={ctaHref} variant="outline">{t.demo}</Button>
+      </div>
+    </div>
+
+    <!-- Illustration: glow clouds, pale hexagon and the server/cloud render, layered as in Figma (586×508). -->
+    <div
+      class="relative mx-auto mt-8 aspect-[586.49/508] w-full max-w-[360px] sm:max-w-[440px] lg:absolute lg:end-0 lg:top-[140px] lg:mt-0 lg:w-[440px] xl:end-[20px] xl:top-[74px] xl:w-[586.49px] xl:max-w-none"
+      aria-hidden="true"
+    >
+      <img src={cloudImages.heroGlow} alt="" width="498.487" height="300.844" class="absolute left-[15.01%] top-[19.09%] w-[85%]" />
+      <img src={cloudImages.heroHex} alt="" width="345.463" height="396.213" class="absolute left-[4.56%] top-[13.28%] w-[58.9%]" />
+      <img
+        src={cloudImages.heroServer}
+        alt=""
+        width="508"
+        height="508"
+        fetchpriority="high"
+        class="absolute left-[1.13%] top-0 w-[86.62%]"
+      />
+    </div>
+  </div>
+</section>

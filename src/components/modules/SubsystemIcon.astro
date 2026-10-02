@@ -1,0 +1,26 @@
+---
+import { hexPath, subsystemIcon } from '../../data/modules/icons';
+
+interface Props {
+  id: string;
+  order: number;
+  /** Rendered width/height in px (Figma: 73.8 on cards, 68.8 × 65.8 in the hero). */
+  size?: number;
+  class?: string;
+}
+const { id, order, size = 74, class: className } = Astro.props;
+const icon = subsystemIcon(id, order);
+---
+
+{
+  'src' in icon ? (
+    <img src={icon.src} alt="" width={size} height={size} class:list={['shrink-0', className]} style={`width:${size}px;height:${size}px`} />
+  ) : (
+    <svg viewBox="0 0 74 74" width={size} height={size} class:list={['shrink-0', className]} aria-hidden="true">
+      <path d={hexPath} fill={icon.bg} />
+      <g transform="translate(20.9 20.9) scale(1.333)" fill="none" stroke={icon.fg} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d={icon.glyph} />
+      </g>
+    </svg>
+  )
+}

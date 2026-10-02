@@ -1,0 +1,69 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import QuoteButton from './QuoteButton.astro';
+import Hexagon from './Hexagon.astro';
+import { customizationBenefits, customizationSteps, serviceImages, serviceSections } from '../../data/services';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const c = useTranslations(locale).services.customization;
+---
+
+<!-- Figma 2:15059 (text card) and 2:15072 (process flow, rebuilt in HTML). -->
+<section id={serviceSections.customization} class="scroll-mt-28 py-12 lg:py-[57px]" aria-labelledby="customization-title">
+  <div class="container-x grid gap-12 lg:grid-cols-[623fr_637fr] lg:gap-[60px]">
+    <!-- Card: end side on desktop, first on mobile. -->
+    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-8 pt-8 shadow-soft sm:px-8 lg:order-2 lg:mt-[14px] lg:self-start lg:px-[35px] lg:pb-[47px] lg:pt-[40px]">
+      <SectionHeading id="customization-title">{c.title}</SectionHeading>
+      <p class="mt-5 lg:text-justify text-[14px] leading-8 text-body lg:text-15">{c.intro}</p>
+      <img
+        src={serviceImages.customization}
+        alt={c.imageAlt}
+        width="740"
+        height="494"
+        loading="lazy"
+        class="mt-5 aspect-[564/241] w-full rounded-[15px] object-cover"
+      />
+      <h3 class="mt-8 text-[16px] font-bold leading-6 text-dark">{c.benefitsTitle}</h3>
+      <ul class="mt-4 list-disc space-y-0.5 ps-[21px] text-[14px] font-bold leading-6 text-ink">
+        {customizationBenefits.map((key) => <li>{c.benefits[key]}</li>)}
+      </ul>
+      <p class="mt-10 text-[15px] font-medium leading-7 text-ink lg:mt-[51px]">{c.integration}</p>
+      <QuoteButton class="mt-10 min-h-[88px] !text-[15px] !leading-6 lg:mt-[58px] lg:!text-[16px]">{c.summary}</QuoteButton>
+    </div>
+
+    <!-- Process flow -->
+    <div class="relative mx-auto flex w-full max-w-[590px] flex-col items-center lg:order-1">
+      <div class="absolute inset-y-8 start-1/2 w-px bg-[#c9cbe0]" aria-hidden="true"></div>
+
+      <div class="relative mt-5 rounded-[11px] border border-[#c3c6d4] bg-white px-6 pb-3 pt-4">
+        <Hexagon color="#f90087" class="absolute -top-[22px] left-1/2 h-[37px] w-[35px] -translate-x-1/2" />
+        <h3 class="text-15 font-bold leading-8 text-title">{c.flowTitle}</h3>
+      </div>
+
+      <ol class="relative mt-[60px] flex w-full flex-col items-center gap-[60px]">
+        {
+          customizationSteps.map((step, i) => (
+            <li class="flex w-full flex-col items-center">
+              <div class="tilt-wrap w-fit max-w-[calc(100%-24px)]">
+                <span class="tilt-back" aria-hidden="true" />
+                {i === 0 && <Hexagon color="#7350ff" class="absolute -top-[30px] left-1/2 h-[51px] w-[47px] -translate-x-1/2" />}
+                <h4 class="tilt-card flex min-h-[57px] items-center gap-3 px-4 py-2 text-[14px] leading-6 text-ink lg:text-15">
+                  {step.icon && <img src={step.icon} alt="" width="40" height="40" class="size-9 shrink-0 lg:size-10" />}
+                  <span>{c.steps[step.key].title}</span>
+                </h4>
+              </div>
+              <div class="relative mt-[22px] w-full rounded-[11px] border border-[#c3c6d4] bg-white px-4 pb-3 pt-4 lg:px-5">
+                <Hexagon color="#00bf6f" class="absolute -top-[9px] left-1/2 h-[17px] w-4 -translate-x-1/2" />
+                <p class="text-[13px] leading-6 text-ink">{c.steps[step.key].text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

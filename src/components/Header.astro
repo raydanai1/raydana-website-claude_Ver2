@@ -1,23 +1,30 @@
 ---
 import Logo from './ui/Logo.astro';
 import Button from './ui/Button.astro';
-import { homePath, type Locale, useTranslations } from '../i18n';
+import { homePath, pagePath, type Locale, type Page, useTranslations } from '../i18n';
 
 interface Props {
   locale: Locale;
+  /** Current page: marks its menu item active and keeps the language switch on the same page. */
+  page?: Page;
 }
-const { locale } = Astro.props;
+const { locale, page = 'home' } = Astro.props;
 const t = useTranslations(locale);
 const otherLocale: Locale = locale === 'fa' ? 'en' : 'fa';
 
+// Homepage sections are linked by anchor; from other pages they go through the homepage.
+const home = page === 'home' ? '' : homePath(locale);
 const navItems = [
-  { label: t.nav.products, href: '#transform' },
-  { label: t.nav.solutions, href: '#industries' },
-  { label: t.nav.services, href: '#deploy' },
-  { label: t.nav.knowledge, href: '#knowledge' },
-  { label: t.nav.about, href: '#footer' },
-  { label: t.nav.contact, href: '#contact' },
+  { label: t.nav.products, href: pagePath('products', locale), page: 'products' },
+  { label: t.nav.solutions, href: `${home}#industries` },
+  { label: t.nav.services, href: pagePath('services', locale), page: 'services' },
+  { label: t.nav.knowledge, href: `${home}#knowledge` },
+  { label: t.nav.about, href: pagePath('about', locale), page: 'about' },
+  { label: t.nav.contact, href: pagePath('contact', locale), page: 'contact' },
 ];
+const switchHref = pagePath(page, otherLocale);
+// Module and subsystem pages belong to the products menu item.
+const section = page.startsWith('products/') ? 'products' : page;
 ---
 
 <header class="sticky top-0 z-50 px-4 pt-4 lg:px-6 lg:pt-8" data-header>
@@ -36,8 +43,9 @@ const navItems = [
         navItems.map((item, i) => (
           <a
             href={item.href}
+            aria-current={item.page === section ? 'page' : undefined}
             class:list={[
-              'flex h-12 items-center whitespace-nowrap rounded-lg p-[11px] font-medium leading-6 text-ink transition-colors hover:text-primary ltr:px-2 ltr:text-[15px]',
+              'flex h-12 items-center whitespace-nowrap rounded-lg p-[11px] font-medium leading-6 text-ink transition-colors hover:text-primary aria-[current=page]:text-primary ltr:px-2 ltr:text-[15px]',
               i === navItems.length - 1 ? 'text-sm' : 'text-base',
             ]}
           >
@@ -52,7 +60,7 @@ const navItems = [
         <img src="/images/header/search.svg" alt="" width="20" height="20" />
       </button>
       <a
-        href={homePath(otherLocale)}
+        href={switchHref}
         hreflang={otherLocale}
         class="hidden h-12 items-center gap-3 rounded-full border border-primary px-5 font-medium text-primary transition-colors hover:bg-primary/5 sm:flex"
         aria-label={`${t.a11y.language}: ${t.nav.switchTo}`}
@@ -98,7 +106,12 @@ const navItems = [
       <nav class="flex flex-col" aria-label={t.a11y.menu}>
         {
           navItems.map((item) => (
-            <a href={item.href} class="border-b border-neutral-200 py-3.5 text-base font-medium text-ink hover:text-primary" data-menu-link>
+            <a
+              href={item.href}
+              aria-current={item.page === section ? 'page' : undefined}
+              class="border-b border-neutral-200 py-3.5 text-base font-medium text-ink hover:text-primary aria-[current=page]:text-primary"
+              data-menu-link
+            >
               {item.label}
             </a>
           ))
@@ -107,7 +120,7 @@ const navItems = [
       <div class="mt-auto flex flex-col gap-3">
         <Button href="#contact" class="w-full">{t.nav.portal}</Button>
         <a
-          href={homePath(otherLocale)}
+          href={switchHref}
           hreflang={otherLocale}
           class="flex h-12 items-center justify-center gap-3 rounded-full border border-primary font-medium text-primary"
         >

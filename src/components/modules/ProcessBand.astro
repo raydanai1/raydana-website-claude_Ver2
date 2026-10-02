@@ -1,0 +1,221 @@
+---
+import { moduleImages, type Subsystem } from '../../data/modules';
+import { pastels } from '../../data/modules/icons';
+import { fill, localizeDigits, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  subsystem: Subsystem;
+}
+const { locale, subsystem } = Astro.props;
+const t = useTranslations(locale).modules;
+const name = subsystem[locale].name;
+
+/** Step details: top-level lines, each with the "- " sub-bullets that follow it. */
+const steps = (subsystem.process ?? []).map((p, i) => {
+  const { title, details } = p[locale];
+  const groups: { text: string; sub: string[] }[] = [];
+  for (const line of details) {
+    if (line.startsWith('- ') && groups.length) groups[groups.length - 1].sub.push(line.slice(2));
+    else groups.push({ text: line, sub: [] });
+  }
+  return { n: i + 1, title, groups, colour: pastels[i % pastels.length] };
+});
+
+// Desktop rows alternate 5 and 4 steps (staggered like Figma 122:9904 … 147:1292).
+const rows: (typeof steps)[] = [];
+for (let i = 0, r = 0; i < steps.length; r++) {
+  const size = r % 2 === 0 ? 5 : 4;
+  rows.push(steps.slice(i, i + size));
+  i += size;
+}
+const hex =
+  'M17.1553 2.21973C18.9154 1.20353 21.0846 1.20353 22.8447 2.21973L33.9766 8.64648C35.7365 9.66273 36.8203 11.541 36.8203 13.5732V26.4268C36.8203 28.459 35.7365 30.3373 33.9766 31.3535L22.8447 37.7803C21.0846 38.7965 18.9154 38.7965 17.1553 37.7803L6.02344 31.3535C4.26352 30.3373 3.17969 28.459 3.17969 26.4268V13.5732C3.17969 11.541 4.26352 9.66273 6.02344 8.64648L17.1553 2.21973Z';
+---
+
+<!-- Figma 119:5590 (photo) + 119:5591 (navy gradient at 86%), 119:9218 (title), numbered steps, 147:1295 (details popover). -->
+<section class="relative isolate z-10" aria-labelledby="process-title" data-process>
+  <img src={moduleImages.bandPhoto} alt="" width="1664" height="678" loading="lazy" class="absolute inset-0 -z-20 size-full object-cover" />
+  <div class="process-gradient absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <div class="container-x pb-14 pt-10 lg:min-h-[477px] lg:pb-[134px] lg:pt-[61px]">
+    <h2 id="process-title" class="text-center text-[20px] font-bold leading-normal text-[#fafafa] lg:text-title-2">{fill(t.titles.process, { S: name })}</h2>
+
+    <div class="mx-auto mt-10 grid grid-cols-2 gap-x-[15px] gap-y-[40px] sm:flex sm:flex-col sm:gap-y-[57px] lg:mt-[59px]">
+      {
+        rows.map((row) => (
+          <ol start={row[0].n} class="contents sm:flex sm:flex-wrap sm:justify-center sm:gap-x-[15px] sm:gap-y-[40px]">
+            {row.map((step) => {
+              const Card = step.groups.length ? 'button' : 'div';
+              const toggle = step.groups.length
+                ? { type: 'button', 'aria-expanded': 'false', 'aria-controls': `step-${step.n}`, 'data-step-toggle': true }
+                : {};
+              return (
+                <li class="step relative sm:w-[155px]">
+                  <Card class="step-card w-full" {...toggle}>
+                    <span class="step-inner">
+                      <span class="step-badge" style={`color:${step.colour.fg}`}>
+                        <svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
+                          <path d={hex} fill={step.colour.bg} stroke="url(#step-edge)" />
+                        </svg>
+                        <span class="relative">{localizeDigits(step.n, locale)}</span>
+                      </span>
+                      <span class="step-title">{step.title}</span>
+                    </span>
+                  </Card>
+
+                  {step.groups.length > 0 && (
+                    <div
+                      id={`step-${step.n}`}
+                      role="region"
+                      aria-label={fill(t.stepDetails, { S: step.title })}
+                      class:list={[
+                        'step-popover absolute top-full z-20 mt-2 w-[276px] max-w-[calc(100vw-32px)] rounded-[10px] border border-[#1c91e2] px-5 pb-5 pt-[23px]',
+                        step.n % 2 === 1 ? 'start-0 sm:start-auto sm:end-0' : 'end-0',
+                      ]}
+                      hidden
+                    >
+                      <ul class="flex flex-col gap-3">
+                        {step.groups.map((g) => (
+                          <li>
+                            <p class="flex items-start gap-[11px] text-small font-medium leading-6 text-ink">
+                              <img src={moduleImages.popoverCheck} alt="" width="9.68" height="7.42" class="mt-[8px] w-[10px] shrink-0" />
+                              <span>{g.text}</span>
+                            </p>
+                            {g.sub.length > 0 && (
+                              <ul class="step-sub mt-1 text-small font-medium leading-[22px] text-muted">
+                                {g.sub.map((sub) => (
+                                  <li>{sub}</li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Badge edge gradient (Figma 122:9893 stroke). -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="step-edge" x1="5.67" y1="1.9" x2="40.61" y2="3.16" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#7C93E3" />
+        <stop offset="1" stop-color="#2853E9" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+  </svg>
+</section>
+
+<style>
+  /* Figma 119:5591: 217° navy gradient at 86% over the photo; mirrored for LTR. */
+  .process-gradient {
+    background-image: linear-gradient(216.53deg, rgba(48, 80, 101, 0.86) 6.79%, rgba(25, 49, 82, 0.86) 93.94%);
+  }
+  :global([dir='ltr']) .process-gradient {
+    background-image: linear-gradient(143.47deg, rgba(48, 80, 101, 0.86) 6.79%, rgba(25, 49, 82, 0.86) 93.94%);
+  }
+  /* Figma 121:9865: white card, light edge, «majul cart» shadow; badge overlaps the top edge. */
+  .step-card {
+    display: block;
+    position: relative;
+    height: 100%;
+    text-align: center;
+  }
+  .step-inner {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-height: 65px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-stroke);
+    border-radius: 12px;
+    background: #fff;
+    padding: 18px 8px 10px;
+    box-shadow: 0 25px 83px -7px rgba(154, 167, 193, 0.25);
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+  .step-badge {
+    position: absolute;
+    top: -19px;
+    left: 50%;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .step-badge svg {
+    position: absolute;
+    inset: 0;
+  }
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    color: var(--color-ink);
+  }
+  button.step-card:hover .step-inner,
+  button.step-card[aria-expanded='true'] .step-inner {
+    border-color: #1c91e2;
+  }
+  button.step-card:hover .step-title,
+  button.step-card[aria-expanded='true'] .step-title {
+    color: var(--color-title);
+  }
+  /* Figma 147:1295: details popover (Figma white at 96%; kept opaque so the cards behind do not show through). */
+  .step-popover {
+    background-color: #fff;
+    box-shadow: 0 25px 83px -7px rgba(154, 167, 193, 0.25);
+    text-align: start;
+  }
+  .step-sub {
+    list-style: disc;
+    padding-inline-start: 40px;
+  }
+</style>
+
+<script>
+  // Steps with details open a popover; one at a time, closed by a second click, Escape or a click outside.
+  document.querySelectorAll<HTMLElement>('[data-process]').forEach((section) => {
+    const toggles = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-step-toggle]'));
+    const setOpen = (btn: HTMLButtonElement, open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      const panel = document.getElementById(btn.getAttribute('aria-controls') ?? '');
+      if (panel) panel.hidden = !open;
+    };
+    const closeAll = (except?: HTMLButtonElement) => toggles.forEach((b) => b !== except && setOpen(b, false));
+    toggles.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = btn.getAttribute('aria-expanded') !== 'true';
+        closeAll(btn);
+        setOpen(btn, open);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!(e.target as Element).closest('.step-popover')) closeAll();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const open = toggles.find((b) => b.getAttribute('aria-expanded') === 'true');
+      if (open) {
+        closeAll();
+        open.focus();
+      }
+    });
+  });
+</script>

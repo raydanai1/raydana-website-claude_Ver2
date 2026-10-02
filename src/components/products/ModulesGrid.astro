@@ -1,0 +1,67 @@
+---
+import { productImages, productModules } from '../../data/products';
+import { getModule, modulePage } from '../../data/modules';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).products.modules;
+---
+
+<!-- Figma 2:5416 / 2:5417 (photo + navy gradient), 2:9048 (title), 2:9099 / 2:9100 (16 module cards). -->
+<section class="relative isolate overflow-hidden" aria-labelledby="products-modules-title">
+  <img
+    src={productImages.modulesBg}
+    alt=""
+    width="740"
+    height="403"
+    loading="lazy"
+    class="absolute inset-0 -z-20 size-full object-cover"
+  />
+  <div class="modules-gradient absolute inset-0 -z-10"></div>
+
+  <div class="container-x py-12 lg:pb-[131px] lg:pt-[58px]">
+    <h2 id="products-modules-title" class="text-center text-[20px] font-bold leading-snug text-light lg:text-title-2 lg:leading-[37px]">{t.title}</h2>
+
+    <ul
+      class="mx-auto mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:mt-[45px] lg:grid-cols-4 lg:gap-x-6 lg:gap-y-[46px] xl:grid-cols-[repeat(4,260px)] xl:justify-center xl:gap-x-[49px]"
+    >
+      {
+        productModules.map((m) => {
+          // Card label: the module's name from its data file (falls back to the products page text).
+          const name = getModule(m.module)?.[locale].name ?? t.items[m.key];
+          return (
+            <li>
+              <a
+                href={pagePath(modulePage(m.module), locale)}
+                class="module-card group relative flex h-full flex-col items-start gap-2 rounded-2xl border-[0.86px] border-stroke bg-[#fafafa] p-3 transition duration-200 hover:-translate-y-1 sm:h-[85px] sm:flex-row sm:items-center sm:gap-2 sm:py-0 sm:pe-[15px] sm:ps-2"
+              >
+                <img src={m.icon} alt="" width="68" height="68" class="size-[68px] shrink-0" />
+                <span class="flex-1 text-[14px] font-bold leading-6 text-title sm:text-15 sm:leading-8 lg:leading-6 xl:leading-8">{name}</span>
+                <span class="icon-btn absolute end-3 top-3 transition-colors group-hover:bg-primary/10 sm:static" aria-hidden="true">
+                  <img src={productImages.cardArrow} alt="" width="18" height="18" class="dir-icon-rev size-[18px]" />
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Figma 2:9102: card shadow. */
+  .module-card {
+    box-shadow: 0 10px 26px 0 #113655;
+  }
+  /* Figma 2:5417: 229° navy gradient at 90% over the photo; mirrored for LTR. */
+  .modules-gradient {
+    background-image: linear-gradient(229.14deg, rgba(48, 80, 101, 0.9) 6.79%, rgba(25, 49, 82, 0.9) 93.94%);
+  }
+  :global([dir='ltr']) .modules-gradient {
+    background-image: linear-gradient(130.86deg, rgba(48, 80, 101, 0.9) 6.79%, rgba(25, 49, 82, 0.9) 93.94%);
+  }
+</style>

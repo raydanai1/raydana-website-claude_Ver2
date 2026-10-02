@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Testimonials from '../Testimonials.astro';
+import AboutHero from './AboutHero.astro';
+import AtAGlance from './AtAGlance.astro';
+import Vision from './Vision.astro';
+import MissionValues from './MissionValues.astro';
+import WhyCyberErp from './WhyCyberErp.astro';
+import Projects from './Projects.astro';
+import Certificates from './Certificates.astro';
+import Licences from './Licences.astro';
+import Team from './Team.astro';
+import HistoryTimeline from './HistoryTimeline.astro';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Layout locale={locale} page="about" title={t.about.meta.title} description={t.about.meta.description}>
+  <Header locale={locale} page="about" />
+  <main id="main">
+    <AboutHero locale={locale} />
+    <AtAGlance locale={locale} />
+    <Vision locale={locale} />
+    <MissionValues locale={locale} />
+    <WhyCyberErp locale={locale} />
+    <Projects locale={locale} />
+    <!-- Customer success stories: the homepage testimonial carousel (Figma Carousel 2011:1854). -->
+    <h2 class="container-x mt-14 text-center text-[20px] font-bold leading-normal text-ink md:text-title-2 lg:mt-[83px]">
+      {t.about.testimonials.title}
+    </h2>
+    <Testimonials locale={locale} />
+    <Certificates locale={locale} />
+    <Licences locale={locale} />
+    <Team locale={locale} />
+    <HistoryTimeline locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Layout>
