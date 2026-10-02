@@ -7,6 +7,8 @@ interface Props {
   locale: Locale;
   /** Current page: marks its menu item active and keeps the language switch on the same page. */
   page?: Page;
+  /** Language-switch target when the page has no counterpart in the other language. */
+  switchHref?: string;
 }
 const { locale, page = 'home' } = Astro.props;
 const t = useTranslations(locale);
@@ -18,13 +20,13 @@ const navItems = [
   { label: t.nav.products, href: pagePath('products', locale), page: 'products' },
   { label: t.nav.solutions, href: `${home}#industries` },
   { label: t.nav.services, href: pagePath('services', locale), page: 'services' },
-  { label: t.nav.knowledge, href: `${home}#knowledge` },
+  { label: t.nav.knowledge, href: pagePath('knowledge', locale), page: 'knowledge' },
   { label: t.nav.about, href: pagePath('about', locale), page: 'about' },
   { label: t.nav.contact, href: pagePath('contact', locale), page: 'contact' },
 ];
-const switchHref = pagePath(page, otherLocale);
-// Module and subsystem pages belong to the products menu item.
-const section = page.startsWith('products/') ? 'products' : page;
+const switchHref = Astro.props.switchHref ?? pagePath(page, otherLocale);
+// Module and subsystem pages belong to the products menu item, articles to the knowledge base.
+const section = page.includes('/') ? page.split('/')[0] : page;
 ---
 
 <header class="sticky top-0 z-50 px-4 pt-4 lg:px-6 lg:pt-8" data-header>

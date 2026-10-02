@@ -28,10 +28,11 @@ export function homePath(locale: Locale): string {
 
 /**
  * Pages that exist in both languages. Module and subsystem detail pages are keyed by their
- * path under /products, e.g. `products/finance` or `products/finance/general-accounting`.
+ * path under /products, e.g. `products/finance` or `products/finance/general-accounting`;
+ * knowledge base pages by their path under /knowledge, e.g. `knowledge/erp-vs-crm`.
  */
-type StaticPage = 'home' | 'services' | 'products' | 'cloud' | 'oilGas' | 'contact' | 'about';
-export type Page = StaticPage | `products/${string}`;
+type StaticPage = 'home' | 'services' | 'products' | 'cloud' | 'oilGas' | 'contact' | 'about' | 'knowledge';
+export type Page = StaticPage | `products/${string}` | `knowledge/${string}`;
 const pageSlugs: Record<StaticPage, string> = {
   home: '',
   services: 'services/',
@@ -40,11 +41,12 @@ const pageSlugs: Record<StaticPage, string> = {
   oilGas: 'solutions/oil-gas-petrochemical/',
   contact: 'contact/',
   about: 'about/',
+  knowledge: 'knowledge/',
 };
 
 /** Path of a page for a locale, e.g. /services/ (fa) and /en/services/ (en). */
 export function pagePath(page: Page, locale: Locale): string {
-  const slug = page.startsWith('products/') ? `${page}/` : pageSlugs[page as StaticPage];
+  const slug = page.includes('/') ? `${page}/` : pageSlugs[page as StaticPage];
   return `${homePath(locale)}${slug}`;
 }
 

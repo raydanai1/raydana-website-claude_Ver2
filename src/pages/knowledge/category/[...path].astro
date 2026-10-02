@@ -1,0 +1,21 @@
+---
+// Knowledge base category listing (fa) — /knowledge/category/<category>/ and /<category>/<n>/ (12 per page)
+import type { GetStaticPaths } from 'astro';
+import CategoryPage from '../../../components/knowledge/CategoryPage.astro';
+import { KNOWLEDGE_PAGE_SIZE, getKnowledgeItems, itemsInCategory, knowledgeCategories, type KnowledgeCategory } from '../../../data/knowledge';
+
+export const getStaticPaths = (async () => {
+  const items = await getKnowledgeItems('fa');
+  return knowledgeCategories.flatMap((category) => {
+    const pages = Math.max(1, Math.ceil(itemsInCategory(items, category).length / KNOWLEDGE_PAGE_SIZE));
+    return Array.from({ length: pages }, (_, i) => ({
+      params: { path: i === 0 ? category : `${category}/${i + 1}` },
+      props: { category, page: i + 1 },
+    }));
+  });
+}) satisfies GetStaticPaths;
+
+const { category, page } = Astro.props as { category: KnowledgeCategory; page: number };
+---
+
+<CategoryPage locale="fa" category={category} page={page} />

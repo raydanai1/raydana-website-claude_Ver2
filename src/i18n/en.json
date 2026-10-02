@@ -217,12 +217,45 @@
     }
   },
   "knowledge": {
-    "title": "Knowledge Base",
-    "items": {
-      "news": { "title": "Latest science news", "text": "Stay up to date with the latest in ERP" },
-      "articles": { "title": "Scientific & technical articles", "text": "Hundreds of expert articles on software development and ERP" },
-      "events": { "title": "Latest events", "text": "Stay up to date with Raydana events" }
-    }
+    "title": "Knowledge base",
+    "meta": {
+      "title": "Knowledge base | Raydana CYBER ERP",
+      "description": "The Raydana knowledge base: the latest news, expert articles and events on ERP, enterprise software and digital transformation."
+    },
+    "categoryMetaTitle": "{C} | Raydana knowledge base",
+    "categoryMetaDescription": "{C} in the Raydana CYBER ERP knowledge base.",
+    "articleMetaTitle": "{T} | Raydana knowledge base",
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "viewAllArticles": "View all articles",
+    "archive": "Article archive",
+    "related": "Related articles",
+    "next": "Next page",
+    "prev": "Previous page",
+    "page": "Page {N}",
+    "pagination": "Pagination",
+    "categories": "Categories",
+    "featured": "Featured",
+    "slide": "Item {N}",
+    "empty": "Nothing has been published here yet.",
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "How is the price of the CYBER ERP finance solution calculated?",
+          "a": "The price depends on the subsystems you choose, the number of users and the deployment type (cloud or on-premise). Fill in the demo request form to receive a quote."
+        },
+        {
+          "q": "Is CYBER ERP available in the cloud?",
+          "a": "Yes. CYBER ERP can run on your organization's own servers or in the cloud (Cyber Cloud ERP)."
+        },
+        {
+          "q": "How are users trained?",
+          "a": "Raydana runs a joint training plan with individual and group classes and “step-by-step” handbooks, and stays with users until they work on their own."
+        }
+      ]
+    },
+    "demoTitle": "Request a free consultation and demo today."
   },
   "footer": {
     "about": "Raydana Engineering was founded in 2000 to build modern integrated enterprise systems. Our drive to make information technology more than just a comprehensive software system led us to create localized, web-based software that lets managers and users improve their business from anywhere, at any time.",

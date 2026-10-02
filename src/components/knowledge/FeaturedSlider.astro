@@ -1,0 +1,136 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../ui/Button.astro';
+import ItemMeta from './ItemMeta.astro';
+import { knowledgeImages, type KnowledgeItem } from '../../data/knowledge';
+import { fill, localizeDigits, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  items: KnowledgeItem[];
+}
+const { locale, items } = Astro.props;
+const t = useTranslations(locale).knowledge;
+---
+
+<!--
+  Figma 33:6800 (background #f0f2f7, 582 high), 33:10608 (label + date), 33:10488 (title), 33:6808 (summary),
+  33:6801 (button), 2046:3813 (cover in the hexagon frame), 33:10798–33:10800 (dots).
+-->
+<section class="relative -mt-[84px] overflow-hidden bg-[#f0f2f7] lg:-mt-[118px]" aria-roledescription="carousel" aria-label={t.featured} data-slider>
+  <h1 class="sr-only">{t.title}</h1>
+  <div class="container-x relative pb-12 pt-[100px] lg:h-[582px] lg:pb-0 lg:pt-[144px]">
+    <div class="no-scrollbar flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain" data-track>
+      {
+        items.map((item, i) => (
+          <div
+            class="flex w-full shrink-0 snap-start flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={fill(t.slide, { N: localizeDigits(i + 1, locale) })}
+            data-slide
+          >
+            <div class="w-full lg:max-w-[612px] lg:pe-0 lg:ps-[25px] xl:ps-[25px]">
+              <ItemMeta item={item} locale={locale} variant="slider" class="min-h-[38px] ps-5" />
+              <h2 class="mt-5 text-[20px] font-bold leading-normal text-ink lg:mt-[25px] lg:text-title-2">
+                <a href={item.href} class="hover:text-primary">{item.data.title}</a>
+              </h2>
+              <p class="mt-3 line-clamp-5 text-15 leading-8 text-[#616d8f] rtl:text-justify lg:mt-[7px] lg:line-clamp-4">{item.data.summary}</p>
+              <Button href={item.href} class="mt-6 lg:mt-[11px]">{t.readMore}</Button>
+            </div>
+
+            <!-- 452×366 hexagon art: pale back hexagon, white card, cover cut to the hexagon, small blue hexagon. -->
+            <a
+              href={item.href}
+              class="relative order-first mx-auto block aspect-[452/366] w-full max-w-[340px] shrink-0 sm:max-w-[400px] lg:order-last lg:me-[35px] lg:ms-0 lg:mt-[4px] lg:w-[452px] lg:max-w-none"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <img src={knowledgeImages.hexBack} alt="" width="313.501" height="359.555" class="absolute left-[5.365%] top-[1.43%] w-[69.36%]" />
+              <img src={knowledgeImages.hexCard} alt="" width="340.305" height="381.224" class="absolute left-[15.23%] top-[-0.17%] h-[104.16%] w-[75.29%] max-w-none" />
+              <div class="hex-mask absolute left-[18.77%] top-[0.33%] h-[96.6%] w-[68.21%]">
+                <Image
+                  src={item.data.cover}
+                  alt=""
+                  widths={[310, 620]}
+                  sizes="(min-width: 1024px) 309px, 70vw"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  class="size-full object-cover"
+                />
+              </div>
+              <img src={knowledgeImages.hexSmall} alt="" width="106.521" height="120.555" class="absolute left-[74.61%] top-[65.09%] w-[23.57%]" />
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    {
+      items.length > 1 && (
+        <div class="mt-8 flex justify-center gap-[10px] lg:absolute lg:inset-x-0 lg:bottom-[35px] lg:mt-0" dir="ltr">
+          {items.map((_, i) => (
+            <button
+              type="button"
+              class="size-2 rounded-full bg-[#d9d9d9] transition-colors aria-[current=true]:bg-violet"
+              aria-label={fill(t.slide, { N: localizeDigits(i + 1, locale) })}
+              aria-current={i === 0 ? 'true' : 'false'}
+              data-dot={i}
+            >
+              <span class="sr-only">{i + 1}</span>
+            </button>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hex-mask {
+    mask: url('/images/knowledge/hex-mask.svg') center / 100% 100% no-repeat;
+    -webkit-mask: url('/images/knowledge/hex-mask.svg') center / 100% 100% no-repeat;
+  }
+</style>
+
+<script>
+  // Swipe/scroll-snap carousel: dots follow the visible slide; it advances every 7 s unless the
+  // visitor hovers, focuses or prefers reduced motion.
+  document.querySelectorAll<HTMLElement>('[data-slider]').forEach((slider) => {
+    const track = slider.querySelector<HTMLElement>('[data-track]');
+    const slides = Array.from(slider.querySelectorAll<HTMLElement>('[data-slide]'));
+    const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    if (!track || slides.length < 2) return;
+
+    let current = 0;
+    const setCurrent = (index: number) => {
+      current = index;
+      dots.forEach((d, i) => d.setAttribute('aria-current', String(i === index)));
+      slides.forEach((s, i) => s.querySelectorAll('a, button').forEach((el) => {
+        if (!el.hasAttribute('aria-hidden')) el.setAttribute('tabindex', i === index ? '0' : '-1');
+      }));
+    };
+    const go = (index: number) => {
+      const target = slides[(index + slides.length) % slides.length];
+      track.scrollBy({ left: target.getBoundingClientRect().left - track.getBoundingClientRect().left, behavior: 'smooth' });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setCurrent(slides.indexOf(e.target as HTMLElement))),
+      { root: track, threshold: 0.6 },
+    );
+    slides.forEach((s) => observer.observe(s));
+    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let paused = false;
+    ['mouseenter', 'focusin', 'touchstart'].forEach((ev) => slider.addEventListener(ev, () => (paused = true), { passive: true }));
+    ['mouseleave', 'focusout'].forEach((ev) => slider.addEventListener(ev, () => (paused = false)));
+    window.setInterval(() => !paused && !document.hidden && go(current + 1), 7000);
+  });
+</script>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import ItemMeta from './ItemMeta.astro';
+import { knowledgeImages, type KnowledgeItem } from '../../data/knowledge';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  item: KnowledgeItem;
+  locale: Locale;
+  /** Put the photo on the reading-start side (Figma 33:10625) instead of the end side (33:10581). */
+  imageFirst?: boolean;
+}
+const { item, locale, imageFirst = false } = Astro.props;
+const t = useTranslations(locale).knowledge;
+---
+
+<!-- Figma 33:10581 / 33:10625: 1320×465 white card (radius 18), 660×465 photo half, text half. -->
+<article
+  class="group relative grid overflow-hidden rounded-[18px] bg-white shadow-[0_24.965px_41.37px_rgba(154,167,193,0.25)] lg:min-h-[465px] lg:grid-cols-2"
+>
+  <div class:list={['relative overflow-hidden bg-light-4', imageFirst ? 'lg:order-first' : 'lg:order-last']}>
+    <Image
+      src={item.data.cover}
+      alt={item.data.coverAlt ?? ''}
+      widths={[660, 1320]}
+      sizes="(min-width: 1024px) 660px, 100vw"
+      loading="lazy"
+      class="aspect-[660/465] size-full object-cover transition duration-500 group-hover:scale-[1.03] lg:absolute lg:inset-0 lg:aspect-auto"
+    />
+  </div>
+  <div class="flex flex-col px-5 pb-5 pt-6 sm:px-[37px] lg:pb-8 lg:ps-[37px] lg:pe-[30px] lg:pt-[30px]">
+    <ItemMeta item={item} locale={locale} variant="wide" class="min-h-[38px] ps-[18px]" />
+    <h3 class="mt-6 text-15 font-bold leading-8 text-ink lg:mt-[34px]">
+      <a href={item.href} class="after:absolute after:inset-0 after:content-[''] hover:text-primary">{item.data.title}</a>
+    </h3>
+    <p class="mt-[6px] line-clamp-6 text-15 leading-8 text-body rtl:text-justify lg:line-clamp-[7]">{item.data.summary}</p>
+    <span class="mt-4 flex lg:mt-[22px]" aria-hidden="true">
+      <span class="-ms-5 inline-flex h-12 items-center gap-3 rounded-full px-5 text-base font-medium leading-6 text-primary drop-shadow-[0_0_8px_rgba(55,183,195,0.25)] transition-transform group-hover:-translate-x-1 ltr:group-hover:translate-x-1">
+        {t.readMore}
+        <img src={knowledgeImages.arrowBlue} alt="" width="12.5" height="11.0459" class="dir-icon h-[11px] w-[12.5px]" />
+      </span>
+    </span>
+  </div>
+</article>

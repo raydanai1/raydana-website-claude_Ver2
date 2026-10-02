@@ -149,3 +149,115 @@
     transform: rotate(-1.6deg);
   }
 }
+
+/* Knowledge base article bodies (rendered Markdown). Body text follows Figma 2015:6396 (15/32, #6c7078);
+   logical properties keep lists, quotes and tables right in both RTL and LTR. */
+@layer components {
+  .knowledge-prose {
+    font-size: 15px;
+    line-height: 32px;
+    color: var(--color-body);
+    overflow-wrap: break-word;
+  }
+  [dir='rtl'] .knowledge-prose p,
+  [dir='rtl'] .knowledge-prose li {
+    text-align: justify;
+  }
+  .knowledge-prose > * + * {
+    margin-top: 16px;
+  }
+  .knowledge-prose h2,
+  .knowledge-prose h3,
+  .knowledge-prose h4 {
+    font-weight: 700;
+    line-height: 1.6;
+    color: var(--color-ink);
+  }
+  .knowledge-prose h2 {
+    margin-top: 40px;
+    font-size: 20px;
+  }
+  .knowledge-prose h3 {
+    margin-top: 32px;
+    font-size: 17px;
+  }
+  .knowledge-prose h4 {
+    margin-top: 24px;
+    font-size: 15px;
+  }
+  .knowledge-prose :is(h2, h3, h4) + * {
+    margin-top: 8px;
+  }
+  .knowledge-prose a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .knowledge-prose strong {
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+  .knowledge-prose ul,
+  .knowledge-prose ol {
+    padding-inline-start: 24px;
+  }
+  .knowledge-prose ul {
+    list-style: disc;
+  }
+  .knowledge-prose ol {
+    list-style: decimal;
+  }
+  [dir='rtl'] .knowledge-prose ol {
+    list-style: persian;
+  }
+  .knowledge-prose li + li {
+    margin-top: 6px;
+  }
+  .knowledge-prose li::marker {
+    color: var(--color-primary);
+  }
+  .knowledge-prose blockquote {
+    border-inline-start: 3px solid var(--color-primary);
+    border-radius: 4px;
+    background: var(--color-tint);
+    padding: 12px 20px;
+    color: var(--color-ink);
+  }
+  .knowledge-prose img {
+    border-radius: 16px;
+  }
+  .knowledge-prose hr {
+    border-color: var(--color-stroke);
+  }
+  .knowledge-prose code {
+    border-radius: 6px;
+    background: var(--color-light-4);
+    padding: 2px 6px;
+    font-size: 0.9em;
+  }
+  .knowledge-prose pre {
+    overflow-x: auto;
+    border-radius: 12px;
+    padding: 16px;
+    direction: ltr;
+  }
+  .knowledge-prose table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 26px;
+  }
+  .knowledge-prose th,
+  .knowledge-prose td {
+    border: 1px solid var(--color-stroke);
+    padding: 8px 14px;
+    text-align: start;
+  }
+  .knowledge-prose th {
+    background: var(--color-tint);
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+}

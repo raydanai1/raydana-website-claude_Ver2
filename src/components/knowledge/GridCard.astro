@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import ItemMeta from './ItemMeta.astro';
+import { knowledgeImages, type KnowledgeItem } from '../../data/knowledge';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  item: KnowledgeItem;
+  locale: Locale;
+  /** Heading level of the card title within the page outline. */
+  level?: 'h2' | 'h3';
+}
+const { item, locale, level: Title = 'h3' } = Astro.props;
+const t = useTranslations(locale).knowledge;
+---
+
+<!-- Figma 33:10697 "articls": 409×200 photo (radius 16), label + date, 2-line title, 4-line summary, "ادامه مطلب". -->
+<article class="group relative flex h-full flex-col">
+  <div class="overflow-hidden rounded-[16px] bg-light-4">
+    <Image
+      src={item.data.cover}
+      alt={item.data.coverAlt ?? ''}
+      widths={[409, 818]}
+      sizes="(min-width: 1024px) 409px, (min-width: 640px) 50vw, 100vw"
+      loading="lazy"
+      class="aspect-[409/200] w-full object-cover transition duration-500 group-hover:scale-105"
+    />
+  </div>
+  <ItemMeta item={item} locale={locale} class="mt-[18px] ps-2" />
+  <Title class="mt-[13px] line-clamp-2 text-15 font-bold leading-8 text-[#173f49]">
+    <a href={item.href} class="after:absolute after:inset-0 after:content-[''] hover:text-primary">{item.data.title}</a>
+  </Title>
+  <p class="mt-[5px] line-clamp-4 text-15 leading-8 text-[#4c6d75] rtl:text-justify">{item.data.summary}</p>
+  <span class="mt-auto flex pt-5" aria-hidden="true">
+    <span class="-ms-[7px] inline-flex h-10 items-center gap-3 rounded-full px-5 text-base font-medium leading-6 text-primary transition-transform group-hover:-translate-x-1 ltr:group-hover:translate-x-1">
+      {t.readMore}
+      <img src={knowledgeImages.arrowBlue} alt="" width="12.5" height="11.0459" class="dir-icon h-[11px] w-[12.5px]" />
+    </span>
+  </span>
+</article>

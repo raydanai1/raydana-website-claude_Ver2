@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Button from '../ui/Button.astro';
+import DemoRequestForm from '../cloud/DemoRequestForm.astro';
+import Faq from '../cloud/Faq.astro';
+import FeaturedSlider from './FeaturedSlider.astro';
+import CategoryPills from './CategoryPills.astro';
+import WideCard from './WideCard.astro';
+import GridCard from './GridCard.astro';
+import {
+  getKnowledgeItems,
+  itemsInCategory,
+  knowledgeCategories,
+  knowledgeCategoryNames,
+  knowledgeCategoryPath,
+  sliderItems,
+  type KnowledgeCategory,
+} from '../../data/knowledge';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale).knowledge;
+
+const items = await getKnowledgeItems(locale);
+const byCategory = (c: KnowledgeCategory) => itemsInCategory(items, c);
+
+// Section per category, in Figma order: news as wide cards, the rest as a 3-column grid.
+const sections = [
+  { category: 'news' as const, limit: 2, wide: true, more: t.viewAll },
+  { category: 'articles' as const, limit: 6, wide: false, more: t.viewAllArticles },
+  { category: 'events' as const, limit: 3, wide: false, more: t.viewAll },
+  // Categories added later to knowledge-categories.ts get a grid section too.
+  ...knowledgeCategories
+    .filter((c) => !['news', 'articles', 'events'].includes(c))
+    .map((category) => ({ category, limit: 3, wide: false, more: t.viewAll })),
+]
+  .map((s) => ({ ...s, all: byCategory(s.category) }))
+  .filter((s) => s.all.length > 0);
+---
+
+<Layout locale={locale} page="knowledge" title={t.meta.title} description={t.meta.description}>
+  <Header locale={locale} page="knowledge" />
+  <main id="main">
+    {items.length > 0 && <FeaturedSlider locale={locale} items={sliderItems(items)} />}
+    {items.length === 0 && (
+      <section class="container-x py-24 text-center">
+        <h1 class="section-title">{t.title}</h1>
+        <p class="mt-4 text-15 leading-8 text-body">{t.empty}</p>
+      </section>
+    )}
+
+    <CategoryPills
+      locale={locale}
+      pills={sections.map((s) => ({ category: s.category, href: `#${s.category}` }))}
+      class="container-x mt-10 lg:mt-[44px]"
+    />
+
+    {
+      sections.map((s, index) => (
+        <section
+          id={s.category}
+          class:list={['container-x scroll-mt-28', index === 0 ? 'mt-8 lg:mt-[44px]' : 'mt-16 lg:mt-[110px]']}
+          aria-labelledby={`${s.category}-title`}
+        >
+          <h2 id={`${s.category}-title`} class:list={['text-center text-title-3 font-bold leading-[1.47] text-ink', s.wide && 'sr-only']}>
+            {knowledgeCategoryNames[s.category][locale]}
+          </h2>
+          {s.wide ? (
+            <div class="flex flex-col gap-6 lg:gap-[26px]">
+              {s.all.slice(0, s.limit).map((item, i) => (
+                <WideCard item={item} locale={locale} imageFirst={i % 2 === 1} />
+              ))}
+            </div>
+          ) : (
+            <div class="mt-6 grid gap-x-[46px] gap-y-12 sm:grid-cols-2 lg:mt-[33px] lg:grid-cols-3 lg:gap-y-16">
+              {s.all.slice(0, s.limit).map((item) => <GridCard item={item} locale={locale} />)}
+            </div>
+          )}
+          {s.all.length > s.limit && (
+            <div class="mt-10 flex justify-center">
+              <Button href={knowledgeCategoryPath(s.category, locale)} variant="outline">{s.more}</Button>
+            </div>
+          )}
+        </section>
+      ))
+    }
+
+    <div class="mt-16 lg:mt-[116px]">
+      <DemoRequestForm locale={locale} copy={{ title: t.demoTitle }} />
+    </div>
+    <Faq locale={locale} title={t.faq.title} items={t.faq.items} spacing="pb-14 pt-14 lg:pb-[184px] lg:pt-[97px]" />
+  </main>
+  <Footer locale={locale} />
+</Layout>

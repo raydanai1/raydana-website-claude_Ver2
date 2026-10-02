@@ -1,0 +1,38 @@
+---
+import { formatKnowledgeDate, isoDate, knowledgeCategoryNames, knowledgeImages, type KnowledgeItem } from '../../data/knowledge';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  item: KnowledgeItem;
+  locale: Locale;
+  /** slider: 33:10608 (bold label, 40×38 disc) · wide: 33:10635 (36×38 disc) · card: 115:1043 (26px disc). */
+  variant?: 'slider' | 'wide' | 'card';
+  class?: string;
+}
+const { item, locale, variant = 'card', class: className = '' } = Astro.props;
+
+// Disc behind the start of the category label, overhanging the label by `over` px.
+const disc = {
+  slider: { w: 40.3186, h: 38, over: 20, label: 'font-bold leading-6' },
+  wide: { w: 36.0482, h: 38, over: 18, label: 'leading-6' },
+  card: { w: 26, h: 26, over: 8, label: 'font-medium leading-6' },
+}[variant];
+---
+
+<div class:list={['flex items-center justify-between gap-4', className]}>
+  <span class="relative isolate inline-flex items-center text-[14px] text-[#7b7f8b]">
+    <img
+      src={knowledgeImages.chipDot}
+      alt=""
+      width={disc.w}
+      height={disc.h}
+      class="absolute top-1/2 -z-10 -translate-y-1/2"
+      style={`width:${disc.w}px;height:${disc.h}px;inset-inline-start:-${disc.over}px`}
+    />
+    <span class:list={['whitespace-nowrap', disc.label]}>{knowledgeCategoryNames[item.data.category][locale]}</span>
+  </span>
+  <time datetime={isoDate(item.data.date)} class:list={['flex items-center gap-2 whitespace-nowrap text-[#4c6d75]', variant === 'slider' ? 'text-[13px]' : 'text-[12px]']}>
+    <img src={knowledgeImages.calendar} alt="" width="14.6364" height="16" class="h-[15px] w-auto" />
+    {formatKnowledgeDate(item.data.date, locale)}
+  </time>
+</div>

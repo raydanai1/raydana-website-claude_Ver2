@@ -1,0 +1,139 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import ItemMeta from './ItemMeta.astro';
+import GridCard from './GridCard.astro';
+import {
+  formatKnowledgeDate,
+  getKnowledgeItems,
+  getKnowledgeSlugs,
+  isoDate,
+  knowledgeBase,
+  knowledgeImages,
+  knowledgeItemPath,
+  relatedItems,
+  type KnowledgeItem,
+} from '../../data/knowledge';
+import { fill, locales, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  item: KnowledgeItem;
+}
+const { locale, item } = Astro.props;
+const t = useTranslations(locale).knowledge;
+const { Content } = await render(item.entry);
+
+const items = await getKnowledgeItems(locale);
+const archive = items.filter((i) => i.slug !== item.slug).slice(0, 5);
+const related = relatedItems(items, item);
+
+// The language switch goes to the translation, or to the other knowledge base home when there is none.
+const otherLocale: Locale = locale === 'fa' ? 'en' : 'fa';
+const translated = (await getKnowledgeSlugs(otherLocale)).has(item.slug);
+const switchHref = translated ? knowledgeItemPath(item.slug, otherLocale) : knowledgeBase(otherLocale);
+const available = locales.filter((l) => l === locale || translated);
+const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jpg' })).src;
+---
+
+<Layout
+  locale={locale}
+  page={`knowledge/${item.slug}`}
+  title={fill(t.articleMetaTitle, { T: item.data.title })}
+  description={item.data.summary}
+  available={available}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <Header locale={locale} page={`knowledge/${item.slug}`} switchHref={switchHref} />
+  <main id="main">
+    <article>
+      <!-- Figma 2015:6373: 1318×438 cover, radius 18, 0.78px #dbe1ff border. -->
+      <div class="container-x mt-4 lg:mt-[15px]">
+        <div class="overflow-hidden rounded-[18px] border-[0.781px] border-stroke bg-white">
+          <Image
+            src={item.data.cover}
+            alt={item.data.coverAlt ?? ''}
+            widths={[640, 1320, 2000]}
+            sizes="(min-width: 1320px) 1320px, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            class="aspect-[16/9] w-full object-cover sm:aspect-[1318/438]"
+          />
+        </div>
+      </div>
+
+      <div class="container-x mt-8 grid items-start gap-12 lg:mt-[46px] lg:grid-cols-[minmax(0,1fr)_453px] lg:gap-[53px]">
+        <!-- Figma 2015:6393: label + date, 24px title, 15/32 body. -->
+        <div class="min-w-0 lg:pe-2 lg:ps-[34px]">
+          <ItemMeta item={item} locale={locale} variant="slider" class="min-h-[38px] ps-5 lg:max-w-[770px]" />
+          <h1 class="mt-6 text-[20px] font-bold leading-[1.6] text-ink lg:mt-[29px] lg:text-title-2">{item.data.title}</h1>
+          <div class="knowledge-prose mt-6 lg:mt-[30px]">
+            <Content />
+          </div>
+        </div>
+
+        <!-- Figma 2015:6384 "latest Publications": white card, radius 16, shadow 0 14 10 #eef0ff. -->
+        {
+          archive.length > 0 && (
+            <aside class="rounded-[16px] bg-white px-4 pb-6 pt-7 shadow-industry sm:px-[23px] lg:sticky lg:top-[134px] lg:pb-[43px] lg:pt-[43px]" aria-labelledby="archive-title">
+              <h2 id="archive-title" class="text-[20px] font-bold leading-normal text-ink lg:text-title-2">{t.archive}</h2>
+              <ul class="no-scrollbar -mx-4 mt-6 flex snap-x gap-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:mt-[26px] lg:flex-col lg:gap-10 lg:overflow-visible lg:px-0 lg:pb-0">
+                {archive.map((a) => (
+                  <li class="w-[300px] shrink-0 snap-start lg:w-auto">
+                    <a href={a.href} class="group flex gap-4">
+                      <Image
+                        src={a.data.cover}
+                        alt=""
+                        widths={[102, 204]}
+                        sizes="102px"
+                        loading="lazy"
+                        class="size-[102px] shrink-0 rounded-[9.6px] object-cover"
+                      />
+                      <span class="flex min-w-0 flex-1 flex-col">
+                        <span class="line-clamp-2 text-15 font-bold leading-8 text-ink group-hover:text-primary">{a.data.title}</span>
+                        <span class="mt-auto flex items-center justify-between gap-2">
+                          <time datetime={isoDate(a.data.date)} class="flex items-center gap-2 whitespace-nowrap text-[14px] leading-8 text-[#aeb3bd] lg:text-15">
+                            <img src={knowledgeImages.calendarGrey} alt="" width="14.6364" height="16" class="h-[15px] w-auto" />
+                            {formatKnowledgeDate(a.data.date, locale)}
+                          </time>
+                          <span class="icon-btn group-hover:bg-primary/10" aria-hidden="true">
+                            <img src="/images/tools/arrow-small.svg" alt="" width="18" height="18" class="dir-icon-rev" />
+                          </span>
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )
+        }
+      </div>
+    </article>
+
+    {
+      related.length > 0 && (
+        <section class="container-x mt-20 lg:mt-[170px]" aria-labelledby="related-title">
+          <h2 id="related-title" class="text-center text-title-3 font-bold leading-[1.47] text-ink">{t.related}</h2>
+          <div class="mt-6 grid gap-x-[46px] gap-y-12 sm:grid-cols-2 lg:mt-[33px] lg:grid-cols-3">
+            {related.map((r) => <GridCard item={r} locale={locale} />)}
+          </div>
+        </section>
+      )
+    }
+  </main>
+  <Footer locale={locale} />
+</Layout>
+
+<style>
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+</style>

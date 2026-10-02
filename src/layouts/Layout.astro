@@ -9,9 +9,14 @@ interface Props {
   /** Page-specific title and description (defaults to the homepage meta). */
   title?: string;
   description?: string;
+  /** Languages this page exists in (for hreflang); defaults to all. */
+  available?: readonly Locale[];
+  /** Share image (absolute path or URL) and Open Graph type, e.g. for knowledge base articles. */
+  ogImage?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { locale, page = 'home' } = Astro.props;
+const { locale, page = 'home', available = locales, ogImage = '/images/hero/hero-bg.webp', ogType = 'website' } = Astro.props;
 const t = useTranslations(locale);
 const title = Astro.props.title ?? t.meta.title;
 const description = Astro.props.description ?? t.meta.description;
@@ -28,16 +33,16 @@ const canonical = new URL(pagePath(page, locale), site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {locales.map((l) => <link rel="alternate" hreflang={l} href={new URL(pagePath(page, l), site).href} />)}
-    <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, 'fa'), site).href} />
+    {available.length > 1 && available.map((l) => <link rel="alternate" hreflang={l} href={new URL(pagePath(page, l), site).href} />)}
+    {available.length > 1 && <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, available[0]), site).href} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0b518c" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
-    <meta property="og:image" content={new URL('/images/hero/hero-bg.webp', site).href} />
+    <meta property="og:image" content={new URL(ogImage, site).href} />
     <link rel="preload" href="/fonts/IRANSansX-Bold.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/IRANSansX-Regular.ttf" as="font" type="font/ttf" crossorigin />
     <!-- Vazirmatn is only used if IRANSansX fails to load. -->

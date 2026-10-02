@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import CategoryPills from './CategoryPills.astro';
+import GridCard from './GridCard.astro';
+import {
+  KNOWLEDGE_PAGE_SIZE,
+  getKnowledgeItems,
+  itemsInCategory,
+  knowledgeBase,
+  knowledgeCategories,
+  knowledgeCategoryNames,
+  knowledgeCategoryPath,
+  knowledgeImages,
+  type KnowledgeCategory,
+} from '../../data/knowledge';
+import { fill, localizeDigits, locales, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  category: KnowledgeCategory;
+  /** 1-based page number. */
+  page: number;
+}
+const { locale, category, page } = Astro.props;
+const t = useTranslations(locale).knowledge;
+const name = knowledgeCategoryNames[category][locale];
+
+const all = await getKnowledgeItems(locale);
+const items = itemsInCategory(all, category);
+const pageCount = Math.max(1, Math.ceil(items.length / KNOWLEDGE_PAGE_SIZE));
+const pageItems = items.slice((page - 1) * KNOWLEDGE_PAGE_SIZE, page * KNOWLEDGE_PAGE_SIZE);
+
+// Categories with items get a pill; the current one always does.
+const pills = knowledgeCategories
+  .filter((c) => c === category || itemsInCategory(all, c).length > 0)
+  .map((c) => ({ category: c, href: knowledgeCategoryPath(c, locale) }));
+
+// Same page in the other language when it exists there, else that category's first page.
+const otherLocale: Locale = locale === 'fa' ? 'en' : 'fa';
+const otherCount = Math.ceil(itemsInCategory(await getKnowledgeItems(otherLocale), category).length / KNOWLEDGE_PAGE_SIZE);
+const available = locales.filter((l) => l === locale || page <= Math.max(1, otherCount));
+const switchHref = knowledgeCategoryPath(category, otherLocale, page <= Math.max(1, otherCount) ? page : 1);
+const pagePart = `knowledge/category/${category}${page > 1 ? `/${page}` : ''}` as const;
+const pageLabel = (n: number) => fill(t.page, { N: localizeDigits(n, locale) });
+const title = fill(t.categoryMetaTitle, { C: page > 1 ? `${name} – ${pageLabel(page)}` : name });
+---
+
+<Layout locale={locale} page={pagePart} title={title} description={fill(t.categoryMetaDescription, { C: name })} available={available}>
+  <Header locale={locale} page={pagePart} switchHref={switchHref} />
+  <main id="main">
+    <section class="relative -mt-[84px] bg-[#f0f2f7] pb-10 pt-[112px] lg:-mt-[118px] lg:pb-[52px] lg:pt-[160px]">
+      <div class="container-x text-center">
+        <a href={knowledgeBase(locale)} class="text-15 font-medium text-primary hover:underline">{t.title}</a>
+        <h1 class="mt-2 text-[22px] font-bold leading-normal text-ink lg:text-title-2">
+          {name}
+          {page > 1 && <span class="text-body"> – {pageLabel(page)}</span>}
+        </h1>
+      </div>
+    </section>
+
+    <CategoryPills locale={locale} pills={pills} active={category} class="container-x mt-10 lg:mt-[44px]" />
+
+    <section class="container-x mt-10 lg:mt-[52px]" aria-label={name}>
+      {
+        pageItems.length > 0 ? (
+          <div class="grid gap-x-[46px] gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
+            {pageItems.map((item) => <GridCard item={item} locale={locale} level="h2" />)}
+          </div>
+        ) : (
+          <p class="py-16 text-center text-15 leading-8 text-body">{t.empty}</p>
+        )
+      }
+
+      {
+        pageCount > 1 && (
+          <nav aria-label={t.pagination} class="mt-14 flex flex-wrap items-center justify-center gap-2">
+            {page > 1 && (
+              <a href={knowledgeCategoryPath(category, locale, page - 1)} rel="prev" class="flex h-10 items-center gap-2 rounded-full border border-[#c4d3fb] px-4 text-15 font-medium text-[#0f53f8] hover:bg-[rgba(213,224,252,0.35)]">
+                <img src={knowledgeImages.pillArrowBlue} alt="" width="18" height="18" class="dir-icon-rev size-[18px]" />
+                {t.prev}
+              </a>
+            )}
+            {Array.from({ length: pageCount }, (_, i) => i + 1).map((n) => (
+              <a
+                href={knowledgeCategoryPath(category, locale, n)}
+                aria-current={n === page ? 'page' : undefined}
+                aria-label={pageLabel(n)}
+                class="flex size-10 items-center justify-center rounded-full border border-[#c4d3fb] text-15 font-medium text-[#0f53f8] hover:bg-[rgba(213,224,252,0.35)] aria-[current=page]:border-transparent aria-[current=page]:bg-primary aria-[current=page]:text-white"
+              >
+                {localizeDigits(n, locale)}
+              </a>
+            ))}
+            {page < pageCount && (
+              <a href={knowledgeCategoryPath(category, locale, page + 1)} rel="next" class="flex h-10 items-center gap-2 rounded-full border border-[#c4d3fb] px-4 text-15 font-medium text-[#0f53f8] hover:bg-[rgba(213,224,252,0.35)]">
+                {t.next}
+                <img src={knowledgeImages.pillArrowBlue} alt="" width="18" height="18" class="dir-icon size-[18px]" />
+              </a>
+            )}
+          </nav>
+        )
+      }
+    </section>
+  </main>
+  <Footer locale={locale} />
+</Layout>
