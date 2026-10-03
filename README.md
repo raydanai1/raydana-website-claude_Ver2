@@ -84,3 +84,5 @@ The colours, type sizes and shadows from the Figma variables are defined as Tail
 
 IRANSansX (Regular 400, Medium 500, Bold 700) is self-hosted from `public/fonts`. Vazirmatn (CDN) is only a fallback.
 IRANSansX is a commercial font, so make sure your licence covers web use.
+
+
