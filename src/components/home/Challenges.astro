@@ -1,0 +1,87 @@
+---
+/**
+ * "Is your organization facing these challenges?" (Figma 2054:3720).
+ * ≥1280px: chips scattered and tilted exactly as in Figma; below: a tidy 2-column grid.
+ */
+import { challenges } from '../../data/home';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const items = t.challenges.items as Record<string, string>;
+
+// Stage = Figma "carts" group (origin 46,1003); chips are placed by their centre point.
+const STAGE_W = 1354;
+const STAGE_H = 360;
+const icon = (name: string) => `/images/home/challenges/${name}.svg`;
+---
+
+<section class="mt-14 overflow-x-clip lg:mt-[85px]" aria-labelledby="challenges-title">
+  <div class="container-x text-center">
+    <h2 id="challenges-title" class="section-title lg:leading-[43px]">{t.challenges.title}</h2>
+    <p class="section-lead mx-auto mt-2 max-w-[747px] lg:mt-0 lg:leading-[26px]">{t.challenges.lead}</p>
+  </div>
+
+  <div class="relative mx-auto mt-7 max-w-[1354px] px-4 sm:px-6 xl:mt-10 xl:aspect-[1354/360] xl:px-0">
+    <ul class="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 xl:block">
+      {
+        challenges.map((c) => (
+          <li
+            class="chip flex min-h-[56px] items-center gap-2 rounded-2xl border-[0.4px] border-neutral-200 bg-white py-2 pe-3 ps-2 shadow-chip xl:absolute xl:h-[69px] xl:min-h-0 xl:gap-[10px] xl:py-0 xl:pe-[22px] xl:ps-[10px]"
+            style={`--x:${((c.x / STAGE_W) * 100).toFixed(2)}%;--y:${((c.y / STAGE_H) * 100).toFixed(2)}%;--w:${c.w}px;--r:${c.rotate}deg`}
+          >
+            <span class="relative size-7 shrink-0 xl:size-[35px]">
+              <img src={icon(c.icon)} alt="" width="35" height="35" class="absolute inset-0 size-full" />
+              {'iconX' in c && <img src={icon(c.iconX)} alt="" class="absolute inset-[31%] size-[38%]" />}
+            </span>
+            <span class="text-[14px] leading-[1.55] text-ink xl:text-15 xl:leading-8 xl:whitespace-nowrap">{items[c.key]}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <p
+    class="relative z-10 mx-4 mt-6 flex min-h-[64px] items-center justify-center rounded-[47px] border-[0.4px] border-neutral-200 bg-gradient-to-l from-[#0e4fa0] to-[#051d3a] px-6 py-4 text-center text-15 font-bold leading-7 text-light shadow-chip sm:mx-auto sm:max-w-[649px] xl:-mt-[10px] xl:h-[77px] xl:text-title-3"
+  >
+    {t.challenges.slogan}
+  </p>
+</section>
+
+<style>
+  @media (min-width: 1280px) {
+    .chip {
+      left: var(--x);
+      top: var(--y);
+      width: max-content;
+      min-width: var(--w);
+      transform: translate(-50%, -50%) rotate(var(--r));
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+    .chip:hover {
+      transform: translate(-50%, -50%) rotate(0deg) scale(1.04);
+      z-index: 2;
+    }
+    /* Mirror the scatter for left-to-right languages; longer labels grow the chip but keep it on the stage. */
+    :global([dir='ltr']) .chip {
+      left: clamp(170px, calc(100% - var(--x)), calc(100% - 170px));
+      width: max-content;
+      min-width: min(var(--w), 240px);
+      max-width: 340px;
+      transform: translate(-50%, -50%) rotate(calc(var(--r) * -1));
+    }
+    :global([dir='ltr']) .chip span:last-child {
+      font-size: 14px;
+      white-space: normal;
+      line-height: 1.35;
+    }
+    :global([dir='ltr']) .chip:hover {
+      transform: translate(-50%, -50%) rotate(0deg) scale(1.04);
+    }
+  }
+</style>

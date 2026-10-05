@@ -91,7 +91,13 @@ const sections = [
     }
 
     <div class="mt-16 lg:mt-[116px]">
-      <DemoRequestForm locale={locale} copy={{ title: t.demoTitle }} />
+      <!-- Figma 33:10528: laptop photo (image 43) on #5871af under rgba(22,52,125,0.65). -->
+      <DemoRequestForm
+        locale={locale}
+        copy={{ title: t.demoTitle }}
+        photo="/images/knowledge/demo-photo.webp"
+        overlay="bg-[rgba(22,52,125,0.65)]"
+      />
     </div>
     <Faq locale={locale} title={t.faq.title} items={t.faq.items} spacing="pb-14 pt-14 lg:pb-[184px] lg:pt-[97px]" />
   </main>

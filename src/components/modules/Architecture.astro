@@ -31,7 +31,7 @@ for (let i = 0; i < cards.length; i += 2) rows.push(cards.slice(i, i + 2));
                 {row.map((card) => (
                   <article class="arch-card relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] pb-6 pe-6 ps-6 pt-[26px] lg:min-h-[234px] lg:ps-[39px]">
                     <h3 class="relative flex items-center text-[16px] font-bold leading-normal text-title lg:text-title-3">
-                      <img src={moduleImages.titleDot} alt="" width="38" height="38" class="absolute -start-[30px] top-1/2 size-[38px] -translate-y-1/2 lg:-start-[47px]" />
+                      <img src={moduleImages.titleDot} alt="" width="38" height="38" class="absolute -start-[30px] top-1/2 hidden size-[38px] -translate-y-1/2 sm:block lg:-start-[47px]" />
                       <span class="relative ps-[11px]">{card.title}</span>
                     </h3>
                     <ul class="arch-list mt-[15px] text-[14px] leading-7 text-body lg:text-15 lg:leading-8">
@@ -52,7 +52,7 @@ for (let i = 0; i < cards.length; i += 2) rows.push(cards.slice(i, i + 2));
       stakeholders.length > 0 && (
         <article class:list={['arch-card relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] px-4 pb-6 pt-[26px] lg:px-[21px]', cards.length ? 'mt-4 lg:mt-[22px]' : '']}>
           <h2 class="relative flex items-center ps-[11px] text-[16px] font-bold leading-normal text-title lg:ps-[25px] lg:text-title-3">
-            <img src={moduleImages.titleDot} alt="" width="38" height="38" class="absolute -start-[14px] top-1/2 size-[38px] -translate-y-1/2 lg:-start-[32px]" />
+            <img src={moduleImages.titleDot} alt="" width="38" height="38" class="absolute -start-[14px] top-1/2 hidden size-[38px] -translate-y-1/2 sm:block lg:-start-[32px]" />
             <span class="relative">{fill(t.stakeholders, { S: name })}</span>
           </h2>
           <ul class="mt-6 grid grid-cols-1 gap-[10px] md:grid-cols-3 lg:mt-[23px]">

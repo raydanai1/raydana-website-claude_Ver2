@@ -17,7 +17,8 @@ import {
   relatedItems,
   type KnowledgeItem,
 } from '../../data/knowledge';
-import { fill, locales, type Locale, useTranslations } from '../../i18n';
+import { fill, fullLocales, type Locale, useTranslations } from '../../i18n';
+import { articleSchema, breadcrumbList } from '../../seo';
 
 interface Props {
   locale: Locale;
@@ -31,11 +32,13 @@ const items = await getKnowledgeItems(locale);
 const archive = items.filter((i) => i.slug !== item.slug).slice(0, 5);
 const related = relatedItems(items, item);
 
-// The language switch goes to the translation, or to the other knowledge base home when there is none.
-const otherLocale: Locale = locale === 'fa' ? 'en' : 'fa';
-const translated = (await getKnowledgeSlugs(otherLocale)).has(item.slug);
-const switchHref = translated ? knowledgeItemPath(item.slug, otherLocale) : knowledgeBase(otherLocale);
-const available = locales.filter((l) => l === locale || translated);
+// The language switch goes to each translation, or to that language's knowledge base when there is none.
+const translatedIn = new Set<Locale>();
+for (const l of fullLocales) if (l === locale || (await getKnowledgeSlugs(l)).has(item.slug)) translatedIn.add(l);
+const switchHrefs = Object.fromEntries(
+  fullLocales.map((l) => [l, translatedIn.has(l) ? knowledgeItemPath(item.slug, l) : knowledgeBase(l)]),
+) as Record<Locale, string>;
+const available = fullLocales.filter((l) => translatedIn.has(l));
 const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jpg' })).src;
 ---
 
@@ -47,8 +50,15 @@ const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jp
   available={available}
   ogImage={ogImage}
   ogType="article"
+  jsonLd={[
+    articleSchema(locale, item, ogImage),
+    breadcrumbList(locale, [
+      [t.title, 'knowledge'],
+      [item.data.title, `knowledge/${item.slug}`],
+    ]),
+  ]}
 >
-  <Header locale={locale} page={`knowledge/${item.slug}`} switchHref={switchHref} />
+  <Header locale={locale} page={`knowledge/${item.slug}`} switchHrefs={switchHrefs} />
   <main id="main">
     <article>
       <!-- Figma 2015:6373: 1318×438 cover, radius 18, 0.78px #dbe1ff border. -->
@@ -96,7 +106,7 @@ const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jp
                       <span class="flex min-w-0 flex-1 flex-col">
                         <span class="line-clamp-2 text-15 font-bold leading-8 text-ink group-hover:text-primary">{a.data.title}</span>
                         <span class="mt-auto flex items-center justify-between gap-2">
-                          <time datetime={isoDate(a.data.date)} class="flex items-center gap-2 whitespace-nowrap text-[14px] leading-8 text-[#aeb3bd] lg:text-15">
+                          <time datetime={isoDate(a.data.date)} class="flex items-center gap-2 whitespace-nowrap text-[14px] leading-8 text-muted lg:text-15">
                             <img src={knowledgeImages.calendarGrey} alt="" width="14.6364" height="16" class="h-[15px] w-auto" />
                             {formatKnowledgeDate(a.data.date, locale)}
                           </time>

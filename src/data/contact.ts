@@ -25,8 +25,8 @@ export interface ContactCard {
   icon: string;
   iconW: number;
   iconH: number;
-  /** Phone as shown (Latin digits; localized for fa) and as dialled. */
-  phone?: { display: string; tel: string };
+  /** Phone as shown (Latin digits; localized for fa) and as dialled; `fax` labels it as the fax number. */
+  phone?: { display: string; tel: string; fax?: boolean };
   email?: string;
   /** Button target: the map section or a mailto link. */
   href: string;
@@ -40,7 +40,7 @@ export const contactCards: ContactCard[] = [
     icon: img('icon-management.svg'),
     iconW: 81.3596,
     iconH: 81.3595,
-    phone: { display: '+98 (21) 8876 5311', tel: '+982188765311' },
+    phone: { display: '+98 (21) 8876 5311', tel: '+982188765311', fax: true },
     email: 'info@raydana.com',
     href: 'mailto:info@raydana.com',
   },

@@ -1,0 +1,28 @@
+---
+/** Not-found page in one language (served by the host for unknown URLs under that language). */
+import Layout from '../layouts/Layout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Button from './ui/Button.astro';
+import { homePath, localizeDigits, pagePath, type Locale, useTranslations } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<Layout locale={locale} title={t.notFound.title} description={t.notFound.text} available={[locale]} noindex>
+  <Header locale={locale} />
+  <main id="main" class="container-x flex min-h-[50vh] flex-col items-center justify-center gap-4 py-24 text-center">
+    <p class="text-[56px] font-bold text-primary">{localizeDigits('404', locale)}</p>
+    <h1 class="section-title">{t.notFound.title}</h1>
+    <p class="text-body">{t.notFound.text}</p>
+    <div class="mt-4 flex flex-wrap justify-center gap-3">
+      <Button href={homePath(locale)}>{t.notFound.home}</Button>
+      <Button href={pagePath('products', locale)} variant="outline">{t.nav.products}</Button>
+    </div>
+  </main>
+  <Footer locale={locale} />
+</Layout>

@@ -1,4 +1,5 @@
 ---
+import { breadcrumbList } from '../../seo';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
@@ -17,7 +18,13 @@ const t = useTranslations(locale);
 const ctaHref = `${homePath(locale)}#demo`;
 ---
 
-<Layout locale={locale} page="products" title={t.products.meta.title} description={t.products.meta.description}>
+<Layout
+  locale={locale}
+  page="products"
+  title={t.products.meta.title}
+  description={t.products.meta.description}
+  jsonLd={[breadcrumbList(locale, [[t.nav.products, 'products']])]}
+>
   <Header locale={locale} page="products" />
   <main id="main">
     <ProductsHero locale={locale} ctaHref={ctaHref} />

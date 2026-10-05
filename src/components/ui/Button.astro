@@ -8,9 +8,11 @@ interface Props {
   variant?: 'primary' | 'outline' | 'white' | 'violet' | 'violet-outline';
   class?: string;
   arrow?: boolean;
+  /** Extra screen-reader text after the visible text when that alone is not descriptive (e.g. "Read more"). */
+  label?: string;
 }
 
-const { href = '#', variant = 'primary', class: className = '', arrow = true } = Astro.props;
+const { href = '#', variant = 'primary', class: className = '', arrow = true, label } = Astro.props;
 
 const styles = {
   primary: 'bg-primary text-light hover:bg-primary-dark',
@@ -34,5 +36,6 @@ const arrowSrc = variant === 'primary' || variant === 'violet' || variant === 'v
   ]}
 >
   <slot />
+  {label && <span class="sr-only"> – {label}</span>}
   {arrow && <img src={arrowSrc} alt="" width="12.5" height="11" class="dir-icon h-[11px] w-[12.5px]" />}
 </a>

@@ -36,7 +36,7 @@ const t = useTranslations(locale).knowledge;
                 <a href={item.href} class="hover:text-primary">{item.data.title}</a>
               </h2>
               <p class="mt-3 line-clamp-5 text-15 leading-8 text-[#616d8f] lg:mt-[7px] lg:line-clamp-none rtl:lg:text-justify">{item.data.summary}</p>
-              <Button href={item.href} class="mt-6 lg:mt-[11px]">{t.readMore}</Button>
+              <Button href={item.href} class="mt-6 lg:mt-[11px]" label={item.data.title}>{t.readMore}</Button>
             </div>
 
             <!-- 452×366 hexagon art: pale back hexagon, white card, cover cut to the hexagon, small blue hexagon. -->
@@ -45,6 +45,7 @@ const t = useTranslations(locale).knowledge;
               class="relative order-first mx-auto block aspect-[452/366] w-full max-w-[340px] shrink-0 sm:max-w-[400px] lg:order-last lg:me-[35px] lg:ms-0 lg:mt-[4px] lg:w-[452px] lg:max-w-none"
               tabindex="-1"
               aria-hidden="true"
+              aria-label={item.data.title}
             >
               <img src={knowledgeImages.hexBack} alt="" width="313.501" height="359.555" class="absolute left-[5.365%] top-[1.43%] w-[69.36%]" />
               <img src={knowledgeImages.hexCard} alt="" width="340.305" height="381.224" class="absolute left-[15.23%] top-[-0.17%] h-[104.16%] w-[75.29%] max-w-none" />
@@ -67,16 +68,16 @@ const t = useTranslations(locale).knowledge;
 
     {
       items.length > 1 && (
-        <div class="mt-8 flex justify-center gap-[10px] lg:absolute lg:inset-x-0 lg:bottom-[35px] lg:mt-0">
+        <div class="mt-6 flex justify-center lg:absolute lg:inset-x-0 lg:bottom-[21px] lg:mt-0">
           {items.map((_, i) => (
             <button
               type="button"
-              class="size-2 rounded-full bg-[#d9d9d9] transition-colors aria-[current=true]:bg-violet"
+              class="group flex size-11 items-center justify-center"
               aria-label={fill(t.slide, { N: localizeDigits(i + 1, locale) })}
               aria-current={i === 0 ? 'true' : 'false'}
               data-dot={i}
             >
-              <span class="sr-only">{i + 1}</span>
+              <span class="size-2 rounded-full bg-[#d9d9d9] transition-colors group-aria-[current=true]:bg-violet" />
             </button>
           ))}
         </div>

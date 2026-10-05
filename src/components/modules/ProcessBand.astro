@@ -78,12 +78,12 @@ const hex =
                       <ul class="flex flex-col gap-3">
                         {step.groups.map((g) => (
                           <li>
-                            <p class="flex items-start gap-[11px] text-small font-medium leading-6 text-ink">
+                            <p class="flex items-start gap-[11px] text-[14px] lg:text-small font-medium leading-6 text-ink">
                               <img src={moduleImages.popoverCheck} alt="" width="9.68" height="7.42" class="mt-[8px] w-[10px] shrink-0" />
                               <span>{g.text}</span>
                             </p>
                             {g.sub.length > 0 && (
-                              <ul class="step-sub mt-1 text-small font-medium leading-[22px] text-muted">
+                              <ul class="step-sub mt-1 text-[14px] lg:text-small font-medium leading-[22px] text-muted">
                                 {g.sub.map((sub) => (
                                   <li>{sub}</li>
                                 ))}

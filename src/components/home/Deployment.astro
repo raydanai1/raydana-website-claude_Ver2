@@ -1,0 +1,96 @@
+---
+/** Cloud vs on-premise cards (Figma 2:27283). */
+import Button from '../ui/Button.astro';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+// Cloud illustration pieces, in card-local Figma coordinates (card origin 736,2289).
+const cloudParts: { src: string; x: number; y: number; w: number; h: number; flip?: boolean }[] = [
+  { src: 'net.svg', x: 33.93, y: 73.78, w: 364.63, h: 295.74 },
+  { src: 'p1.svg', x: 202.98, y: 215.16, w: 32.22, h: 31.2 },
+  { src: 'p2.svg', x: 247.21, y: 232, w: 44.13, h: 42.73 },
+  { src: 'p3.svg', x: 347.34, y: 90.04, w: 39.98, h: 38.71 },
+  { src: 'p4.svg', x: 78.06, y: 40, w: 39.98, h: 38.71 },
+  { src: 'p5.svg', x: 302.21, y: 258, w: 39.98, h: 27.2, flip: true },
+  { src: 'p6.svg', x: 116.96, y: 215.78, w: 21.5, h: 20.16, flip: true },
+  { src: 'p7.svg', x: 297.97, y: 104.43, w: 21.5, h: 10.77, flip: true },
+  { src: 'p8.svg', x: 297.22, y: 90.04, w: 21.5, h: 20.16 },
+  { src: 'p9.svg', x: 202, y: 283, w: 56.84, h: 49.5, flip: true },
+  { src: 'p10.svg', x: 70, y: 286, w: 136, h: 52, flip: true },
+  { src: 'p11.svg', x: 387, y: 298, w: 44.13, h: 42.73 },
+  { src: 'p12.svg', x: 185, y: 319, w: 32.22, h: 31.2 },
+  { src: 'p13.svg', x: 23, y: 313, w: 39.98, h: 38.71 },
+  { src: 'glow.svg', x: 36.21, y: 100, w: 297, h: 188 },
+  { src: 'cloud.webp', x: 15.21, y: 51, w: 298.88, h: 298.88 },
+];
+---
+
+<section id="deploy" class="container-x mt-14 scroll-mt-28 lg:mt-[102px]" aria-label={`${t.deploy.cloud.title} / ${t.deploy.onPremise.title}`}>
+  <div class="grid gap-4 lg:grid-cols-2 lg:gap-6">
+    <!-- Cloud (Figma s2) -->
+    <article class="relative isolate flex flex-col overflow-hidden rounded-3xl lg:h-[410px] lg:flex-row lg:items-center">
+      <img
+        src="/images/home/cloud/bg-photo.webp"
+        alt=""
+        width="1536"
+        height="864"
+        loading="lazy"
+        class="absolute inset-0 -z-20 size-full object-cover"
+      />
+      <div class="absolute inset-0 -z-10 bg-[rgba(22,52,125,0.65)] backdrop-blur-[2.5px]"></div>
+
+      <div class="relative z-10 order-2 px-6 pb-8 lg:order-1 lg:w-[45%] lg:shrink-0 lg:pb-0 lg:pe-0 lg:ps-[45px]">
+        <h3 class="text-[20px] font-bold leading-[1.5] text-white lg:text-title-2 lg:leading-[35px]">{t.deploy.cloud.title}</h3>
+        <p class="mt-2 text-[16px] font-bold text-white lg:mt-[13px] lg:text-title-3" dir="ltr">{t.deploy.cloud.subtitle}</p>
+        <Button href={pagePath('cloud', locale)} variant="white" class="mt-6 lg:mt-[29px]" label={t.deploy.cloud.title}>{t.cta.learnMore}</Button>
+      </div>
+
+      <div class="relative order-1 mx-auto w-full max-w-[330px] sm:max-w-[440px] lg:order-2 lg:me-0 lg:ms-auto">
+        <svg viewBox="0 30 440 330" class="block h-auto w-full ltr:-scale-x-100" role="img" aria-label={t.deploy.cloud.alt}>
+          {
+            cloudParts.map((p) => (
+              <image
+                href={`/images/home/cloud/${p.src}`}
+                x={p.x}
+                y={p.y}
+                width={p.w}
+                height={p.h}
+                preserveAspectRatio="none"
+                transform={p.flip ? `translate(${2 * p.x + p.w} 0) scale(-1 1)` : undefined}
+              />
+            ))
+          }
+        </svg>
+      </div>
+    </article>
+
+    <!-- On-premise (Figma s1) -->
+    <article
+      class="relative isolate flex flex-col overflow-hidden rounded-3xl border border-white bg-[#e8eaf6] lg:h-[410px] lg:flex-row lg:items-center"
+    >
+      <div class="absolute inset-0 -z-10 rtl:bg-gradient-to-l ltr:bg-gradient-to-r from-[#e8eaf6] to-[#ebf1ff] to-[65%]"></div>
+
+      <div class="order-2 px-6 pb-8 lg:order-1 lg:w-[45%] lg:shrink-0 lg:pb-0 lg:ps-[49px] min-[87.5rem]:w-[341px] min-[87.5rem]:pe-0">
+        <h3 class="text-[20px] font-bold leading-[1.5] text-[#1a256d] lg:text-title-2 lg:leading-[37px]">{t.deploy.onPremise.title}</h3>
+        <p class="mt-2 text-[16px] font-bold text-[#1a256d] lg:mt-[18px] lg:text-title-3" dir="ltr">{t.deploy.onPremise.subtitle}</p>
+        <Button href={pagePath('contact', locale)} variant="white" class="mt-6 lg:mt-[28px]" label={t.deploy.onPremise.title}>{t.cta.learnMore}</Button>
+      </div>
+
+      <div class="order-1 flex justify-center py-6 lg:order-2 lg:me-[58px] lg:ms-auto lg:py-0">
+        <img
+          src="/images/home/cloud/onprem-servers.webp"
+          alt={t.deploy.onPremise.alt}
+          width="509"
+          height="644"
+          loading="lazy"
+          class="h-auto w-[170px] mix-blend-multiply sm:w-[200px] lg:w-[254px]"
+        />
+      </div>
+    </article>
+  </div>
+</section>

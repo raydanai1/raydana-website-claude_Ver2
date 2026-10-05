@@ -11,6 +11,7 @@ import Faq from '../cloud/Faq.astro';
 import { demoOverlay, moduleImages, modulePage, type Module } from '../../data/modules';
 import { cloudImages } from '../../data/cloud';
 import { fill, type Locale, useTranslations } from '../../i18n';
+import { breadcrumbList } from '../../seo';
 
 interface Props {
   locale: Locale;
@@ -20,12 +21,22 @@ const { locale, module } = Astro.props;
 const t = useTranslations(locale).modules;
 const text = module[locale];
 const N = text.name;
-const tabs = (module.features ?? []).map((f, i) => ({ key: String(i + 1), label: f[locale].tab, items: f[locale].items }));
-const faq = (module.faq ?? []).map((f) => f[locale]);
+// Feature tabs: explicit data, otherwise one tab per subsystem listing its benefits (Figma 2:15565 tab row).
+const page = modulePage(module.id);
+const breadcrumb = breadcrumbList(locale, [
+  [useTranslations(locale).nav.products, 'products'],
+  [N, page],
+]);
+const tabs = module.features?.length
+  ? module.features.map((f, i) => ({ key: String(i + 1), label: f[locale].tab, items: f[locale].items }))
+  : module.subsystems.map((s) => ({ key: s.id, label: s[locale].name, items: s[locale].benefits }));
+const faq = module.faq?.length
+  ? module.faq.map((f) => f[locale])
+  : (t.faq as { q: string; a: string }[]).map((f) => ({ q: fill(f.q, { N }), a: fill(f.a, { N }) }));
 ---
 
 <!-- Figma «detail-product-modules» (2:15565). -->
-<Layout locale={locale} page={modulePage(module.id)} title={fill(t.metaTitle, { N })} description={text.tagline}>
+<Layout locale={locale} page={modulePage(module.id)} title={fill(t.metaTitle, { N })} description={text.description} jsonLd={[breadcrumb]}>
   <Header locale={locale} page={modulePage(module.id)} />
   <main id="main">
     <ModuleHero locale={locale} tagline={text.tagline} description={text.description} illustration={moduleImages.heroHexes}>
@@ -56,7 +67,7 @@ const faq = (module.faq ?? []).map((f) => f[locale]);
       overlay={demoOverlay}
       height="lg:min-h-[616px]"
     />
-    {faq.length > 0 && <Faq locale={locale} items={faq} spacing="pb-14 pt-14 lg:pb-[150px] lg:pt-[60px]" />}
+    {faq.length > 0 && <Faq locale={locale} title={t.faqTitle} items={faq} spacing="pb-14 pt-14 lg:pb-[70px] lg:pt-[60px]" />}
   </main>
   <Footer locale={locale} />
 </Layout>

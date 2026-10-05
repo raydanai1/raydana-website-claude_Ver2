@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { localeInfo, pagePath, locales, type Locale, type Page, useTranslations } from '../i18n';
+import { fullLocales, homePath, isTranslated, localeInfo, locales, pagePath, type Locale, type Page, useTranslations } from '../i18n';
 
 interface Props {
   locale: Locale;
@@ -9,50 +9,127 @@ interface Props {
   /** Page-specific title and description (defaults to the homepage meta). */
   title?: string;
   description?: string;
-  /** Languages this page exists in (for hreflang); defaults to all. */
+  /** Languages this page exists in (for hreflang); defaults to every language it is translated into. */
   available?: readonly Locale[];
   /** Share image (absolute path or URL) and Open Graph type, e.g. for knowledge base articles. */
   ogImage?: string;
   ogType?: 'website' | 'article';
+  /** Text that needs the Nastaliq font (customer names on the homepage); loads a subset of Noto Nastaliq Urdu. */
+  nastaliqText?: string;
+  /** Keep the page out of search results (404 pages). */
+  noindex?: boolean;
+  /** Page-specific schema.org objects (Article, BreadcrumbList, FAQPage…); Organization is added on every page. */
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { locale, page = 'home', available = locales, ogImage = '/images/hero/hero-bg.webp', ogType = 'website' } = Astro.props;
+const { locale, page = 'home', ogImage = '/images/home/og-image.jpg', ogType = 'website', nastaliqText, noindex = false, jsonLd = [] } = Astro.props;
+const nastaliqHref = nastaliqText
+  ? `https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400&display=swap&text=${encodeURIComponent([...new Set(nastaliqText)].join(''))}`
+  : undefined;
+const available = Astro.props.available ?? locales.filter((l) => isTranslated(page, l));
 const t = useTranslations(locale);
-const title = Astro.props.title ?? t.meta.title;
-const description = Astro.props.description ?? t.meta.description;
-const { dir, htmlLang, ogLocale } = localeInfo[locale];
+// Search-friendly lengths: titles up to 65 characters, descriptions 120–160.
+const clip = (text: string, max: number) =>
+  text.length <= max ? text : `${text.slice(0, text.lastIndexOf(' ', max - 1)).replace(/[\s,،;:–-]+$/, '')}…`;
+const fullTitle = Astro.props.title ?? t.meta.title;
+// Too long: drop the " | brand" suffix first, then shorten.
+const title = fullTitle.length <= 65 ? fullTitle : clip(fullTitle.split(' | ')[0], 65);
+const baseDescription = Astro.props.description ?? t.meta.description;
+const description =
+  baseDescription.length < 120 && baseDescription !== t.meta.description
+    ? clip(`${baseDescription} ${t.meta.description}`, 160)
+    : clip(baseDescription, 160);
+const { dir, htmlLang, ogLocale, font } = localeInfo[locale];
 const site = Astro.site ?? new URL('https://raydana.com');
-const canonical = new URL(pagePath(page, locale), site).href;
+const abs = (path: string) => new URL(path, site).href;
+const canonical = abs(pagePath(page, locale));
+// x-default points at the Persian version (the site's main language) when there is one.
+const xDefault = available.includes('fa') ? 'fa' : (available.find((l) => (fullLocales as readonly Locale[]).includes(l)) ?? available[0]);
+
+// schema.org: the organization on every page, plus whatever the page adds.
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${abs('/')}#organization`,
+  name: t.meta.siteName,
+  alternateName: ['Raydana', 'رای‌دانا', 'CYBER ERP'],
+  url: abs(homePath(locale)),
+  logo: abs('/icon-512.png'),
+  email: 'info@raydana.com',
+  telephone: '+982188548676',
+  faxNumber: '+982188765311',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: t.contact.cards.address.text,
+    addressLocality: 'Tehran',
+    postalCode: '1554843315',
+    addressCountry: 'IR',
+  },
+  contactPoint: [
+    { '@type': 'ContactPoint', contactType: 'sales', telephone: '+982188548676', email: 'sales@raydana.com' },
+    { '@type': 'ContactPoint', contactType: 'customer support', telephone: '+982188548802', email: 'support@raydana.com' },
+  ],
+};
+const schema = [organization, ...jsonLd.map((o) => ({ '@context': 'https://schema.org', ...o }))];
+// Keep "</" out of the inline script.
+const schemaJson = JSON.stringify(schema.length === 1 ? schema[0] : schema).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
-<html lang={htmlLang} dir={dir}>
+<html lang={htmlLang} dir={dir} data-font={font}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {available.length > 1 && available.map((l) => <link rel="alternate" hreflang={l} href={new URL(pagePath(page, l), site).href} />)}
-    {available.length > 1 && <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, available[0]), site).href} />}
+    {available.length > 1 && available.map((l) => <link rel="alternate" hreflang={localeInfo[l].htmlLang} href={abs(pagePath(page, l))} />)}
+    {available.length > 1 && <link rel="alternate" hreflang="x-default" href={abs(pagePath(page, xDefault))} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#0b518c" />
     <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={t.meta.siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale} />
-    <meta property="og:image" content={new URL(ogImage, site).href} />
-    <link rel="preload" href="/fonts/IRANSansX-Bold.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/fonts/IRANSansX-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <!-- Vazirmatn is only used if IRANSansX fails to load. -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css"
-      media="print"
-      onload="this.media='all'"
-    />
+    {available.filter((l) => l !== locale).map((l) => <meta property="og:locale:alternate" content={localeInfo[l].ogLocale} />)}
+    <meta property="og:image" content={abs(ogImage)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Decorative font subsets load without blocking first paint. -->
+    {nastaliqHref && <link rel="stylesheet" href={nastaliqHref} media="print" onload="this.media='all'" />}
+    {font !== 'inter' && <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap&text=FAENRUBIEformPMS-" media="print" onload="this.media='all'" />}
+    {
+      font === 'inter' ? (
+        <>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+        </>
+      ) : (
+        <>
+          <!-- IRANSansX (fa / en / ar): preload the two weights used above the fold. -->
+          <link rel="preload" href="/fonts/IRANSansX-Bold.woff2" as="font" type="font/woff2" crossorigin />
+          <link rel="preload" href="/fonts/IRANSansX-Regular.woff2" as="font" type="font/woff2" crossorigin />
+          {dir === 'rtl' && (
+            <>
+              <!-- Vazirmatn is only used if IRANSansX fails to load (Persian/Arabic script). -->
+              <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+              <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css"
+                media="print"
+                onload="this.media='all'"
+              />
+            </>
+          )}
+        </>
+      )
+    }
+    <script type="application/ld+json" set:html={schemaJson} />
   </head>
   <body>
     <a

@@ -1,0 +1,47 @@
+---
+/**
+ * Dark call-to-action strips: "dark" = Figma 2067:3912 (72px, blue buttons, after the tools section),
+ * "banner" = Figma 2:27946 (95px, violet buttons, before the implementation process).
+ */
+import Button from '../ui/Button.astro';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  variant?: 'dark' | 'banner';
+  text: string;
+  class?: string;
+}
+const { locale, variant = 'dark', text, class: className = '' } = Astro.props;
+const t = useTranslations(locale);
+const isBanner = variant === 'banner';
+const contact = pagePath('contact', locale);
+---
+
+<div class:list={['relative z-10 mx-auto w-full px-4 sm:px-6', isBanner ? 'max-w-[1352px] lg:px-4' : 'max-w-[1358px] lg:px-4', className]}>
+  <div
+    class:list={[
+      'flex flex-col items-center justify-between gap-4 bg-gradient-to-r from-[#0e0e1a] to-[#12126b] px-5 py-6 text-center lg:flex-row lg:text-start',
+      isBanner
+        ? 'rounded-[32px] shadow-banner lg:h-[95px] lg:rounded-[74px] lg:py-0 lg:ps-[37px] lg:pe-[20px]'
+        : 'rounded-[32px] lg:h-[72px] lg:rounded-[42px] lg:py-0 lg:ps-[14px] lg:pe-[14px]',
+    ]}
+  >
+    <p class:list={['text-15 font-bold leading-7 text-light lg:text-title-3', !isBanner && 'lg:w-[522px] lg:text-center']}>{text}</p>
+    <div class="grid w-full grid-cols-1 gap-3 sm:w-auto sm:grid-cols-2 lg:flex lg:gap-[26px]">
+      {
+        isBanner ? (
+          <>
+            <Button href={contact} variant="violet-outline" class="w-full sm:w-auto">{t.cta.demo}</Button>
+            <Button href={contact} variant="violet" class="w-full sm:w-auto">{t.cta.consult}</Button>
+          </>
+        ) : (
+          <>
+            <Button href={contact} variant="white" class="w-full sm:w-auto">{t.cta.consult}</Button>
+            <Button href={contact} class="w-full sm:w-auto">{t.cta.demo}</Button>
+          </>
+        )
+      }
+    </div>
+  </div>
+</div>

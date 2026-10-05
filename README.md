@@ -86,3 +86,37 @@ IRANSansX (Regular 400, Medium 500, Bold 700) is self-hosted from `public/fonts`
 IRANSansX is a commercial font, so make sure your licence covers web use.
 
 
+
+## Languages and URLs (upgrade v3)
+
+| Language | Home | Direction | Font | Status |
+| -------- | ---- | --------- | ---- | ------ |
+| Persian | `/` | RTL | IRANSansX, Persian digits | all pages |
+| English | `/en/` | LTR | IRANSansX | all pages |
+| Russian | `/ru/` | LTR | Inter (IRANSansX has no Cyrillic) | all pages |
+| Arabic | `/ar/` | RTL | IRANSansX, Arabic ي/ك and digits | all pages |
+
+- **Text:** `src/i18n/fa.json`, `en.json`, `ru.json`, `ar.json`. A key added later and missing from `ru.json`/`ar.json` falls back to English.
+  Module/subsystem text: `src/data/modules/<id>.json` (fa, en) and `src/data/modules/i18n/<id>.<ru|ar>.json`.
+  Knowledge articles: `src/content/knowledge/<slug>/{fa,en,ru,ar}.md`.
+  A side-by-side review table of all texts is in `docs/translations-v3.xlsx`.
+  Shared terminology: `src/i18n/GLOSSARY.md`.
+- **URL slugs:** one file per language in `src/i18n/routes/` (`fa.ts`, `en.ts`, `ru.ts`, `ar.ts`). Persian URLs use
+  Persian words, e.g. `/محصولات/مدیریت-مالی/`. Change a slug there, and every link, the sitemaps and the language
+  switch update.
+- **Routing:** every page is built by the single route file `src/pages/[...path].astro` from the table in `src/routing.ts`.
+- **SEO:** each page has hreflang tags for its translations plus x-default (Persian), and translated title,
+  description and Open Graph tags. There is one sitemap per language (`/sitemap-fa.xml` and so on), a
+  `/sitemap-index.xml`, and `/robots.txt`.
+- **Redirects:** the old Persian URLs (`/products/…`, `/services/`, …) redirect to the new Persian URLs. The build
+  writes Apache rules to `dist/.htaccess` (301) and also creates meta-refresh fallback pages for other hosts.
+  English URLs did not change.
+- **Homepage:** built from Figma file `esbwi68Qf1BhHNaNeK6vhV`, frame `2:19786`. Sections are in `src/components/home/`;
+  layout data and Figma coordinates are in `src/data/home.ts`; images are in `public/images/home/`.
+- **SEO and PWA basics:** Organization JSON-LD on every page (`src/layouts/Layout.astro`), Article / BreadcrumbList helpers in
+  `src/seo.ts`, FAQPage from the FAQ component. Titles are capped at 65 characters and descriptions kept at 120–160 by the layout.
+  `/apple-touch-icon.png`, `/site.webmanifest`, and a 404 page per language (`/404.html`, `/en/404/`, `/ru/404/`, `/ar/404/`).
+- **Contact map:** a static map image (`public/images/contact/map-static.webp`, © OpenStreetMap contributors) shows first; the
+  interactive OpenStreetMap embed loads only when the visitor clicks "Interactive map".
+- **Hidden content:** the banknote-recognition article is `draft: true` until its full text arrives; social icons and the
+  "Standards" footer link are hidden until their URLs exist.

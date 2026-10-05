@@ -15,11 +15,11 @@ const active = Astro.props.active ?? pills[0]?.category;
 const t = useTranslations(locale).knowledge;
 ---
 
-<!-- Figma 33:10801 (filled, 178×52) and 33:10804 (outline, 192×52). Scrolls sideways on small screens. -->
+<!-- Figma 33:10801 (filled, 178×52) and 33:10804 (outline, 192×52). Wraps (centred) on small screens, inside the page gutter. -->
 {
   pills.length > 0 && (
-    <nav aria-label={t.categories} class:list={['-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0', className]}>
-      <ul class="flex w-max gap-[14px] py-2 sm:mx-auto">
+    <nav aria-label={t.categories} class={className}>
+      <ul class="flex flex-wrap justify-center gap-[10px] py-2 sm:gap-[14px]">
         {pills.map(({ category, href }) => {
           const on = category === active;
           return (
@@ -28,7 +28,7 @@ const t = useTranslations(locale).knowledge;
                 href={href}
                 aria-current={on ? 'true' : undefined}
                 class:list={[
-                  'flex h-[52px] items-center gap-1 whitespace-nowrap rounded-[33px] px-[14px] text-base font-medium leading-6 transition duration-200',
+                  'flex h-12 items-center gap-1 whitespace-nowrap rounded-[33px] px-[14px] text-15 sm:h-[52px] sm:text-base font-medium leading-6 transition duration-200',
                   on
                     ? 'bg-[linear-gradient(90deg,#0968ff_2.756%,#6b68ff)] text-white shadow-[0_0_16px_rgba(55,183,195,0.25)]'
                     : 'border border-[#c4d3fb] bg-[rgba(213,224,252,0.1)] text-[#0f53f8] hover:border-[#0f53f8] hover:bg-[rgba(213,224,252,0.35)]',

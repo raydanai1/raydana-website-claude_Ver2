@@ -42,24 +42,27 @@ const single = testimonials.length < 2;
     </div>
   </div>
 
-  <div class="mt-6 flex items-center justify-center gap-2 p-2">
-    <button type="button" class="p-2 disabled:opacity-40" aria-label={t.a11y.prev} data-prev disabled={single}>
+  <!-- Controls only when there is more than one story. -->
+  <div class:list={['mt-6 flex items-center justify-center gap-2', single && 'hidden']}>
+    <button type="button" class="flex size-11 items-center justify-center disabled:opacity-40" aria-label={t.a11y.prev} data-prev disabled={single}>
       <img src="/images/testimonials/arrow-right.svg" alt="" width="24" height="24" class="ltr:-scale-x-100" />
     </button>
-    <div class="flex items-center gap-2.5 p-2" data-dots>
+    <div class="flex items-center" data-dots>
       {
         testimonials.map((_, i) => (
           <button
             type="button"
-            class="dot size-3 rounded-full bg-[#c8c8d0] transition-all aria-[current=true]:size-4 aria-[current=true]:bg-violet"
+            class="dot group flex size-11 items-center justify-center"
             aria-label={`${t.a11y.slide} ${i + 1}`}
             aria-current={i === 0 ? 'true' : 'false'}
             data-dot={i}
-          ></button>
+          >
+            <span class="size-3 rounded-full bg-[#c8c8d0] transition-all group-aria-[current=true]:size-4 group-aria-[current=true]:bg-violet" />
+          </button>
         ))
       }
     </div>
-    <button type="button" class="p-2 disabled:opacity-40" aria-label={t.a11y.next} data-next disabled={single}>
+    <button type="button" class="flex size-11 items-center justify-center disabled:opacity-40" aria-label={t.a11y.next} data-next disabled={single}>
       <img src="/images/testimonials/arrow-left.svg" alt="" width="24" height="24" class="ltr:-scale-x-100" />
     </button>
   </div>

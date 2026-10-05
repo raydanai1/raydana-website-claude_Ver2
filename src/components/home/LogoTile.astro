@@ -1,0 +1,53 @@
+---
+/**
+ * One 96×96 customer logo tile (Figma "kay partners" tiles): logo image plus an HTML caption so the name
+ * can be translated. Persian/Arabic calligraphic names use a Nastaliq font; other languages the body font.
+ */
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  logo: {
+    key: string;
+    src: string;
+    img: readonly number[];
+    blend?: string;
+    captionKey?: string;
+    caption?: { top: number; size: number; color: string; nastaliq?: boolean; country?: boolean };
+  };
+  decorative?: boolean;
+  class?: string;
+}
+const { locale, logo, decorative = false, class: className = '' } = Astro.props;
+const t = useTranslations(locale);
+const names = t.logos as Record<string, string>;
+const [x, y, w, h] = logo.img;
+const rtlScript = locale === 'fa' || locale === 'ar';
+const cap = logo.caption;
+const captionText = cap ? names[logo.captionKey ?? logo.key] : '';
+const nastaliq = cap?.nastaliq && rtlScript;
+---
+
+<figure class:list={['relative size-24 shrink-0 overflow-hidden', className]} aria-hidden={decorative ? 'true' : undefined}>
+  <img
+    src={logo.src}
+    alt={decorative ? '' : names[logo.key]}
+    width={Math.round(w)}
+    height={Math.round(h)}
+    loading="lazy"
+    class:list={['absolute max-w-none object-contain', logo.blend === 'multiply' && 'mix-blend-multiply']}
+    style={`left:${x}px;top:${y}px;width:${w}px;height:${h}px`}
+  />
+  {
+    cap && (
+      <figcaption
+        class:list={['absolute inset-x-0 text-center', nastaliq ? 'font-nastaliq leading-[1.05]' : 'px-0.5 font-bold leading-[1.45]']}
+        style={`top:${nastaliq ? cap.top - 2 : cap.top}px;color:${cap.color};font-size:${nastaliq ? cap.size * 0.62 : Math.min(cap.size, 10)}px`}
+        aria-hidden="true"
+      >
+        {cap.country && rtlScript && <span class="block text-[8px] leading-[1.6]">{names.presidencyCountry}</span>}
+        {captionText}
+      </figcaption>
+    )
+  }
+</figure>

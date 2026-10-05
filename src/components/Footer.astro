@@ -1,8 +1,8 @@
 ---
 import Logo from './ui/Logo.astro';
 import Button from './ui/Button.astro';
-import { footerCerts, footerLinks } from '../data/home';
-import { pagePath, type Locale, useTranslations } from '../i18n';
+import { footerCerts, footerFax, footerLinks, footerPhones } from '../data/home';
+import { localizeDigits, pagePath, type Locale, useTranslations } from '../i18n';
 
 interface Props {
   locale: Locale;
@@ -14,120 +14,170 @@ const t = useTranslations(locale);
 const footerHrefs: Partial<Record<(typeof footerLinks)[number], string>> = {
   products: pagePath('products', locale),
   services: pagePath('services', locale),
+  industries: pagePath('oilGas', locale),
   about: pagePath('about', locale),
   contact: pagePath('contact', locale),
   knowledge: pagePath('knowledge', locale),
 };
 
-const contacts = [
-  { icon: 'icon-location.svg', label: '', value: t.footer.address, href: undefined },
-  { icon: 'icon-fax.svg', label: t.footer.faxLabel, value: t.footer.fax, href: 'tel:+982188765311' },
-  { icon: 'icon-mail.svg', label: t.footer.emailLabel, value: t.footer.email, href: `mailto:${t.footer.email}` },
+// Numbers are written 021-88765311 with Persian / Arabic-Indic digits in fa / ar, and +98 21 8876 5311 in en / ru.
+const rtlDigits = locale === 'fa' || locale === 'ar';
+const formatNumber = (n: string) => (rtlDigits ? localizeDigits(`021-${n}`, locale) : `+98 21 ${n.slice(0, 4)} ${n.slice(4)}`);
+const number = (n: string, link: boolean) => ({ text: formatNumber(n), href: link ? `tel:+9821${n}` : undefined });
+const contacts: { icon: string; label: string; values: { text: string; href?: string }[]; separator?: string }[] = [
+  { icon: 'icon-location.svg', label: '', values: [{ text: t.footer.address }] },
+  { icon: 'icon-phone.svg', label: t.footer.phoneLabel, values: footerPhones.map((n) => number(n, true)), separator: rtlDigits ? ' - ' : ', ' },
+  { icon: 'icon-fax.svg', label: t.footer.faxLabel, values: [number(footerFax, false)] },
+  { icon: 'icon-mail.svg', label: t.footer.emailLabel, values: [{ text: t.footer.email, href: `mailto:${t.footer.email}` }] },
 ];
 
-// Left-to-right order as in Figma; the glyphs are one overlay image spanning all three circles.
-const socials = [
-  { name: 'Instagram', bg: 'social-1.svg', x: 0 },
-  { name: 'LinkedIn', bg: 'social-2.svg', x: 40 },
-  { name: 'YouTube', bg: 'social-3.svg', x: 80 },
-];
 ---
 
-<footer id="footer" class="mt-16 scroll-mt-24 bg-title text-white lg:mt-[50px]">
+<footer id="footer" class="mt-14 scroll-mt-24 bg-title text-white lg:mt-[56px]">
   <div class="container-x pb-6 pt-12 lg:pt-[63px]">
-    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[312fr_190fr_300fr_312fr] lg:gap-x-12 xl:gap-x-[70px]">
+    <div class="grid gap-3 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-6 lg:grid-cols-[312fr_190fr_300fr_312fr] lg:gap-x-12 xl:gap-x-[70px]">
       <!-- About -->
       <div>
         <Logo variant="footer" />
-        <p class="mt-6 text-justify text-[13px] font-medium leading-7">{t.footer.about}</p>
-        <div class="mt-6 flex items-center gap-5" aria-label={t.footer.badgesAlt} role="img">
-          <img src="/images/footer/badge-1.png" alt="" width="78" height="74" loading="lazy" class="h-[52px] w-auto" />
-          <img src="/images/footer/badge-2.png" alt="" width="70" height="70" loading="lazy" class="h-[52px] w-auto" />
-          <img src="/images/footer/badge-3.png" alt="" width="95" height="58" loading="lazy" class="h-[42px] w-auto" />
+        <p class="mt-6 text-justify text-[14px] font-medium leading-7 lg:text-[13px]">{t.footer.about}</p>
+        <div class="mt-6 flex items-start justify-between gap-4 lg:mt-[22px] lg:w-[313px]" aria-label={t.footer.badgesAlt} role="img">
+          <img src="/images/home/footer/badge-3.webp" alt="" width="93" height="57" loading="lazy" class="mt-[19px] h-auto w-[93px]" />
+          <img src="/images/home/footer/badge-2.webp" alt="" width="90" height="90" loading="lazy" class="h-auto w-[90px]" />
+          <img src="/images/home/footer/badge-1.webp" alt="" width="80" height="75" loading="lazy" class="h-auto w-[80px]" />
         </div>
       </div>
 
       <!-- Links -->
-      <nav aria-labelledby="footer-links-title">
-        <h2 id="footer-links-title" class="footer-heading" dir="auto">{t.footer.linksTitle}</h2>
-        <ul class="mt-5 space-y-[6px]">
+      <details class="footer-acc" data-footer-acc>
+        <summary class="footer-summary"><h2 class="footer-heading" dir="auto">{t.footer.linksTitle}</h2></summary>
+        <nav aria-label={t.footer.linksTitle}>
+        <ul class="mt-3 space-y-[6px] lg:mt-5">
           {
             footerLinks.map((key) => (
               <li>
-                <a href={footerHrefs[key] ?? '#'} class="flex items-center gap-4 py-0.5 text-sm font-bold leading-[30px] hover:text-[#9ccfff]">
-                  <img src="/images/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
+                <a href={footerHrefs[key] ?? '#'} class="flex min-h-11 items-center gap-4 text-[15px] font-bold leading-[30px] hover:text-[#9ccfff] lg:min-h-0 lg:py-0.5 lg:text-sm">
+                  <img src="/images/home/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
                   {t.footer.links[key]}
                 </a>
               </li>
             ))
           }
         </ul>
-      </nav>
+        </nav>
+      </details>
 
       <!-- Certificates -->
-      <div>
-        <h2 class="footer-heading">{t.footer.certsTitle}</h2>
-        <ul class="mt-5 space-y-[13px]">
+      <details class="footer-acc" data-footer-acc>
+        <summary class="footer-summary"><h2 class="footer-heading">{t.footer.certsTitle}</h2></summary>
+        <ul class="mt-3 space-y-[13px] lg:mt-5">
           {
             footerCerts.map((key) => (
-              <li class="flex items-center gap-4 text-sm leading-[30px]">
-                <img src="/images/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
+              <li class="flex items-center gap-4 text-[15px] leading-[30px] lg:text-sm">
+                <img src="/images/home/footer/chevron.svg" alt="" width="8.5" height="4" class="dir-icon h-[4px] w-[8.5px] rotate-90" />
                 {t.footer.certs[key]}
               </li>
             ))
           }
         </ul>
-      </div>
+      </details>
 
       <!-- Contact -->
-      <div id="contact" class="scroll-mt-28">
-        <h2 class="footer-heading">{t.footer.contactTitle}</h2>
-        <ul class="mt-5 space-y-[22px]">
+      <details id="contact" class="footer-acc scroll-mt-28" data-footer-acc open>
+        <summary class="footer-summary"><h2 class="footer-heading">{t.footer.contactTitle}</h2></summary>
+        <ul class="mt-3 space-y-[22px] lg:mt-5">
           {
             contacts.map((c) => (
               <li class="flex items-start gap-3">
                 <span class="relative mt-0.5 flex size-7 shrink-0 items-center justify-center">
-                  <img src="/images/footer/icon-bg.svg" alt="" class="absolute inset-0 size-full" />
-                  <img src={`/images/footer/${c.icon}`} alt="" class="relative size-[18px]" />
+                  <img src="/images/home/footer/icon-bg.svg" alt="" class="absolute inset-0 size-full" />
+                  <img src={`/images/home/footer/${c.icon}`} alt="" class="relative size-[18px]" />
                 </span>
-                <span class="text-sm font-bold leading-[29px]">
+                <span class="text-[15px] font-bold leading-[29px] lg:text-sm">
                   {c.label && <span>{c.label} </span>}
-                  {c.href ? (
-                    <a href={c.href} class="hover:text-[#9ccfff]" dir="ltr">
-                      {c.value}
-                    </a>
-                  ) : (
-                    <span dir={c.label ? 'ltr' : undefined}>{c.value}</span>
-                  )}
+                  {c.values.map((v, i) => (
+                    <>
+                      {i > 0 && c.separator}
+                      {v.href ? (
+                        <a href={v.href} class="inline-flex min-h-11 items-center hover:text-[#9ccfff] lg:min-h-0" dir="ltr">
+                          {v.text}
+                        </a>
+                      ) : (
+                        <span dir={c.label ? 'ltr' : undefined}>{v.text}</span>
+                      )}
+                    </>
+                  ))}
                 </span>
               </li>
             ))
           }
         </ul>
         <Button href={pagePath('products', locale)} class="mt-6">{t.footer.productsButton}</Button>
-      </div>
+      </details>
     </div>
 
     <div class="mt-10 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/30 pt-5 sm:flex-row lg:mt-[33px]">
-      <p class="flex items-center gap-3 text-center text-[13px] leading-6">
-        <img src="/images/footer/copyright.svg" alt="" width="16" height="16" />
+      <p class="flex items-center gap-3 text-center text-[14px] leading-6 lg:text-[13px]">
+        <img src="/images/home/footer/copyright.svg" alt="" width="16" height="16" />
         {t.footer.copyright}
       </p>
-      <div class="relative h-7 w-[108px]" dir="ltr">
-        {
-          socials.map((s) => (
-            <a href="#" aria-label={s.name} class="absolute top-0 block size-7 transition hover:scale-110" style={`left:${s.x}px`}>
-              <img src={`/images/footer/${s.bg}`} alt="" width="28" height="28" class="size-full" />
-            </a>
-          ))
-        }
-        <img src="/images/footer/social-glyphs.svg" alt="" class="pointer-events-none absolute left-[7px] top-[6px] h-[15px] w-[94px]" />
-      </div>
+      <!-- Social icons (Figma) stay hidden until the profile URLs are provided. -->
     </div>
   </div>
 </footer>
 
+<script>
+  // Footer columns are an accordion on small screens and always open on desktop.
+  const acc = [...document.querySelectorAll<HTMLDetailsElement>('[data-footer-acc]')];
+  const wide = window.matchMedia('(min-width: 1024px)');
+  const sync = () => acc.forEach((d, i) => (d.open = wide.matches || (d.dataset.userToggled ? d.open : i === acc.length - 1)));
+  acc.forEach((d) => d.querySelector('summary')?.addEventListener('click', () => (d.dataset.userToggled = '1')));
+  wide.addEventListener('change', sync);
+  sync();
+</script>
+
 <style>
+  .footer-summary {
+    display: flex;
+    min-height: 44px;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-summary::-webkit-details-marker {
+    display: none;
+  }
+  .footer-summary::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    margin-inline-end: 4px;
+    border-inline-end: 2px solid currentColor;
+    border-block-end: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s;
+  }
+  .footer-acc[open] > .footer-summary::after {
+    transform: rotate(-135deg);
+  }
+  .footer-acc {
+    border-bottom: 1px solid rgb(255 255 255 / 0.18);
+    padding-bottom: 8px;
+  }
+  @media (min-width: 1024px) {
+    .footer-acc {
+      border: 0;
+      padding: 0;
+    }
+    .footer-summary {
+      min-height: 0;
+      cursor: default;
+      pointer-events: none;
+    }
+    .footer-summary::after {
+      display: none;
+    }
+  }
   .footer-heading {
     position: relative;
     padding-bottom: 10px;

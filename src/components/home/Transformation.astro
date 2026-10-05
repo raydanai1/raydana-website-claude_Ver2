@@ -1,0 +1,87 @@
+---
+/**
+ * "How CYBER ERP transforms your organization" (Figma 2065:3806): title, lead, body, then six feature cards
+ * around the cube illustration (≥1280px, Figma coordinates) or stacked cards with the icon inside (mobile).
+ */
+import { transformCards } from '../../data/home';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const items = t.transform.items as Record<string, { title: string; text: string }>;
+
+const STAGE_W = 1193;
+const STAGE_H = 512;
+const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`;
+---
+
+<section id="transform" class="container-x mt-14 scroll-mt-28 lg:mt-[49px]" aria-labelledby="transform-title">
+  <div class="mx-auto max-w-[1153px] text-center">
+    <h2 id="transform-title" class="section-title lg:leading-[42px]">{t.transform.title}</h2>
+    <p class="mt-2 flex flex-col items-center justify-center gap-1 text-15 font-bold leading-relaxed text-primary sm:flex-row sm:gap-3 lg:mt-0 lg:min-h-[48px] lg:text-title-3">
+      <span dir="auto">{t.transform.leadBrand}</span>
+      <span>{t.transform.lead}</span>
+    </p>
+    <p class="mt-2 text-15 leading-8 text-body lg:mt-0">{t.transform.body}</p>
+  </div>
+
+  <div class="relative mx-auto mt-6 max-w-[1193px] xl:mt-[44px] xl:aspect-[1193/512]">
+    <img
+      src="/images/home/transform/cube-composite.webp"
+      alt={t.transform.imageAlt}
+      width="1203"
+      height="895"
+      loading="lazy"
+      class="cube mx-auto w-full max-w-[400px] mix-blend-multiply ltr:-scale-x-100 xl:absolute xl:max-w-none"
+      style={`--x:${pct(332.3, STAGE_W)};--y:${pct(62.3, STAGE_H)};--w:${pct(600.8, STAGE_W)}`}
+    />
+
+    <ul class="mt-4 grid gap-3 sm:grid-cols-2 xl:mt-0 xl:block">
+      {
+        transformCards.map((card) => (
+          <li
+            class="tcard rounded-[12px] border-[0.86px] border-white bg-white/33 p-2.5 backdrop-blur-[13.3px] xl:absolute xl:p-0"
+            style={`--x:${pct(card.x, STAGE_W)};--y:${pct(card.y, STAGE_H)};--w:${pct(card.w, STAGE_W)}`}
+          >
+            <div class="tcard-inner flex items-start gap-3 rounded-[8.6px] border-[0.86px] border-stroke-strong bg-white p-4 shadow-glow xl:gap-[9px] xl:py-[21px] xl:ps-[10px] xl:pe-[13px]">
+              <img src={card.icon} alt="" width="66" height="62" loading="lazy" class="h-[52px] w-[56px] shrink-0 xl:h-[62.2px] xl:w-[66.5px]" />
+              <div class="min-w-0">
+                <h3 class="text-15 font-bold leading-[1.55] text-ink xl:text-[14.15px] xl:leading-[22.6px]">{items[card.key].title}</h3>
+                <p
+                  class:list={[
+                    'mt-1 text-[14px] font-medium leading-[1.6] xl:text-[12.73px] xl:leading-[19.8px]',
+                    'accent' in card && card.accent ? 'text-primary-dark' : 'text-muted',
+                  ]}
+                >
+                  {items[card.key].text}
+                </p>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 1280px) {
+    .tcard,
+    .cube {
+      left: var(--x);
+      top: var(--y);
+      width: var(--w);
+    }
+    /* Outer glass frame: ~15px around the white card (Figma Rectangle 34624401/402). */
+    .tcard {
+      padding: 15px 20px 16px;
+    }
+    :global([dir='ltr']) .tcard,
+    :global([dir='ltr']) .cube {
+      left: calc(100% - var(--x) - var(--w));
+    }
+  }
+</style>

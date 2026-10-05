@@ -1,0 +1,57 @@
+---
+/** Hero (Figma 2175:3799 background, 2:23255 / 2:23254 / 2:23253 text, 2:23246 buttons). */
+import Button from '../ui/Button.astro';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const contact = pagePath('contact', locale);
+---
+
+<section class="relative -mt-[76px] overflow-hidden sm:-mt-[84px] lg:-mt-[112px]" aria-labelledby="hero-title">
+  <!-- Desktop background: cube illustration (2076:3931, 1431×646) faded toward the text side (2:19789). -->
+  <div class="absolute inset-x-0 top-0 hidden h-[646px] lg:block" aria-hidden="true">
+    <img
+      src="/images/home/hero/hero-bg.webp"
+      alt=""
+      width="1024"
+      height="543"
+      fetchpriority="high"
+      class="absolute start-[4px] top-0 h-full w-[calc(100%-9px)] object-cover ltr:-scale-x-100"
+    />
+    <div class="absolute inset-y-0 start-0 h-[632px] w-[51.1%] from-light from-[38.94%] to-light/0 rtl:bg-gradient-to-l ltr:bg-gradient-to-r"></div>
+  </div>
+
+  <div class="container-x relative pt-[100px] sm:pt-[112px] lg:min-h-[646px] lg:pt-[202px]">
+    <div class="max-w-[660px] lg:max-w-[700px] lg:pe-[13px]">
+      <h1 id="hero-title" class="text-[24px] font-bold leading-[1.45] text-ink sm:text-[28px] lg:text-title-1 lg:leading-[48px] rtl:xl:whitespace-nowrap ltr:lg:max-w-[600px]">
+        {t.hero.title}
+      </h1>
+      <p class="mt-2 text-[18px] font-bold leading-[1.6] text-primary sm:text-[20px] lg:mt-0 lg:text-title-2 lg:leading-[48px]">
+        {t.hero.subtitle}
+      </p>
+      <p class="mt-3 max-w-[633px] text-15 font-bold leading-8 text-body lg:mt-[9px]">
+        {t.hero.body}
+      </p>
+      <div class="mt-6 grid grid-cols-1 gap-3 sm:flex sm:flex-wrap sm:gap-4 lg:mt-6">
+        <Button href={contact} class="w-full sm:w-auto">{t.cta.consult}</Button>
+        <Button href={contact} variant="outline" class="w-full sm:w-auto">{t.cta.demo}</Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile/tablet: smaller illustration below the copy. -->
+  <div class="relative mt-6 h-[170px] overflow-hidden sm:h-[260px] lg:hidden">
+    <img
+      src="/images/home/hero/hero-bg.webp"
+      alt={t.hero.imageAlt}
+      width="1024"
+      height="543"
+      fetchpriority="high"
+      class="absolute inset-0 size-full object-cover object-[14%_50%] ltr:-scale-x-100 ltr:object-[86%_50%]"
+    />
+  </div>
+</section>

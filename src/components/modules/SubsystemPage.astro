@@ -10,9 +10,10 @@ import ModuleBenefits from './ModuleBenefits.astro';
 import CloudFeatures from '../cloud/CloudFeatures.astro';
 import DemoRequestForm from '../cloud/DemoRequestForm.astro';
 import Faq from '../cloud/Faq.astro';
-import { demoOverlay, moduleImages, subsystemPage, type Module, type Subsystem } from '../../data/modules';
+import { demoOverlay, moduleImages, modulePage, subsystemPage, type Module, type Subsystem } from '../../data/modules';
 import { cloudImages } from '../../data/cloud';
 import { fill, type Locale, useTranslations } from '../../i18n';
+import { breadcrumbList } from '../../seo';
 
 interface Props {
   locale: Locale;
@@ -25,19 +26,33 @@ const text = subsystem[locale];
 const N = module[locale].name;
 const S = text.name;
 const page = subsystemPage(module.id, subsystem.id);
-const tabs = (subsystem.features ?? []).map((f, i) => ({ key: String(i + 1), label: f[locale].tab, items: f[locale].items }));
-const faq = (subsystem.faq ?? []).map((f) => f[locale]);
+// "Procurement – Procurement" would repeat the name: use the module title pattern when the names match.
+const metaTitle = S === N || S.includes(N) ? fill(t.metaTitle, { N: S }) : fill(t.subsystemMetaTitle, { S, N });
+const breadcrumb = breadcrumbList(locale, [
+  [useTranslations(locale).nav.products, 'products'],
+  [N, modulePage(module.id)],
+  [S, page],
+]);
+// Feature tabs: explicit data, otherwise one tab per process step that has details (Figma 119:5583 tab row).
+const tabs = subsystem.features?.length
+  ? subsystem.features.map((f, i) => ({ key: String(i + 1), label: f[locale].tab, items: f[locale].items }))
+  : (subsystem.process ?? [])
+      .map((step, i) => ({ key: String(i + 1), label: step[locale].title, items: step[locale].details.map((d) => d.replace(/^- /, '')) }))
+      .filter((tab) => tab.items.length > 0);
+const faq = subsystem.faq?.length
+  ? subsystem.faq.map((f) => f[locale])
+  : (t.subsystemFaq as { q: string; a: string }[]).map((f) => ({ q: fill(f.q, { S, N }), a: fill(f.a, { S, N }) }));
 const hasArchitecture = Boolean(subsystem.architecture?.length || subsystem.stakeholders?.length);
 ---
 
 <!-- Figma «detail-product-modules-subsystems» (119:5583). -->
-<Layout locale={locale} page={page} title={fill(t.subsystemMetaTitle, { S, N })} description={text.tagline}>
+<Layout locale={locale} page={page} title={metaTitle} description={text.description} jsonLd={[breadcrumb]}>
   <Header locale={locale} page={page} />
   <main id="main">
     <ModuleHero locale={locale} tagline={text.tagline} description={text.description} illustration={moduleImages.heroHexesSubsystem}>
       <SubsystemIcon slot="icon" id={subsystem.id} order={subsystem.order} size={68.8} />
       <span>{S}</span>
-      <span class="ms-2 lg:ms-[9px]">{N}</span>
+      <span class="block text-[16px] font-medium text-body sm:ms-2 sm:inline sm:text-[length:inherit] sm:font-bold sm:text-title lg:ms-[9px]">{N}</span>
     </ModuleHero>
     {hasArchitecture && <Architecture locale={locale} subsystem={subsystem} />}
     {subsystem.process?.length ? <ProcessBand locale={locale} subsystem={subsystem} /> : null}
@@ -65,7 +80,7 @@ const hasArchitecture = Boolean(subsystem.architecture?.length || subsystem.stak
       overlay={demoOverlay}
       height="lg:min-h-[616px]"
     />
-    {faq.length > 0 && <Faq locale={locale} items={faq} spacing="pb-14 pt-14 lg:pb-[150px] lg:pt-[60px]" />}
+    {faq.length > 0 && <Faq locale={locale} title={t.faqTitle} items={faq} spacing="pb-14 pt-14 lg:pb-[70px] lg:pt-[60px]" />}
   </main>
   <Footer locale={locale} />
 </Layout>

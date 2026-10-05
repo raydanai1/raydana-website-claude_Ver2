@@ -13,9 +13,16 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale).cloud.faq;
 const { title = t.title, items = t.items, spacing = 'pb-0 pt-14 lg:pt-[143px] lg:pb-[54px]' } = Astro.props;
+// schema.org FAQPage for the questions on this page.
+const faqSchema = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })),
+}).replace(/</g, '\\u003c');
 ---
 
 <!-- Figma 2027:9478: title + four expandable rows (2015:6124). -->
+<script type="application/ld+json" set:html={faqSchema} />
 <section class:list={['bg-light', spacing]} aria-labelledby="cloud-faq-title">
   <div class="container-x">
     <h2 id="cloud-faq-title" class="section-title text-center">{title}</h2>

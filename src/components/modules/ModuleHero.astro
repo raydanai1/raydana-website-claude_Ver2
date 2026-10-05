@@ -14,12 +14,13 @@ const t = useTranslations(locale).modules;
 const contact = pagePath('contact', locale);
 ---
 
+<!-- Phones: icon above the title and no illustration (it is too faint at that size). -->
 <!-- Figma 2:15575 / 119:5594 (background), 2:19358 / 119:9350 (title), 2:15584 (tagline), 2:15583 (text), 2:15576 (buttons), 102:11851 / 119:9592 (picture). -->
 <section class="relative -mt-[84px] overflow-hidden bg-light lg:-mt-[118px]" aria-labelledby="module-hero-title">
   <div class="container-x relative pb-10 pt-[112px] lg:min-h-[582px] lg:pb-12 lg:pt-[154px]">
     <div class="relative z-10 lg:max-w-[calc(100%-470px)] xl:max-w-[640px] xl:pe-[19px]">
       <!-- Title row: the subsystem page puts its hexagon icon before the title. -->
-      <div class="flex items-center gap-[9px]">
+      <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-[9px]">
         <slot name="icon" />
         <h1 id="module-hero-title" class="text-[22px] font-bold leading-normal text-title lg:text-title-2">
           <slot />
@@ -39,7 +40,7 @@ const contact = pagePath('contact', locale);
       width="663"
       height="456"
       fetchpriority="high"
-      class="relative mx-auto mt-6 h-auto w-full max-w-[480px] sm:max-w-[560px] lg:absolute lg:end-0 lg:top-[150px] lg:mt-0 lg:w-[460px] xl:end-[3px] xl:top-[124px] xl:w-[662.961px] xl:max-w-none"
+      class="relative mx-auto mt-6 hidden h-auto w-full max-w-[480px] sm:block sm:max-w-[560px] lg:absolute lg:end-0 lg:top-[150px] lg:mt-0 lg:w-[460px] xl:end-[3px] xl:top-[124px] xl:w-[662.961px] xl:max-w-none"
     />
   </div>
 </section>

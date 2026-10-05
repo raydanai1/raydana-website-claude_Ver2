@@ -1,0 +1,71 @@
+---
+/**
+ * Mobile helper for horizontally scrolling card rows: a "swipe for more" hint and page dots that follow
+ * the scroll position. Place it right after an element marked [data-swipe-track] inside a [data-swipe] wrapper.
+ */
+interface Props {
+  count: number;
+  hint: string;
+  class?: string;
+  dark?: boolean;
+}
+const { count, hint, class: className = '', dark = false } = Astro.props;
+---
+
+<div class:list={['mt-4 flex items-center justify-between gap-3', className]} aria-hidden="true">
+  <span class:list={['flex items-center gap-1.5 text-[14px] font-medium', dark ? 'text-white/85' : 'text-body']}>
+    {hint}
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="swipe-hint-arrow ltr:-scale-x-100"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  </span>
+  <span class="flex items-center gap-1.5" data-swipe-dots>
+    {Array.from({ length: count }, (_, i) => <span class:list={['h-2 w-2 rounded-full transition-all', dark ? 'bg-white/40' : 'bg-[#c8cdda]']} data-dot={i} />)}
+  </span>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-swipe]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-swipe-track]');
+    const dots = [...root.querySelectorAll<HTMLElement>('[data-dot]')];
+    if (!track || !dots.length) return;
+    const items = [...track.children] as HTMLElement[];
+    const update = () => {
+      const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+      let best = 0;
+      let bestDist = Infinity;
+      items.forEach((el, i) => {
+        const r = el.getBoundingClientRect();
+        const d = Math.abs(r.left + r.width / 2 - center);
+        if (d < bestDist) {
+          bestDist = d;
+          best = i;
+        }
+      });
+      dots.forEach((d, i) => d.toggleAttribute('data-active', i === best));
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    update();
+  });
+</script>
+
+<style>
+  [data-dot][data-active] {
+    width: 1.25rem;
+    background: var(--color-primary);
+  }
+  .swipe-hint-arrow {
+    animation: nudge 1.6s ease-in-out infinite;
+  }
+  @keyframes nudge {
+    50% {
+      translate: -4px 0;
+    }
+  }
+  :global([dir='ltr']) .swipe-hint-arrow {
+    animation-name: nudge-ltr;
+  }
+  @keyframes nudge-ltr {
+    50% {
+      translate: 4px 0;
+    }
+  }
+</style>

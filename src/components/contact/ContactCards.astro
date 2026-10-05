@@ -24,12 +24,12 @@ const t = useTranslations(locale).contact.cards;
           ) : (
             <div class="mt-[9px] flex flex-col text-[15.9px] font-medium leading-[34.1px] text-[#838897]">
               {card.phone && (
-                <a href={`tel:${card.phone.tel}`} class="tracking-[2px] transition-colors hover:text-[#555dfa]" aria-label={`${t.phoneLabel}: ${card.phone.display}`}>
+                <a href={`tel:${card.phone.tel}`} class="inline-flex min-h-11 items-center tracking-[2px] transition-colors lg:min-h-0 hover:text-[#555dfa]" aria-label={`${card.phone.fax ? t.faxLabel : t.phoneLabel}: ${card.phone.display}`}>
                   <span dir="ltr">{localizeDigits(card.phone.display, locale)}</span>
                 </a>
               )}
               {card.email && (
-                <a href={`mailto:${card.email}`} class="tracking-[1.75px] transition-colors hover:text-[#555dfa]" dir="ltr">
+                <a href={`mailto:${card.email}`} class="inline-flex min-h-11 items-center tracking-[1.75px] transition-colors lg:min-h-0 hover:text-[#555dfa]" dir="ltr">
                   {card.email}
                 </a>
               )}

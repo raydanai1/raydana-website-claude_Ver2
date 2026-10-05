@@ -1,21 +1,23 @@
 ---
+/**
+ * Homepage — Figma file esbwi68Qf1BhHNaNeK6vhV, frame "HomePage" (2:19786), in fa / en / ru / ar.
+ * Section components live in src/components/home/.
+ */
 import Layout from '../layouts/Layout.astro';
 import Header from './Header.astro';
-import Hero from './Hero.astro';
-import TrustedBy from './TrustedBy.astro';
-import Challenges from './Challenges.astro';
-import Transformation from './Transformation.astro';
-import Deployment from './Deployment.astro';
-import BusinessSolutions from './BusinessSolutions.astro';
-import ComplementaryTools from './ComplementaryTools.astro';
-import CtaStrip from './CtaStrip.astro';
-import Demo from './Demo.astro';
-import IndustrySolutions from './IndustrySolutions.astro';
-import ImplementationProcess from './ImplementationProcess.astro';
-import Customers from './Customers.astro';
-import Testimonials from './Testimonials.astro';
-import KnowledgeBase from './KnowledgeBase.astro';
 import Footer from './Footer.astro';
+import Hero from './home/Hero.astro';
+import TrustedBy from './home/TrustedBy.astro';
+import Challenges from './home/Challenges.astro';
+import Transformation from './home/Transformation.astro';
+import Deployment from './home/Deployment.astro';
+import BusinessSolutions from './home/BusinessSolutions.astro';
+import ComplementaryTools from './home/ComplementaryTools.astro';
+import CtaStrip from './home/CtaStrip.astro';
+import IndustrySolutions from './home/IndustrySolutions.astro';
+import ImplementationProcess from './home/ImplementationProcess.astro';
+import Customers from './home/Customers.astro';
+import KnowledgeBase from './home/KnowledgeBase.astro';
 import { type Locale, useTranslations } from '../i18n';
 
 interface Props {
@@ -23,9 +25,11 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+// Calligraphic logo captions (Persian / Arabic only) need a small subset of the Nastaliq font.
+const nastaliqText = locale === 'fa' || locale === 'ar' ? Object.values(t.logos).join('') : undefined;
 ---
 
-<Layout locale={locale}>
+<Layout locale={locale} nastaliqText={nastaliqText}>
   <Header locale={locale} />
   <main id="main">
     <Hero locale={locale} />
@@ -35,13 +39,11 @@ const t = useTranslations(locale);
     <Deployment locale={locale} />
     <BusinessSolutions locale={locale} />
     <ComplementaryTools locale={locale} />
-    <CtaStrip locale={locale} text={t.ctaStrip.text} />
-    <Demo locale={locale} />
+    <CtaStrip locale={locale} text={t.ctaStrip.text} class="mt-4 lg:mt-[50px]" />
     <IndustrySolutions locale={locale} />
-    <CtaStrip locale={locale} variant="banner" text={t.banner.text} class="mt-14 lg:mt-20" />
+    <CtaStrip locale={locale} variant="banner" text={t.banner.text} class="mt-12 lg:mt-[56px]" />
     <ImplementationProcess locale={locale} />
     <Customers locale={locale} />
-    <Testimonials locale={locale} />
     <KnowledgeBase locale={locale} />
   </main>
   <Footer locale={locale} />

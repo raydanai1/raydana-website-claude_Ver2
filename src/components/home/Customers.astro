@@ -1,0 +1,92 @@
+---
+/**
+ * "Proud to work with you" logo wall (Figma 4001:4142), rebuilt in HTML: cards, logo images and translatable
+ * captions placed at the Figma coordinates (scaled with the stage width, ≥1024px). Mobile: 3-column grid.
+ */
+import { logoWall, wallSquares } from '../../data/home';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const names = t.logos as Record<string, string>;
+const rtlScript = locale === 'fa' || locale === 'ar';
+// 1 stage unit = 1 Figma pixel at 1382px wide.
+const u = (n: number) => `calc(var(--u) * ${+n.toFixed(2)})`;
+const pos = ([x, y, w, h]: readonly number[]) => `left:${u(x)};top:${u(y)};width:${u(w)};height:${u(h)}`;
+const tiles = logoWall.filter((tile) => tile.logo);
+---
+
+<section class="pt-12 lg:pt-[56px]" aria-labelledby="customers-title">
+  <h2 id="customers-title" class="section-title container-x relative z-10 text-center lg:leading-[45px]">{t.customers.title}</h2>
+
+  <!-- Desktop stage -->
+  <div class="wall relative mx-auto -mt-[21px] hidden max-w-[1382px] px-4 lg:block xl:px-0" aria-label={t.customers.title}>
+    <div class="wall-stage relative aspect-[1382/680]">
+      {wallSquares.map((s) => <span class="absolute rounded-[calc(var(--u)*14.15)] bg-tint" style={`${pos([s.x, s.y, s.w, s.h])};opacity:${s.op}`} aria-hidden="true" />)}
+      <ul>
+        {
+          logoWall.map((tile) => (
+            <li>
+              {tile.card && (
+                <span
+                  class:list={['absolute rounded-[calc(var(--u)*14.15)] border-[0.6px] border-stroke bg-[#fafafa]', tile.soft ? 'shadow-[0_9.4px_5.9px_#eef0ff]' : 'shadow-industry']}
+                  style={pos(tile.card)}
+                  aria-hidden="true"
+                />
+              )}
+              {tile.inner && <span class="absolute rounded-[calc(var(--u)*12)] bg-[#f5f6f7]" style={pos(tile.inner)} aria-hidden="true" />}
+              {tile.logo && (
+                <img
+                  src={tile.logo.src}
+                  alt={names[tile.key]}
+                  loading="lazy"
+                  class:list={['absolute object-contain', tile.logo.blend === 'multiply' && 'mix-blend-multiply', tile.logo.blend === 'darken' && 'mix-blend-darken']}
+                  style={pos(tile.logo.box)}
+                />
+              )}
+              {tile.caption && (
+                <span
+                  class:list={['absolute -translate-x-1/2 text-center', tile.caption.nastaliq && rtlScript ? 'font-nastaliq leading-[1.15]' : 'leading-[1.45]']}
+                  style={`left:${u(tile.caption.x)};top:${u(tile.caption.y)};width:${u(tile.caption.w)};color:${tile.caption.color};font-weight:${tile.caption.nastaliq && rtlScript ? 400 : (tile.caption.weight ?? 700)};font-size:${u(tile.caption.nastaliq && rtlScript ? tile.caption.size * 0.62 : Math.min(tile.caption.size, 12))}`}
+                  aria-hidden="true"
+                >
+                  {tile.caption.country && rtlScript && <span class="block" style={`font-size:${u(12)}`}>{names.presidencyCountry}</span>}
+                  {names[tile.caption.key]}
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mobile/tablet: 3-column logo grid -->
+  <ul class="container-x mt-6 grid grid-cols-3 gap-3 lg:hidden">
+    {
+      tiles.map((tile) => (
+        <li class="flex min-h-[124px] flex-col items-center justify-center gap-2 rounded-[14px] border-[0.6px] border-stroke bg-[#fafafa] p-2 text-center shadow-industry">
+          <img src={tile.logo!.src} alt={names[tile.key]} loading="lazy" class="max-h-[64px] w-auto max-w-[80%] object-contain" />
+          {tile.caption && (
+            <span class:list={['text-[14px] font-bold leading-[1.35]', tile.caption.nastaliq && rtlScript && 'font-nastaliq font-normal leading-[1.6]']} style={`color:${tile.caption.color}`} aria-hidden="true">
+              {names[tile.caption.key]}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .wall {
+    container-type: inline-size;
+  }
+  /* 1 unit = 1 Figma pixel when the wall is 1382px wide; everything scales with the container. */
+  .wall-stage {
+    --u: calc(100cqw / 1382);
+  }
+</style>

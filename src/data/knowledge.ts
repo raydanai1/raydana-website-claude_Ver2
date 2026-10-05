@@ -1,10 +1,10 @@
 /**
- * Knowledge base helpers. Items live in src/content/knowledge/<slug>/{fa,en}.md (see KNOWLEDGE.md);
+ * Knowledge base helpers. Items live in src/content/knowledge/<slug>/{fa,en,ru,ar}.md (see KNOWLEDGE.md);
  * categories in ./knowledge-categories.ts. Layout values come from the Figma "KnowledgePage"
  * frame (node 33:6798) and the article page "NewsAndLectures" (node 119:1523).
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { homePath, localizeDigits, type Locale } from '../i18n';
+import { localizeDigits, pagePath, type Locale } from '../i18n';
 import { knowledgeCategories, knowledgeCategoryNames, type KnowledgeCategory } from './knowledge-categories';
 
 export { knowledgeCategories, knowledgeCategoryNames, type KnowledgeCategory };
@@ -29,16 +29,17 @@ export const knowledgeImages = {
   arrowBlue: img('arrow-blue.svg'), // 33:10633 "ادامه مطلب" text button
   pillArrowWhite: img('pill-arrow-white.svg'), // 33:10802
   pillArrowBlue: img('pill-arrow-blue.svg'), // 33:10805
-  hexBack: img('hex-back.png'), // 2046:3814 pale stamp-edged hexagon
+  hexBack: img('hex-back.webp'), // 2046:3814 pale stamp-edged hexagon
   hexCard: img('hex-card.svg'), // 2046:3815 white hexagon card with shadow
   hexMask: img('hex-mask.svg'), // 2118:3808 mask (Polygon 15)
-  hexSmall: img('hex-small.png'), // 2046:3819 small blue hexagon
+  hexSmall: img('hex-small.webp'), // 2046:3819 small blue hexagon
 };
 
-export const knowledgeBase = (locale: Locale) => `${homePath(locale)}knowledge/`;
-export const knowledgeItemPath = (slug: string, locale: Locale) => `${knowledgeBase(locale)}${slug}/`;
+// URL slugs per language live in src/i18n/routes/<lang>.ts.
+export const knowledgeBase = (locale: Locale) => pagePath('knowledge', locale);
+export const knowledgeItemPath = (slug: string, locale: Locale) => pagePath(`knowledge/${slug}`, locale);
 export const knowledgeCategoryPath = (category: KnowledgeCategory, locale: Locale, page = 1) =>
-  `${knowledgeBase(locale)}category/${category}/${page > 1 ? `${page}/` : ''}`;
+  pagePath(`knowledge/category/${category}/${page}`, locale);
 
 const splitId = (id: string) => {
   const [slug, lang] = id.split('/');
@@ -76,14 +77,16 @@ export function relatedItems(items: KnowledgeItem[], current: KnowledgeItem, cou
   return [...same, ...others.filter((i) => i.data.category !== current.data.category)].slice(0, count);
 }
 
-/** "۸ شهریور ۱۴۰۵" (Persian calendar and digits) or "Aug 30, 2026". */
+/** "۸ شهریور ۱۴۰۵" (Persian calendar and digits), "Aug 30, 2026", "30 авг. 2026 г." or "٣٠ أغسطس ٢٠٢٦". */
+const dateLocales: Record<Exclude<Locale, 'fa'>, string> = { en: 'en-US', ru: 'ru-RU', ar: 'ar-EG' };
 export function formatKnowledgeDate(date: Date, locale: Locale): string {
   if (locale === 'fa') {
     const parts = new Intl.DateTimeFormat('fa-IR-u-ca-persian-nu-arabext', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).formatToParts(date);
     const get = (type: string) => parts.find((p) => p.type === type)?.value ?? '';
     return localizeDigits(`${get('day')} ${get('month')} ${get('year')}`, 'fa');
   }
-  return new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(date);
+  const month = locale === 'ar' ? 'long' : 'short';
+  return new Intl.DateTimeFormat(dateLocales[locale], { day: 'numeric', month, year: 'numeric', timeZone: 'UTC' }).format(date);
 }
 
 export const isoDate = (date: Date) => date.toISOString().slice(0, 10);

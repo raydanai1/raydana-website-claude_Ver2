@@ -1,0 +1,75 @@
+---
+/** "Trusted by" strip (Figma 2068:3926): bordered box, title, auto-scrolling row of logo tiles. */
+import LogoTile from './LogoTile.astro';
+import { trustedLogos } from '../../data/home';
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section class="container-x relative z-10 mt-6 lg:-mt-[64px]" aria-labelledby="trusted-title">
+  <div class="mx-auto max-w-[1314px] overflow-hidden rounded-[20px] border border-stroke-strong bg-light px-4 pb-6 pt-5 shadow-card lg:h-[227px] lg:px-[47px] lg:pt-8">
+    <h2 id="trusted-title" class="text-center text-15 font-bold leading-[1.6] text-title lg:text-title-3 lg:leading-[27px]">
+      <span class="text-primary-dark" dir="ltr">{t.trusted.brand}</span>{' '}{t.trusted.title}
+    </h2>
+
+    <div class="marquee mt-5 lg:mt-[35px]">
+      <ul class="marquee-track flex w-max items-center gap-8 lg:gap-16">
+        {
+          [...trustedLogos, ...trustedLogos].map((logo, i) => (
+            <li class="shrink-0">
+              <LogoTile locale={locale} logo={logo} decorative={i >= trustedLogos.length} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  }
+  .marquee-track {
+    animation: marquee 45s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+  :global([dir='rtl']) .marquee-track {
+    animation-name: marquee-rtl;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-50% - 1rem));
+    }
+  }
+  @keyframes marquee-rtl {
+    to {
+      transform: translateX(calc(50% + 1rem));
+    }
+  }
+  @media (min-width: 1024px) {
+    @keyframes marquee {
+      to {
+        transform: translateX(calc(-50% - 2rem));
+      }
+    }
+    @keyframes marquee-rtl {
+      to {
+        transform: translateX(calc(50% + 2rem));
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

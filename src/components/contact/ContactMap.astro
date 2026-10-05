@@ -15,25 +15,58 @@ const bbox = [lon - d.lon, lat - d.lat, lon + d.lon, lat + d.lat].map((n) => n.t
 const embedSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
 ---
 
-<!-- Figma 37:624: full-width 1432×499 map band, flush with the footer. The Google link sits bottom-left in both
-     directions, clear of the OSM zoom buttons (top-right) and attribution (bottom-right). -->
-<section id="map" class="relative mx-auto -mb-16 mt-12 max-w-[1432px] scroll-mt-28 lg:-mb-[50px] lg:mt-[59px]" aria-label={t.title}>
-  <iframe
-    src={embedSrc}
-    title={t.title}
+<!-- Figma 37:624: full-width 1432×499 map band, flush with the footer. A static map image (OpenStreetMap tiles, pin at the
+     office) is shown first, so the band never stays empty if openstreetmap.org is slow or blocked; the interactive
+     OSM embed loads only when the visitor asks for it. The Google link sits bottom-left in both directions. -->
+<section id="map" class="relative mx-auto -mb-16 mt-12 max-w-[1432px] scroll-mt-28 lg:-mb-[50px] lg:mt-[59px]" aria-label={t.title} data-map>
+  <img
+    src="/images/contact/map-static.webp"
+    alt={t.title}
+    width="1432"
+    height="499"
     loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    class="block h-[320px] w-full border-0 bg-light-4 lg:h-[499px]"></iframe>
-  <a
-    href={googleMapsUrl}
-    target="_blank"
-    rel="noopener"
-    class="absolute bottom-4 left-4 inline-flex h-10 items-center gap-2 rounded-full bg-white px-4 text-sm font-medium text-primary shadow-header transition-colors hover:bg-light"
-  >
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
-      <circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.8"></circle>
-    </svg>
-    {t.google}
-  </a>
+    decoding="async"
+    class="block h-[320px] w-full bg-light-4 object-cover lg:h-[499px]"
+    data-map-static
+  />
+  <template data-map-embed>
+    <iframe src={embedSrc} title={t.title} referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 size-full border-0"></iframe>
+  </template>
+  <div class="absolute bottom-4 left-4 flex flex-wrap gap-2">
+    <a
+      href={googleMapsUrl}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex h-11 items-center gap-2 rounded-full bg-white px-4 text-sm font-medium text-primary shadow-header transition-colors hover:bg-light"
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+        <circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.8"></circle>
+      </svg>
+      {t.google}
+    </a>
+    <button
+      type="button"
+      class="inline-flex h-11 items-center rounded-full bg-white px-4 text-sm font-medium text-primary shadow-header transition-colors hover:bg-light"
+      data-map-load
+    >
+      {t.interactive}
+    </button>
+  </div>
+  <p class="absolute bottom-0 right-0 bg-white/80 px-2 text-[14px] leading-6 text-ink lg:text-[11px] lg:leading-5" dir="ltr" data-map-credit>
+    © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener" class="underline">OpenStreetMap</a> contributors
+  </p>
 </section>
+
+<script>
+  // Swap the static map for the interactive OpenStreetMap embed on request.
+  document.querySelectorAll<HTMLElement>('[data-map]').forEach((band) => {
+    band.querySelector('[data-map-load]')?.addEventListener('click', (e) => {
+      const tpl = band.querySelector<HTMLTemplateElement>('template[data-map-embed]');
+      if (!tpl) return;
+      band.prepend(tpl.content.cloneNode(true));
+      band.querySelector('[data-map-credit]')?.remove();
+      (e.currentTarget as HTMLElement).remove();
+    });
+  });
+</script>

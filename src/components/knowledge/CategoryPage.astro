@@ -15,7 +15,7 @@ import {
   knowledgeImages,
   type KnowledgeCategory,
 } from '../../data/knowledge';
-import { fill, localizeDigits, locales, type Locale, useTranslations } from '../../i18n';
+import { fill, localizeDigits, fullLocales, type Locale, useTranslations } from '../../i18n';
 
 interface Props {
   locale: Locale;
@@ -37,18 +37,22 @@ const pills = knowledgeCategories
   .filter((c) => c === category || itemsInCategory(all, c).length > 0)
   .map((c) => ({ category: c, href: knowledgeCategoryPath(c, locale) }));
 
-// Same page in the other language when it exists there, else that category's first page.
-const otherLocale: Locale = locale === 'fa' ? 'en' : 'fa';
-const otherCount = Math.ceil(itemsInCategory(await getKnowledgeItems(otherLocale), category).length / KNOWLEDGE_PAGE_SIZE);
-const available = locales.filter((l) => l === locale || page <= Math.max(1, otherCount));
-const switchHref = knowledgeCategoryPath(category, otherLocale, page <= Math.max(1, otherCount) ? page : 1);
+// Same page in each other language when it exists there, else that category's first page.
+const pageCounts = new Map<Locale, number>();
+for (const l of fullLocales) {
+  pageCounts.set(l, Math.max(1, Math.ceil(itemsInCategory(await getKnowledgeItems(l), category).length / KNOWLEDGE_PAGE_SIZE)));
+}
+const available = fullLocales.filter((l) => l === locale || page <= pageCounts.get(l)!);
+const switchHrefs = Object.fromEntries(
+  fullLocales.map((l) => [l, knowledgeCategoryPath(category, l, page <= pageCounts.get(l)! ? page : 1)]),
+) as Record<Locale, string>;
 const pagePart = `knowledge/category/${category}${page > 1 ? `/${page}` : ''}` as const;
 const pageLabel = (n: number) => fill(t.page, { N: localizeDigits(n, locale) });
 const title = fill(t.categoryMetaTitle, { C: page > 1 ? `${name} – ${pageLabel(page)}` : name });
 ---
 
 <Layout locale={locale} page={pagePart} title={title} description={fill(t.categoryMetaDescription, { C: name })} available={available}>
-  <Header locale={locale} page={pagePart} switchHref={switchHref} />
+  <Header locale={locale} page={pagePart} switchHrefs={switchHrefs} />
   <main id="main">
     <section class="relative -mt-[84px] bg-[#f0f2f7] pb-10 pt-[112px] lg:-mt-[118px] lg:pb-[52px] lg:pt-[160px]">
       <div class="container-x text-center">

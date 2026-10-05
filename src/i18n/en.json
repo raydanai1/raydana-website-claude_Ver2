@@ -1,7 +1,8 @@
 {
   "meta": {
-    "title": "Raydana | CYBER ERP – Integration for Organizations and Industries",
-    "description": "Raydana CYBER ERP brings every process in your organization — from finance and HR to production, sales and supply chain — together on one integrated platform."
+    "title": "Raydana | CYBER ERP — Integrated ERP for Enterprises and Industry",
+    "description": "CYBER ERP by Raydana unifies finance, HR, production, sales and supply chain on one integrated, web-based ERP platform for enterprises, public organizations and industry.",
+    "siteName": "Raydana"
   },
   "a11y": {
     "skip": "Skip to main content",
@@ -16,7 +17,11 @@
     "next": "Next",
     "slide": "Slide",
     "more": "More",
-    "current": "Current page"
+    "current": "Current page",
+    "languages": "Language",
+    "searchPlaceholder": "Search the site…",
+    "swipe": "Swipe to see more",
+    "expand": "Show"
   },
   "nav": {
     "products": "Products",
@@ -24,112 +29,118 @@
     "services": "Services",
     "knowledge": "Knowledge Base",
     "about": "About Us",
-    "contact": "Contact Us",
-    "portal": "Customer Portal",
-    "langLabel": "En",
-    "switchTo": "فارسی"
+    "contact": "Contact",
+    "portal": "Customer Portal"
   },
   "cta": {
-    "consult": "Expert Consultation",
+    "consult": "Talk to an Expert",
     "demo": "Request a Demo",
     "learnMore": "Learn More"
   },
   "hero": {
-    "title": "CYBER ERP: Integration for Organizations and Industries",
-    "subtitle": "Run your organization in a more integrated, smarter and faster way",
-    "body": "CYBER ERP brings every process in your organization — from finance and human resources to production, sales and supply chain — together on one integrated platform."
+    "title": "CYBER ERP: One Integrated Platform for Organizations and Industry",
+    "subtitle": "Run your organization in a more connected, smarter and faster way",
+    "body": "CYBER ERP brings every core process — from finance and human resources to production, sales and supply chain — together on a single integrated platform.",
+    "imageAlt": "Connected glass cubes representing the integrated CYBER ERP modules"
   },
   "trusted": {
     "brand": "CYBER ERP",
-    "title": "Trusted by major organizations and leading industries"
+    "title": "Trusted by leading enterprises and public organizations"
   },
   "logos": {
-    "presidency": "Presidential Office of Iran",
+    "presidencyCountry": "Islamic Republic of Iran",
+    "presidency": "Presidential Office",
+    "presidencyFull": "Presidential Office of Iran",
     "bankPension": "Bank Employees Pension Fund",
-    "tabrizRefinery": "Tabriz Oil Refining Company",
+    "tabrizRefinery": "Tabriz Oil Refining Co.",
+    "tehranRefinery": "Tehran Oil Refining Co.",
     "offsetPress": "Offset Press Inc.",
-    "mint": "Central Bank Banknote & Coin Printing Organization",
+    "mint": "Central Bank Banknote & Coin Printing",
     "foreignMinistry": "Ministry of Foreign Affairs",
-    "tehranRefinery": "Tehran Oil Refining Company",
-    "razavi": "Astan Quds Razavi Construction & Maintenance Organization",
+    "razavi": "Astan Quds Razavi Construction & Maintenance",
     "steelPension": "National Steel Industry Pension Fund",
+    "hagsan": "Hagsan",
+    "international": "International",
+    "ikap": "IKAP",
+    "tandis": "Tandis",
+    "sakkook": "Sakkook",
+    "tecvest": "Tecvest",
+    "nitco": "NITCO",
     "other": "Raydana customer"
   },
   "challenges": {
-    "title": "Is your organization or industry facing these challenges?",
-    "lead": "When systems don't talk to each other… every day your organization starts work on several disconnected systems",
-    "slogan": "When every department speaks its own language, decisions become slow and expensive.",
+    "title": "Is your organization facing these challenges?",
+    "lead": "When systems don’t talk to each other, every day starts with a patchwork of disconnected tools",
+    "slogan": "When every department speaks its own language, decisions become slow and costly.",
     "items": {
-      "islands": "Isolated systems",
+      "islands": "Siloed systems",
+      "excel": "Heavy reliance on Excel",
+      "cost": "Rising time and cost",
+      "mismatch": "Conflicting data across departments",
+      "finance": "Limited financial transparency",
       "integration": "Disconnected processes and systems",
-      "waste": "Wasted time",
+      "forms": "Scattered, non-standard, duplicated forms",
+      "siloed": "Isolated processes between departments",
+      "planning": "No reliable end-to-end planning",
+      "waste": "Wasted time and resources",
+      "humanError": "Manual errors and rework",
+      "slowDecision": "Slow, delayed management decisions",
+      "nonIntegrated": "Fragmented systems and data",
       "visibility": "No real-time view of performance",
-      "excel": "Heavy reliance on Excel files",
       "lateReports": "Late financial reports",
-      "humanError": "Human error and rework",
-      "warehouseView": "No real-time view of inventory",
-      "forms": "Scattered forms",
-      "separate": "Separate software tools",
-      "slowDecision": "Slow management decisions",
       "slowReports": "Slow, opaque reporting",
-      "mismatch": "Inconsistent data",
-      "siloed": "Siloed processes between departments",
-      "scattered": "Scattered and conflicting data across departments",
-      "finance": "Lack of financial transparency",
-      "management": "Lack of management transparency",
-      "nonIntegrated": "No integration",
-      "warehouse": "Poor coordination with the warehouse"
+      "scattered": "Inconsistent, scattered data between units"
     }
   },
   "transform": {
-    "title": "How do Cyber ERP solutions transform your organization?",
-    "leadBrand": "CyberERP is more than software",
-    "lead": "“It is the operational brain and shared language of every department.”",
-    "body": "Cyber ERP is an integrated enterprise resource planning system that connects every key process on one central platform — so your organization runs with more transparency, fewer human errors, faster reporting and quicker management.",
-    "imageAlt": "3D cubes representing the integrated Cyber ERP modules",
+    "title": "How does CYBER ERP transform your organization?",
+    "leadBrand": "CYBER ERP is more than software",
+    "lead": "“It is the operational core and shared language of every department.”",
+    "body": "CYBER ERP is an integrated enterprise resource planning system that connects every key process on one central platform — giving you more transparency, fewer manual errors, faster reporting and quicker management decisions.",
+    "imageAlt": "3D cubes representing the integrated CYBER ERP modules",
     "items": {
       "integrated": {
-        "title": "Integrated, smart and transparent",
-        "text": "Modules are fully connected, giving real-time access to the status, statistics and reports of every department"
+        "title": "Integrated, intelligent, transparent",
+        "text": "Fully connected modules give real-time access to the status, metrics and reports of every unit."
       },
       "process": {
         "title": "Process-driven",
-        "text": "Enter data only once — the same information flows across the whole organization."
+        "text": "Enter data once — the same information flows across the entire organization."
       },
       "custom": {
-        "title": "Unlimited customization",
-        "text": "One integrated system: standard at the core, flexible in execution, fully customizable"
+        "title": "Extensive customization",
+        "text": "One integrated system: standard at the core, flexible in execution, tailored to your needs."
       },
       "growth": {
-        "title": "Keeps pace with your business",
-        "text": "Supporting today's growth, ready for tomorrow's needs"
+        "title": "Grows with your business",
+        "text": "Supporting today’s growth, ready for tomorrow’s needs."
       },
       "web": {
         "title": "Web-based",
-        "text": "The system is available anytime, anywhere — your data is always at hand"
+        "text": "Your system and data are available anytime, anywhere."
       },
       "cloud": {
-        "title": "Cloud option",
+        "title": "Cloud deployment option",
         "text": "Lower infrastructure and server maintenance costs."
       }
     }
   },
   "deploy": {
     "cloud": {
-      "title": "Cloud Infrastructure Services",
+      "title": "Cloud Infrastructure",
       "subtitle": "(Cyber Cloud ERP)",
       "alt": "Cloud infrastructure and data servers"
     },
     "onPremise": {
-      "title": "On-Premise Installation",
+      "title": "On-Premise Deployment at Your Site",
       "subtitle": "(On-Premise ERP)",
       "alt": "On-premise servers with backup"
     }
   },
   "business": {
     "title": "CYBER ERP Business Solutions",
-    "lead": "“Every part of your organization, connected to one smart core”",
-    "imageAlt": "Screens from the Cyber ERP software",
+    "lead": "“Every part of your organization, connected to one intelligent core”",
+    "imageAlt": "Screens from the CYBER ERP software",
     "subsystems": "Subsystems",
     "items": {
       "warehouse": "Warehouse",
@@ -146,7 +157,7 @@
   "tools": {
     "title": "CYBER ERP Complementary Tools",
     "lead": "Smarter than ever: an intelligent ecosystem that accelerates your digital transformation",
-    "body": "ERP forms the core of your organization's management, but digital transformation needs more tools. That is why CYBER ERP offers a set of complementary solutions alongside the main system, so processes, data and decisions are managed on one smart, coordinated platform.",
+    "body": "ERP is the core of your management system, but digital transformation needs more. That’s why CYBER ERP comes with a suite of complementary tools, so processes, data and decisions are managed on one intelligent, coordinated platform.",
     "imageAlt": "ERP complementary tools ecosystem: BI, AI, e-forms, BPMS, report builder and AR",
     "items": {
       "bi": "Business Intelligence",
@@ -155,10 +166,12 @@
       "eform": "Electronic Form Builder",
       "rb": "Report Builder",
       "ar": "Augmented Reality Solutions"
-    }
+    },
+    "orbitTitle": "Complementary tools",
+    "orbitErp": "ERP"
   },
   "ctaStrip": {
-    "text": "“You can implement exactly the modules your organization needs.”"
+    "text": "“Implement exactly the modules your organization needs.”"
   },
   "demo": {
     "title": "ERP Preview",
@@ -170,37 +183,72 @@
   "industries": {
     "brand": "Cyber ERP",
     "title": "Solutions for organizations and businesses",
-    "kicker": "Solution for",
-    "text": "Transparency, control and productivity at enterprise scale by integrating processes and departments",
+    "kicker": "Solutions for",
+    "text": "Transparency, control and productivity at enterprise scale by integrating processes and business units.",
     "items": {
-      "government": "Government & Public Organizations",
-      "large": "Large Industries",
+      "government": "Government & Public Sector",
+      "large": "Large Enterprises",
       "oil": "Oil, Gas & Petrochemicals",
       "pension": "Pension Funds",
       "international": "International",
       "sme": "Small & Medium Enterprises"
+    },
+    "descriptions": {
+      "government": "Integrated solutions for government and public organizations, focused on transparency, control and optimized organizational processes.",
+      "large": "Comprehensive solutions for integrating processes, managing resources and raising productivity in large industries and enterprises.",
+      "oil": "Specialized solutions for managing complex processes, resources and operations across the oil, gas and petrochemical value chain.",
+      "pension": "Integrated solutions for managing the resources, investments and financial and organizational processes of pension funds.",
+      "international": "Flexible, scalable solutions for the integrated management of business operations and processes in international markets.",
+      "sme": "Agile, cost-effective solutions that integrate operations and pave the way for business growth and expansion."
     }
   },
   "banner": {
-    "text": "Transparency, control and productivity at enterprise scale by integrating processes and departments"
+    "text": "Transparency, control and productivity at enterprise scale by integrating processes and business units"
   },
   "process": {
-    "title": "Cyber ERP Implementation Process",
+    "title": "CYBER ERP Implementation Process",
     "start": {
       "title": "Pre-launch",
-      "text": "Project kick-off meeting / high-level assessment of the organization / project planning"
+      "text": "Project kick-off / high-level assessment of the organization / project planning"
     },
     "end": "Final Delivery",
     "steps": {
-      "s1": { "title": "Current-state assessment", "sub": "(As-Is Analysis)" },
-      "s2": { "title": "Future-state analysis & design", "sub": "(To-Be Analysis)" },
-      "s3": { "title": "Customization & development", "sub": "(Development & Customization)" },
-      "s4": { "title": "Installation & setup", "sub": "(Installation & Data Convert)" },
-      "s5": { "title": "Training & rollout", "sub": "Training & Implementation" },
-      "s6": { "title": "Parallel run", "sub": "Parallel execution" },
-      "s7": { "title": "Go live", "sub": "Go Live" },
-      "s8": { "title": "Warranty services", "sub": "Warranty service" },
-      "s9": { "title": "Support & maintenance", "sub": "Support and maintenance services" }
+      "s1": {
+        "title": "Current-state assessment",
+        "sub": "(As-Is Analysis)"
+      },
+      "s2": {
+        "title": "Future-state analysis & design",
+        "sub": "(To-Be Analysis)"
+      },
+      "s3": {
+        "title": "Customization & development",
+        "sub": "(Development & Customization)"
+      },
+      "s4": {
+        "title": "Installation & data migration",
+        "sub": "(Installation & Data Convert)"
+      },
+      "s5": {
+        "title": "Training & rollout",
+        "sub": "Training & Implementation"
+      },
+      "s6": {
+        "title": "Parallel run",
+        "sub": "Parallel execution"
+      },
+      "s7": {
+        "title": "Go-live",
+        "sub": "Go Live"
+      },
+      "s8": {
+        "title": "Warranty services",
+        "sub": "Warranty service"
+      },
+      "s9": {
+        "title": "Support & maintenance",
+        "sub": "Support and maintenance services"
+      }
     }
   },
   "customers": {
@@ -217,19 +265,19 @@
     }
   },
   "knowledge": {
-    "title": "Knowledge base",
+    "title": "Knowledge Base",
     "homeCards": {
       "news": {
-        "title": "Latest news",
-        "text": "Keeping you up to date with ERP news"
+        "title": "Latest technology news",
+        "text": "Stay current with what’s new in ERP"
       },
       "articles": {
-        "title": "Articles",
-        "text": "Hundreds of expert articles on software development and ERP"
+        "title": "Articles & insights",
+        "text": "Hundreds of expert articles on software and ERP"
       },
       "events": {
         "title": "Latest events",
-        "text": "Keeping you up to date with Raydana events"
+        "text": "Keep up with Raydana events"
       }
     },
     "meta": {
@@ -272,41 +320,44 @@
     "demoTitle": "Request a free consultation and demo today."
   },
   "footer": {
-    "about": "Raydana Engineering was founded in 2000 to build modern integrated enterprise systems. Our drive to make information technology more than just a comprehensive software system led us to create localized, web-based software that lets managers and users improve their business from anywhere, at any time.",
+    "about": "Raydana Engineering was founded in 2000 to build modern, integrated enterprise systems. Our aim — to make information technology more than just comprehensive software — led us to create localized, web-based solutions that let managers and users improve their business from anywhere, at any time.",
     "linksTitle": "Raydana CYBER ERP",
     "links": {
       "products": "Products",
       "services": "Services",
       "industries": "Industry Solutions",
       "about": "About Us",
-      "contact": "Contact Us",
+      "contact": "Contact",
       "standards": "Standards & Regulations",
       "knowledge": "Knowledge Base"
     },
-    "certsTitle": "Certificates",
+    "certsTitle": "Certifications",
     "certs": {
-      "knowledgeBased": "Industrial knowledge-based company",
-      "rating": "IT company rating & qualification"
+      "knowledgeBased": "Certified industrial knowledge-based company",
+      "authenticity": "Software authenticity & integrity certificate",
+      "afta": "AFTA product security certificate",
+      "technical": "Software technical approval certificate",
+      "guild": "Computer Guild Organization license"
     },
     "contactTitle": "Contact Information",
-    "address": "No. 11, Start of 13th St., Ghandi (Palizi) St., North Sohrevardi, Tehran, Iran",
+    "address": "No. 11, 13th St., Ghandi (Palizi) Ave., North Sohrevardi St., Tehran, Iran",
     "faxLabel": "Fax:",
-    "fax": "021-8876 5311",
     "emailLabel": "Email:",
     "email": "info@raydana.com",
     "productsButton": "Products",
     "badgesAlt": "Trust seals and licenses",
-    "copyright": "All rights reserved. © Raydana."
+    "copyright": "© Raydana. All rights reserved.",
+    "phoneLabel": "Phone:"
   },
   "services": {
     "meta": {
       "title": "Services | Raydana CYBER ERP",
-      "description": "Raydana services: training and deployment, customization, software development, support and maintenance, and a complete deployment methodology for Cyber ERP."
+      "description": "Raydana services: consulting, training and deployment, customization, software development, support and maintenance, and a proven Cyber ERP deployment methodology."
     },
     "hero": {
       "title": "Our Services",
       "subtitle": "From scattered data to clear, integrated decision-making",
-      "body": "The CyberERP solution fully covers an organization's management, operational and support processes, including management, finance, production and production planning, contract management, purchasing and imports, sales and exports, warehousing and inventory control, personnel and human resources, quality control, research and development, maintenance and repairs, and administrative correspondence."
+      "body": "CyberERP covers every management, operational and support process in your organization: finance, production and production planning, contract management, purchasing and imports, sales and exports, warehousing and inventory control, personnel and HR, quality control, R&D, maintenance, and administrative correspondence."
     },
     "grid": {
       "title": "Our Services",
@@ -321,15 +372,15 @@
         "installation": "Installation & Setup"
       }
     },
-    "quote": "You can implement exactly the modules your organization needs.",
+    "quote": "Implement exactly the modules your organization needs.",
     "training": {
       "title": "Training & Deployment",
-      "body": "Raydana helps customers finish system training in the right amount of time by drawing up a training program together with them, covering the subsystems and the core ERP concepts in the customer's own environment. It also makes the system easier to use by providing two training booklets, \"Working with the System Step by Step\" and \"System Processes and Business Logic\". Training at Raydana is delivered as individual and group classes for key users and process owners (two people per subsystem).",
+      "body": "Raydana builds a training plan together with each customer, covering the subsystems and core ERP concepts in the customer's own environment, so training is completed on schedule. Two handbooks, \"Working with the System Step by Step\" and \"System Processes and Business Logic\", make the system easier to adopt. Training is delivered in individual and group sessions for key users and process owners (two people per subsystem).",
       "imageAlt": "Training system users"
     },
     "customization": {
       "title": "Customization",
-      "intro": "One of the most common requests from organizations is to customize their software system, because they have specific processes or functions that cannot be implemented and used within the standard processes of an ERP system.",
+      "intro": "Customization is one of the most common requests we receive: many organizations have specific processes or functions that a standard ERP process cannot support.",
       "imageAlt": "Designing and customizing software screens",
       "benefitsTitle": "Benefits and value gained from the customization phase",
       "benefits": {
@@ -339,7 +390,7 @@
         "speed": "Using a system that meets the customer's requirements in the shortest possible time",
         "integrated": "A comprehensive system that is integrated with other systems"
       },
-      "integration": "In addition, the system can connect and integrate with the organization's other systems through web services, and the Raydana team can extend and develop it without limit, including by third parties. This lets the ERP system be used easily as one integrated system together with the organization's other systems.",
+      "integration": "The system also integrates with your other applications through web services, and the Raydana team or approved third parties can extend it without limits, so ERP works as one integrated platform alongside the rest of your systems.",
       "summary": "The customization process is carried out to make the necessary changes to the system and align the software with the customer organization's improved processes.",
       "flowTitle": "Customization process activities",
       "steps": {
@@ -359,18 +410,6 @@
           "title": "Testing",
           "text": "Complete, thorough system testing is done in-house at Raydana by Raydana's testing and support team. Real scenarios identified in earlier phases are used at this stage."
         }
-      }
-    },
-    "development": {
-      "title": "Software Development",
-      "body": "Raydana helps customers finish system training in the right amount of time by drawing up a training program together with them, covering the subsystems and the core ERP concepts in the customer's own environment. It also makes the system easier to use by providing two training booklets, \"Working with the System Step by Step\" and \"System Processes and Business Logic\". Training at Raydana is delivered as individual and group classes for key users and process owners (two people per subsystem).",
-      "imageAlt": "",
-      "hexes": {
-        "courses": "Designing training courses",
-        "booklets": "Step-by-step booklets",
-        "classes": "Individual and group classes",
-        "video": "Training videos",
-        "demo": "Software demo"
       }
     },
     "support": {
@@ -484,6 +523,14 @@
         "pension": "Pension Funds",
         "international": "International",
         "sme": "Small & Medium Industries"
+      },
+      "descriptions": {
+        "government": "Integrated finance, budgeting and HR for public bodies, with transparent, regulation-ready reporting",
+        "large": "Control of the supply chain, production and cost of goods across multiple plants and companies",
+        "oil": "Control of project costs, contractors and the supply chain from well to refinery to market",
+        "pension": "Investment, pensioner and fund resource management in one integrated system",
+        "international": "Multi-language, multi-currency editions for companies operating in several countries",
+        "sme": "Fast, affordable deployment of essential modules that grows with your business"
       }
     },
     "complementary": {
@@ -507,7 +554,7 @@
       "kicker": "Solution",
       "title": "Cloud Infrastructure Services",
       "product": "(Cyber Cloud ERP)",
-      "body": "In a professional organization, precise control of financial resources is not possible with traditional accounting alone. This is where financial software systems come in. By integrating accounting, budgeting, credit, treasury and other information, these systems let managers make accurate and timely decisions.",
+      "body": "With Raydana cloud infrastructure services, Cyber ERP runs on secure, high-performance servers in a domestic data center. Raydana specialists handle installation, updates, backups and security, so your organization can access its data anytime, anywhere, without buying or maintaining servers.",
       "consult": "Expert Consultation",
       "demo": "Request a Demo"
     },
@@ -515,11 +562,11 @@
       "title": "Benefits of Cloud Infrastructure Services",
       "items": [
         "Scalability that matches your needs",
-        "Accessible from anywhere",
-        "Continuous backups with no coordination needed",
-        "No need to provide physical or network infrastructure",
-        "Get updates as quickly as possible",
-        "Get updates as quickly as possible"
+        "Access from anywhere",
+        "Continuous backups with no coordination required",
+        "No physical or network infrastructure to provide",
+        "Updates delivered as soon as they are released",
+        "Lower hardware purchase and maintenance costs"
       ]
     },
     "features": {
@@ -528,12 +575,12 @@
         "servers": {
           "label": "Raydana Servers",
           "items": [
-            "Accurate work-time calculation, with staff attendance integrated into payroll, HSE and office automation",
-            "Management of dispatch between sites, long assignments, accommodation and transfers",
-            "Connection to the comprehensive oil system",
-            "Grading in employee evaluations and career paths",
-            "Work-time control with strong support for shifts/rosters and work-time calculations",
-            "Integration and coordination with other departments"
+            "Dedicated and virtual servers with expandable resources",
+            "CPU and memory sized to your users and transaction volume",
+            "Real-time monitoring of server performance and availability",
+            "Hosted in a domestic data center with backup power and cooling",
+            "Resources added with no service downtime",
+            "Servers managed and maintained by Raydana specialists"
           ]
         },
         "storage": {
@@ -692,12 +739,6 @@
         "quality": "Quality Control",
         "sales": "Orders & Sales",
         "budget": "Budget Management"
-      },
-      "chips": {
-        "orders": "Domestic Orders & Sales",
-        "exports": "Exports",
-        "salesAccounting": "Sales Accounting",
-        "portal": "Customer Portal"
       }
     },
     "benefits": {
@@ -706,7 +747,15 @@
         "records": "Journal entries and detailed financial reporting",
         "cheques": "Issuing and receiving cheques, petty cash, and bank advices",
         "closing": "Closing the financial accounts",
-        "assets": "Fixed-asset registration, upkeep and depreciation"
+        "assets": "Fixed-asset registration, upkeep and depreciation",
+        "budgetControl": "Budget and credit control",
+        "projectCosts": "Real-time control of project and contractor costs",
+        "multiCurrency": "Multi-currency management",
+        "contractors": "Contractor progress billing and settlement",
+        "inventory": "Spare parts stock control",
+        "hse": "Integration with HSE",
+        "consolidated": "Consolidated group reports",
+        "maintenance": "Equipment maintenance"
       }
     },
     "features": {
@@ -856,11 +905,13 @@
         "action": "Send a ticket"
       },
       "phoneLabel": "Phone",
-      "emailLabel": "Email"
+      "emailLabel": "Email",
+      "faxLabel": "Fax"
     },
     "map": {
       "title": "Raydana office location on the map",
-      "google": "Open in Google Maps"
+      "google": "Open in Google Maps",
+      "interactive": "Interactive map"
     }
   },
   "about": {
@@ -1043,15 +1094,6 @@
         "afta": "AFTA Strategic Management Center (cyber security)"
       }
     },
-    "team": {
-      "title": "Our leadership",
-      "roles": {
-        "ceo": "CEO",
-        "chairman": "Chairman of the Board",
-        "vice": "Vice Chairman of the Board"
-      },
-      "name": "Hasan Nilforoushan"
-    },
     "history": {
       "title": "Our journey: from one enterprise solution to an intelligent management ecosystem",
       "intro": "Raydana began by focusing on the real needs of organizations. Along the way, experience with enterprise projects and a deep understanding of complex business processes led us to build CYBER ERP and its complementary solutions.",
@@ -1110,6 +1152,48 @@
       "process": "{S} process overview",
       "subsystemBenefits": "Benefits of {S}",
       "subsystemFeatures": "{S} features"
-    }
+    },
+    "faqTitle": "Frequently Asked Questions",
+    "faq": [
+      {
+        "q": "How is the price of the CYBER ERP {N} solution calculated?",
+        "a": "Pricing depends on the subsystems you select, the number of users and the deployment model (on-premises or cloud). Complete the demo request form to receive a tailored quote."
+      },
+      {
+        "q": "Can {N} be purchased separately from other modules?",
+        "a": "Yes. Each module can be deployed on its own, and further modules can be added later without migrating your data again."
+      },
+      {
+        "q": "How does {N} integrate with the rest of the organization?",
+        "a": "All CYBER ERP modules share one database, so transactions in one department are posted automatically to the related areas, with no duplicate data entry."
+      },
+      {
+        "q": "How long does a {N} implementation take?",
+        "a": "The timeline depends on the size of your organization and the number of subsystems. It covers process analysis, installation, data migration, user training and post-launch support."
+      }
+    ],
+    "subsystemFaq": [
+      {
+        "q": "Which organizations is the {S} system designed for?",
+        "a": "It suits public, private and holding organizations of any size, and its base settings adapt it to each organization's structure and processes."
+      },
+      {
+        "q": "Is {S} integrated with the other subsystems?",
+        "a": "Yes. {S} exchanges data automatically with the other {N} subsystems and with the rest of the CYBER ERP modules."
+      },
+      {
+        "q": "Can data be migrated from our previous software?",
+        "a": "Yes. Raydana's implementation team migrates master data and balances from your previous system and verifies them before go-live."
+      },
+      {
+        "q": "How are {S} users trained?",
+        "a": "Training is delivered through individual and group sessions, step-by-step guides and video tutorials, with continued support after go-live."
+      }
+    ]
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you’re looking for doesn’t exist or has moved.",
+    "home": "Back to the homepage"
   }
 }

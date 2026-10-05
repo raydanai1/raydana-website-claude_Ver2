@@ -4,15 +4,15 @@ import { z } from 'astro/zod';
 import { knowledgeCategories } from './data/knowledge-categories';
 
 /**
- * Knowledge base items: src/content/knowledge/<slug>/{fa.md, en.md, cover.jpg}.
- * fa.md is the Persian version, en.md the (optional) English one; both are linked by the folder name.
+ * Knowledge base items: src/content/knowledge/<slug>/{fa,en,ru,ar}.md + cover.jpg.
+ * fa.md is the Persian version; en.md, ru.md and ar.md are the (optional) translations; they are linked by the folder name.
  * Folders starting with "_" (e.g. _template) are never published.
  * Entry ids are "<slug>/<lang>", e.g. "erp-vs-crm/fa".
  */
 const knowledge = defineCollection({
   loader: glob({
     base: './src/content/knowledge',
-    pattern: '[!_]*/{fa,en}.md',
+    pattern: '[!_]*/{fa,en,ru,ar}.md',
     generateId: ({ entry }) => entry.replace(/\\/g, '/').replace(/\.md$/, ''),
   }),
   schema: ({ image }) =>

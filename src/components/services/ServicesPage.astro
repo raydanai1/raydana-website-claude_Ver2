@@ -6,7 +6,6 @@ import ServicesHero from './ServicesHero.astro';
 import ServicesGrid from './ServicesGrid.astro';
 import TrainingSection from './TrainingSection.astro';
 import CustomizationSection from './CustomizationSection.astro';
-import DevelopmentSection from './DevelopmentSection.astro';
 import SupportSection from './SupportSection.astro';
 import DeploymentSection from './DeploymentSection.astro';
 import { homePath, type Locale, useTranslations } from '../../i18n';
@@ -27,7 +26,6 @@ const ctaHref = `${homePath(locale)}#demo`;
     <ServicesGrid locale={locale} />
     <TrainingSection locale={locale} ctaHref={ctaHref} />
     <CustomizationSection locale={locale} />
-    <DevelopmentSection locale={locale} ctaHref={ctaHref} />
     <SupportSection locale={locale} ctaHref={ctaHref} />
     <DeploymentSection locale={locale} ctaHref={ctaHref} />
   </main>

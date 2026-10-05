@@ -1,0 +1,49 @@
+---
+/**
+ * The one route file for the whole site. Every URL — in every language — comes from src/routing.ts,
+ * which reads the slugs in src/i18n/routes/<lang>.ts. To rename a URL, edit the slug file, not this one.
+ */
+import type { GetStaticPaths } from 'astro';
+import HomePage from '../components/HomePage.astro';
+import ServicesPage from '../components/services/ServicesPage.astro';
+import ProductsPage from '../components/products/ProductsPage.astro';
+import CloudPage from '../components/cloud/CloudPage.astro';
+import OilGasPage from '../components/solutions/OilGasPage.astro';
+import ContactPage from '../components/contact/ContactPage.astro';
+import AboutPage from '../components/about/AboutPage.astro';
+import KnowledgePage from '../components/knowledge/KnowledgePage.astro';
+import ArticlePage from '../components/knowledge/ArticlePage.astro';
+import CategoryPage from '../components/knowledge/CategoryPage.astro';
+import ModulePage from '../components/modules/ModulePage.astro';
+import SubsystemPage from '../components/modules/SubsystemPage.astro';
+import RedirectPage from '../components/RedirectPage.astro';
+import { getModule } from '../data/modules';
+import { getRoutes, toParam, type Route } from '../routing';
+
+export const getStaticPaths = (async () => {
+  const routes = await getRoutes();
+  return routes.map((route) => ({ params: { path: toParam(route.path) }, props: { route } }));
+}) satisfies GetStaticPaths;
+
+const { route } = Astro.props as { route: Route };
+// Russian/Arabic only have the homepage so far; pages built for them are always the homepage.
+const locale = route.locale;
+const data = route.kind === 'page' ? route.data : undefined;
+const module = data && (data.view === 'module' || data.view === 'subsystem') ? getModule(data.moduleId)! : undefined;
+const subsystem = data?.view === 'subsystem' ? module!.subsystems.find((s) => s.id === data.subsystemId)! : undefined;
+const contentLocale = locale;
+---
+
+{route.kind === 'redirect' && <RedirectPage locale={locale} to={route.to} reason={route.reason} />}
+{data?.view === 'home' && <HomePage locale={locale} />}
+{data?.view === 'services' && <ServicesPage locale={contentLocale} />}
+{data?.view === 'products' && <ProductsPage locale={contentLocale} />}
+{data?.view === 'cloud' && <CloudPage locale={contentLocale} />}
+{data?.view === 'oilGas' && <OilGasPage locale={contentLocale} />}
+{data?.view === 'contact' && <ContactPage locale={contentLocale} />}
+{data?.view === 'about' && <AboutPage locale={contentLocale} />}
+{data?.view === 'knowledge' && <KnowledgePage locale={contentLocale} />}
+{data?.view === 'article' && <ArticlePage locale={contentLocale} item={data.item} />}
+{data?.view === 'category' && <CategoryPage locale={contentLocale} category={data.category} page={data.n} />}
+{data?.view === 'module' && <ModulePage locale={contentLocale} module={module!} />}
+{data?.view === 'subsystem' && <SubsystemPage locale={contentLocale} module={module!} subsystem={subsystem!} />}

@@ -29,13 +29,13 @@ const chips = benefitRows.flatMap((row) => row.chips);
       <div class="hidden w-[818px] xl:block">
         {
           benefitRows.map((row) => (
-            <ul class="flex flex-wrap" style={`margin-top:${row.top}px`}>
+            <ul class="flex flex-wrap gap-y-3" style={`margin-top:${row.top}px`}>
               {row.chips.map((chip) => (
                 <li
                   class="benefit-glass p-[10px]"
-                  style={`margin-inline-start:${chip.offset}px;width:${chip.width}px;border-radius:${chip.radius}px;--glass:${chip.glass}`}
+                  style={`margin-inline-start:${chip.offset}px;min-width:${chip.width}px;border-radius:${chip.radius}px;--glass:${chip.glass}`}
                 >
-                  <span class="benefit-chip flex h-[55px] items-center gap-[10px] pe-3 ps-[13px]" style={`border-radius:${chip.innerRadius}px`}>
+                  <span class="benefit-chip flex min-h-[55px] items-center gap-[10px] pe-3 ps-[13px]" style={`border-radius:${chip.innerRadius}px`}>
                     <img src={chip.check} alt="" width={chip.size} height={chip.size} loading="lazy" class="shrink-0" style={`width:${chip.size}px;height:${chip.size}px`} />
                     <span class:list={['text-[14px] text-ink', locale === 'fa' ? 'whitespace-nowrap leading-6' : 'leading-5']}>{t.items[chip.key]}</span>
                   </span>

@@ -1,12 +1,14 @@
 /**
  * ERP module and subsystem content. One JSON file per module lives next to this file
- * (src/data/modules/<moduleId>.json); text for both languages sits in each file's `fa` / `en`.
+ * (src/data/modules/<moduleId>.json); Persian and English text sits in each file's `fa` / `en`.
+ * Russian and Arabic live in src/data/modules/i18n/<moduleId>.<ru|ar>.json (same shape, one language) and are
+ * merged in below.
  * Page layouts come from the Figma frames «detail-product-modules» (2:15565) and
  * «detail-product-modules-subsystems» (119:5583).
  */
 import type { Locale } from '../../i18n';
 
-type Localized<T> = { fa: T; en: T };
+type Localized<T> = Record<Locale, T>;
 
 interface Feature {
   tab: string;
@@ -53,8 +55,63 @@ export interface Module extends Localized<ModuleText>, Extras {
 
 const files = import.meta.glob<Module>('./*.json', { eager: true, import: 'default' });
 
-/** All modules, by `order`; each module's subsystems by `order` too. */
+/** One language of one module file (src/data/modules/i18n/<id>.<lang>.json). */
+interface Translation {
+  id: string;
+  text: ModuleText;
+  features?: Feature[];
+  faq?: Faq[];
+  subsystems: Record<
+    string,
+    {
+      text: SubsystemText;
+      architecture?: { title: string; items: string[] }[];
+      stakeholders?: { role: string; text: string }[];
+      process?: { title: string; details: string[] }[];
+      features?: Feature[];
+      faq?: Faq[];
+    }
+  >;
+}
+const translations = import.meta.glob<Translation>('./i18n/*.json', { eager: true, import: 'default' });
+
+/** Put `items[i]` into `list[i][lang]` (lists of per-language pairs). */
+function mergeList<T>(list: Partial<Localized<T>>[] | undefined, items: T[] | undefined, lang: Locale) {
+  if (!list || !items) return list;
+  return list.map((entry, i) => ({ ...entry, [lang]: items[i] ?? entry.en }));
+}
+
+function withTranslations(m: Module): Module {
+  let out: Module = m;
+  for (const [path, tr] of Object.entries(translations)) {
+    const lang = path.match(/\.(\w+)\.json$/)?.[1] as Locale;
+    if (tr.id !== m.id || !lang) continue;
+    out = {
+      ...out,
+      [lang]: tr.text,
+      features: mergeList(out.features, tr.features, lang) as Module['features'],
+      faq: mergeList(out.faq, tr.faq, lang) as Module['faq'],
+      subsystems: out.subsystems.map((s) => {
+        const ts = tr.subsystems[s.id];
+        if (!ts) return s;
+        return {
+          ...s,
+          [lang]: ts.text,
+          architecture: mergeList(s.architecture, ts.architecture, lang) as Subsystem['architecture'],
+          stakeholders: mergeList(s.stakeholders, ts.stakeholders, lang) as Subsystem['stakeholders'],
+          process: mergeList(s.process, ts.process, lang) as Subsystem['process'],
+          features: mergeList(s.features, ts.features, lang) as Subsystem['features'],
+          faq: mergeList(s.faq, ts.faq, lang) as Subsystem['faq'],
+        };
+      }),
+    };
+  }
+  return out;
+}
+
+/** All modules (all four languages), by `order`; each module's subsystems by `order` too. */
 export const modules: Module[] = Object.values(files)
+  .map(withTranslations)
   .map((m) => ({ ...m, subsystems: [...m.subsystems].sort((a, b) => a.order - b.order) }))
   .sort((a, b) => a.order - b.order);
 
@@ -66,7 +123,7 @@ export function getModule(id: string): Module | undefined {
 export const modulePage = (moduleId: string) => `products/${moduleId}` as const;
 export const subsystemPage = (moduleId: string, subsystemId: string) => `products/${moduleId}/${subsystemId}` as const;
 
-/** Pick one language from a `{ fa, en }` pair. */
+/** Pick one language from a per-language record. */
 export const pick = <T>(pair: Localized<T>, locale: Locale): T => pair[locale];
 
 const img = (path: string) => `/images/modules/${path}`;

@@ -1,13 +1,20 @@
 ---
-import { basketModules, chipPages, oilGasImages } from '../../data/solutions/oil-gas';
-import { modulePage } from '../../data/modules';
-import { localizeDigits, pagePath, type Page, type Locale, useTranslations } from '../../i18n';
+import { basketModules, oilGasImages } from '../../data/solutions/oil-gas';
+import { getModule, modulePage, subsystemPage } from '../../data/modules';
+import { localizeDigits, pagePath, type Locale, useTranslations } from '../../i18n';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = useTranslations(locale).solutionOilGas.basket;
+// Chips: the module's subsystems (each links to its page), or its key benefits when it has no subsystems.
+const cards = basketModules.map((item) => {
+  const module = getModule(item.module)!;
+  const subsystems = module.subsystems.map((s) => ({ label: s[locale].name, href: pagePath(subsystemPage(module.id, s.id), locale) }));
+  const chips = subsystems.length ? subsystems : module[locale].benefits.slice(0, 4).map((label) => ({ label, href: undefined }));
+  return { ...item, count: subsystems.length, chips };
+});
 ---
 
 <!-- Figma 2:1047 (photo) + 2:1048 (gradient), 2:4737 (title), 6 cards 2:4908 … 2:5115. -->
@@ -21,7 +28,7 @@ const t = useTranslations(locale).solutionOilGas.basket;
     <!-- Two 634px columns, 24px apart, as in Figma; one column below 1024px. -->
     <ul class="mx-auto mt-8 grid max-w-[1292px] grid-cols-1 gap-5 lg:mt-[50px] lg:grid-cols-2 lg:gap-x-6 lg:gap-y-[25px]">
       {
-        basketModules.map((item) => (
+        cards.map((item) => (
           <li class="basket-card group relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] pb-6 transition duration-200 hover:-translate-y-1 lg:min-h-[315px]">
             <div class="flex items-start gap-[7px] pe-14 ps-[14px] pt-[17px]">
               <img src={item.icon} alt="" width="68.0947" height="68.0947" loading="lazy" class="size-[56px] shrink-0 sm:size-[68.095px]" />
@@ -30,27 +37,24 @@ const t = useTranslations(locale).solutionOilGas.basket;
                   <!-- The whole card links to the module page; chips naming a subsystem sit above with their own link. -->
                   <a href={pagePath(modulePage(item.module), locale)} class="after:absolute after:inset-0 after:rounded-2xl">{t.modules[item.key]}</a>
                 </h3>
-                <p class="text-small leading-8 text-muted">{localizeDigits(t.includes.replace('{n}', String(item.count)), locale)}</p>
+                {item.count > 0 && <p class="text-[14px] lg:text-small leading-8 text-muted">{localizeDigits(t.includes.replace('{n}', String(item.count)), locale)}</p>}
               </div>
             </div>
             <span class="icon-btn absolute end-[17px] top-[21px] transition-colors group-hover:bg-primary/10" aria-hidden="true">
               <img src={oilGasImages.cardArrow} alt="" width="18" height="18" class="dir-icon-rev size-[18px]" />
             </span>
             <ul class="mt-4 flex flex-wrap gap-x-[10px] gap-y-3 pe-5 ps-4 sm:mt-[17px] sm:gap-y-[18px] sm:pe-[34px] sm:ps-[23px]">
-              {item.chips.map((chip) => {
-                const page = chipPages[chip] as Page | undefined;
-                return page ? (
+              {item.chips.map((chip) =>
+                chip.href ? (
                   <li class="relative z-10 flex">
-                    <a href={pagePath(page, locale)} class="basket-chip flex h-10 items-center rounded-[49px] bg-light-3 px-3 text-small leading-8 whitespace-nowrap text-body">
-                      {t.chips[chip]}
+                    <a href={chip.href} class="basket-chip flex min-h-11 items-center rounded-[49px] bg-light-3 px-3 text-[14px] lg:text-small leading-6 text-body lg:min-h-10">
+                      {chip.label}
                     </a>
                   </li>
                 ) : (
-                  <li class="basket-chip flex h-10 items-center rounded-[49px] bg-light-3 px-3 text-small leading-8 whitespace-nowrap text-body">
-                    {t.chips[chip]}
-                  </li>
-                );
-              })}
+                  <li class="basket-chip flex min-h-10 items-center rounded-[49px] bg-light-3 px-3 py-1 text-[14px] lg:text-small leading-6 text-body">{chip.label}</li>
+                ),
+              )}
             </ul>
           </li>
         ))
