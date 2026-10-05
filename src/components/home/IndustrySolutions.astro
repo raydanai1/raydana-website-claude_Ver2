@@ -2,10 +2,10 @@
 /**
  * "Solutions for organizations and businesses" (Figma ver4 2067:3914 / grid 6002:2398): six sector cards in a
  * 3×2 grid of equal 423px columns on desktop, two per row on tablets, one per row on phones.
- * The cards are informational only (no links); the hover lift and the arrow are kept as decoration.
+ * Each whole card links to the Products page in the same language; the h3 names the link.
  */
 import { industries } from '../../data/home';
-import { type Locale, useTranslations } from '../../i18n';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
 
 interface Props {
   locale: Locale;
@@ -14,6 +14,7 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 const names = t.industries.items as Record<string, string>;
 const descriptions = t.industries.descriptions as Record<string, string>;
+const productsHref = pagePath('products', locale);
 ---
 
 <section id="industries" class="container-x scroll-mt-28 pt-12 lg:pt-[73px]" aria-labelledby="industries-title">
@@ -25,10 +26,15 @@ const descriptions = t.industries.descriptions as Record<string, string>;
   <ul class="mx-auto mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5 lg:mt-[37px] lg:max-w-[1317px] lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10">
     {
       industries.map((item) => (
-        <li class="group flex flex-col gap-3 rounded-3xl border border-stroke bg-[#fafafa] p-6 shadow-industry transition duration-300 hover:-translate-y-1 hover:border-stroke-strong lg:h-[326px] lg:gap-[14px]">
+        <li class="flex">
+          <a
+            href={productsHref}
+            aria-labelledby={`industry-${item.key}`}
+            class="group flex w-full cursor-pointer flex-col gap-3 rounded-3xl border border-stroke bg-[#fafafa] p-6 shadow-industry transition duration-300 hover:-translate-y-1 hover:border-stroke-strong lg:h-[326px] lg:gap-[14px]"
+          >
           <img src={item.icon} alt="" width="78" height="78" loading="lazy" class:list={['shrink-0', 'size' in item ? 'size-[80px]' : 'size-[78px]']} />
           <div class="flex-1">
-            <h3 class="font-bold text-title">
+            <h3 id={`industry-${item.key}`} class="font-bold text-title">
               <span class="block text-15 leading-9">{t.industries.kicker}</span>
               <span class="block text-[18px] leading-9">{names[item.key]}</span>
             </h3>
@@ -37,6 +43,7 @@ const descriptions = t.industries.descriptions as Record<string, string>;
           <span class="icon-btn group-hover:bg-primary/10" aria-hidden="true">
             <img src="/images/home/tools/arrow-small.svg" alt="" width="18" height="18" class="dir-icon-rev" />
           </span>
+          </a>
         </li>
       ))
     }
