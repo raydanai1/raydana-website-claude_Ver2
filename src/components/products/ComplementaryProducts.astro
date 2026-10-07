@@ -21,7 +21,7 @@ const t = useTranslations(locale).products.complementary;
     <ul class="mx-auto mt-8 grid max-w-[940px] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-x-5 lg:mt-[35px] lg:gap-x-[38px] lg:gap-y-6">
       {
         complementaryProducts.map((p) => (
-          <li class="h-[97px] rounded-[17px] border-[1.2px] border-transparent bg-white/22 px-[14px] pt-[11px] backdrop-blur-[19px]">
+          <li class="rounded-[17px] border-[1.2px] border-transparent bg-white/22 p-2 backdrop-blur-[19px] sm:h-[97px] sm:px-[14px] sm:pb-0 sm:pt-[11px]">
             <div class="flex h-[74px] items-center gap-[15px] rounded-xl border-[1.2px] border-stroke-strong bg-white pe-4 ps-[10px] shadow-[0_0_48.5px_rgba(190,190,223,0.74)]">
               <span class="relative flex h-[65px] w-[60px] shrink-0 items-center justify-center">
                 <img src={productImages.badgeHex} alt="" width="60" height="65" class="absolute inset-0 h-[65px] w-[60px]" />

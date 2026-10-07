@@ -39,19 +39,19 @@ const arcs = [205, 235, 275, 325, 389];
     }
   </div>
 
-  <div class="container-x pb-14 pt-12 lg:h-[548px] lg:pb-0 lg:pt-[61px]">
+  <div class="container-x pb-10 pt-10 lg:h-[548px] lg:pb-0 lg:pt-[61px]">
     <h2 id="cloud-benefits-title" class="text-center text-[20px] font-bold leading-normal text-white md:text-title-2">{t.title}</h2>
-    <ul class="mx-auto mt-8 grid max-w-[749.4px] grid-cols-1 gap-3 md:grid-cols-2 md:gap-x-[22.5px] md:gap-y-[22px] lg:mt-[49px]">
+    <ul class="mx-auto mt-6 grid max-w-[749.4px] grid-cols-1 gap-2.5 md:mt-8 md:grid-cols-2 md:gap-x-[22.5px] md:gap-y-[22px] lg:mt-[49px]">
       {
         t.items.map((text, i) => {
           const card = cloudBenefits[i];
           return (
             <li
-              class="relative h-[91px] rounded-[14px] border border-white/70 backdrop-blur-[15.5px]"
+              class="relative rounded-[14px] border border-white/70 p-2 backdrop-blur-[15.5px] md:h-[91px] md:p-0"
               style={`background-color:rgba(255,255,255,${card.glass})`}
             >
               <div
-                class="absolute inset-x-[16px] inset-y-[14.5px] flex items-center gap-[8px] border border-stroke-strong bg-white pe-3 ps-[12px] shadow-[0_0_40px_rgba(190,190,223,0.74)]"
+                class="flex min-h-[56px] items-center gap-[8px] border border-stroke-strong bg-white py-2 pe-3 ps-[12px] shadow-[0_0_40px_rgba(190,190,223,0.74)] md:absolute md:inset-x-[16px] md:inset-y-[14.5px] md:min-h-0 md:py-0"
                 style={`border-radius:${card.radius}px`}
               >
                 <img src={card.check} alt="" width={card.size} height={card.size} loading="lazy" class="shrink-0" style={`width:${card.size}px;height:${card.size}px`} />

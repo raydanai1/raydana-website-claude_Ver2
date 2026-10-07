@@ -3,8 +3,6 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../Header.astro';
 import Footer from '../Footer.astro';
 import Button from '../ui/Button.astro';
-import DemoRequestForm from '../cloud/DemoRequestForm.astro';
-import Faq from '../cloud/Faq.astro';
 import FeaturedSlider from './FeaturedSlider.astro';
 import CategoryPills from './CategoryPills.astro';
 import WideCard from './WideCard.astro';
@@ -29,18 +27,18 @@ const t = useTranslations(locale).knowledge;
 const items = await getKnowledgeItems(locale);
 const byCategory = (c: KnowledgeCategory) => itemsInCategory(items, c);
 
-// Section per category, in Figma order: news as wide cards, the rest as a 3-column grid.
+// Figma ver4 (33:6798): the newest 2 events as wide cards, then 3 articles in a grid.
 const sections = [
-  { category: 'news' as const, limit: 2, wide: true, more: t.viewAll },
-  { category: 'articles' as const, limit: 6, wide: false, more: t.viewAllArticles },
-  { category: 'events' as const, limit: 3, wide: false, more: t.viewAll },
-  // Categories added later to knowledge-categories.ts get a grid section too.
-  ...knowledgeCategories
-    .filter((c) => !['news', 'articles', 'events'].includes(c))
-    .map((category) => ({ category, limit: 3, wide: false, more: t.viewAll })),
+  { category: 'events' as const, limit: 2, wide: true, more: t.viewAll },
+  { category: 'articles' as const, limit: 3, wide: false, more: t.viewAllArticles },
 ]
   .map((s) => ({ ...s, all: byCategory(s.category) }))
   .filter((s) => s.all.length > 0);
+// All categories always get a pill: a section on this page when there is one, else the category page.
+const pills = knowledgeCategories.map((category) => ({
+  category,
+  href: sections.some((s) => s.category === category) ? `#${category}` : knowledgeCategoryPath(category, locale),
+}));
 ---
 
 <Layout locale={locale} page="knowledge" title={t.meta.title} description={t.meta.description}>
@@ -56,7 +54,7 @@ const sections = [
 
     <CategoryPills
       locale={locale}
-      pills={sections.map((s) => ({ category: s.category, href: `#${s.category}` }))}
+      pills={pills}
       class="container-x mt-10 lg:mt-[44px]"
     />
 
@@ -90,16 +88,7 @@ const sections = [
       ))
     }
 
-    <div class="mt-16 lg:mt-[116px]">
-      <!-- Figma 33:10528: laptop photo (image 43) on #5871af under rgba(22,52,125,0.65). -->
-      <DemoRequestForm
-        locale={locale}
-        copy={{ title: t.demoTitle }}
-        photo="/images/knowledge/demo-photo.webp"
-        overlay="bg-[rgba(22,52,125,0.65)]"
-      />
-    </div>
-    <Faq locale={locale} title={t.faq.title} items={t.faq.items} spacing="pb-14 pt-14 lg:pb-[184px] lg:pt-[97px]" />
+    <div class="h-6 lg:h-[40px]" aria-hidden="true"></div>
   </main>
   <Footer locale={locale} />
 </Layout>

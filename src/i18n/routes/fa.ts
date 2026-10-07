@@ -93,6 +93,10 @@ const fa: RouteSlugs = {
     'erp-vs-crm': 'تفاوت-erp-و-crm',
     'financial-software': 'نرم-افزار-مالی-یکپارچه',
     'user-training': 'آموزش-کاربران',
+    'cyber-erp-1405-redesign': 'بازطراحی-cyber-erp-1405',
+    'next-gen-cybererp-features': 'ویژگی-های-نسل-جدید-cybererp',
+    'erp-future': 'آینده-erp',
+    'erp-trends-1405': 'روندهای-erp-1405',
   },
 };
 

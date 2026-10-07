@@ -25,7 +25,13 @@ const knowledge = defineCollection({
       date: z.coerce.date({ error: 'date must be a date like 2026-08-30' }),
       cover: image(),
       coverAlt: z.string().optional(),
+      /** Optional bold blue line under the title in the slider (Figma 6002:2557). */
+      intro: z.string().optional(),
+      /** Optional ready-made slider artwork (shown instead of the cover cut to a hexagon). */
+      sliderImage: image().optional(),
       featured: z.boolean().default(false),
+      /** Tie-breaker for items with the same date: lower numbers come first. */
+      order: z.number().default(0),
       draft: z.boolean().default(false),
     }),
 });

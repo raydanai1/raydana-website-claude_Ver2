@@ -37,7 +37,7 @@ export const glanceStats = [
 /** Vision items: 2-column grid in reading order. */
 export const visionItems = ['leadership', 'flexibility', 'integration', 'intelligence'] as const;
 export const missionItems = ['integrate', 'simplify', 'smart', 'grow'] as const;
-export const valueItems = ['integration', 'realProblem', 'simplicity', 'decisions', 'structure', 'growth'] as const;
+export const valueItems = ['realProblem', 'decisions', 'structure', 'growth', 'integration', 'simplicity'] as const;
 
 /** "Why CYBER ERP" columns: pastel hexagon fill + accent colour of the icon. */
 export const whyItems = [
@@ -56,11 +56,18 @@ export const projectLogos = [
   { key: 'mint', src: img('project-mint.webp'), w: 115 },
 ] as const;
 
-/** Certificates (reading order). */
+/**
+ * Certificates (reading order; Figma ver4 6001:2125). `course` is the course printed on the certificate,
+ * `w` = rendered image width inside the 371px image box (Figma), `px` = intrinsic size of the webp.
+ */
 export const certificates = [
-  { name: 'zarrabi', course: 'Oracle SOA Suite 11g: Build Composite', src: img('cert-soa-zarrabi.webp'), w: 314 },
-  { name: 'nilforoushan', course: 'Oracle ADF 11g: Build Web Application', src: img('cert-adf-nilforoushan.webp'), w: 300 },
-  { name: 'zarrabi', course: 'Oracle ADF 11g: Build Web Application', src: img('cert-adf-zarrabi.webp'), w: 300 },
+  { name: 'zarrabi', course: 'Oracle SOA Suite 11g: Build Composite', src: img('cert-soa-zarrabi.webp'), w: 314, px: [640, 488] },
+  { name: 'nilforoushan', course: 'Oracle ADF 11g: Build Web Application', src: img('cert-adf-nilforoushan.webp'), w: 300, px: [640, 508] },
+  { name: 'zarrabi', course: 'Oracle ADF 11g: Build Web Application', src: img('cert-adf-zarrabi.webp'), w: 300, px: [640, 494] },
+  { name: 'nilforoushan', course: 'Oracle BPM Suite 11g: Implementation', src: img('cert-bpm-nilforoushan.webp'), w: 300, px: [640, 499] },
+  { name: 'zarrabi', course: 'Oracle BPM Suite 11g: Implementation', src: img('cert-bpm-zarrabi.webp'), w: 294, px: [640, 501] },
+  { name: 'nilforoushan', course: 'Oracle SOA Suite 11g: Build Composite', src: img('cert-soa-nilforoushan.webp'), w: 300, px: [640, 499] },
+  { name: 'zarrabi', course: 'Intalio BPM and SOA: Modeling, Designing and Executing', src: img('cert-intalio-zarrabi.webp'), w: 321, px: [640, 447] },
 ] as const;
 
 /** Licence logos (reading order). `w` = rendered width in px (Figma size). */
@@ -70,9 +77,9 @@ export const licences = [
   { key: 'knowledge', src: img('licence-knowledge.webp'), w: 177 },
   { key: 'council', src: img('licence-council.webp'), w: 207 },
   { key: 'ito', src: img('licence-ito.webp'), w: 200 },
+  { key: 'isi', src: img('licence-isi.webp'), w: 200 },
+  { key: 'mimt', src: img('licence-mimt.webp'), w: 186 },
 ] as const;
-
-/** Key people (reading order); names are placeholders as in Figma. */
 
 /**
  * History timeline, reading order. `x` = dot centre measured from the reading-start edge of the
@@ -139,5 +146,7 @@ export const historyEntries = [
     dot: img('dot-1402.svg'),
     x: 1098,
     lower: true,
+    card: { start: 977, top: 402, w: 243 },
+    groups: [{ label: 'Cyber ERP', items: 'next' }],
   },
 ] as const;

@@ -1,18 +1,15 @@
 ---
 import { cloudImages } from '../../data/cloud';
-import { type Locale, useTranslations } from '../../i18n';
+import type { Locale } from '../../i18n';
 
 interface Props {
   locale: Locale;
-  /** Defaults to the cloud page questions. */
-  title?: string;
-  items?: readonly { q: string; a: string }[];
+  title: string;
+  items: readonly { q: string; a: string }[];
   /** Section padding. */
   spacing?: string;
 }
-const { locale } = Astro.props;
-const t = useTranslations(locale).cloud.faq;
-const { title = t.title, items = t.items, spacing = 'pb-0 pt-14 lg:pt-[143px] lg:pb-[54px]' } = Astro.props;
+const { title, items, spacing = 'pb-16 pt-14' } = Astro.props;
 // schema.org FAQPage for the questions on this page.
 const faqSchema = JSON.stringify({
   '@context': 'https://schema.org',

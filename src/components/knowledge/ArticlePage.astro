@@ -71,7 +71,7 @@ const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jp
             sizes="(min-width: 1320px) 1320px, 100vw"
             loading="eager"
             fetchpriority="high"
-            class="aspect-[16/9] w-full object-cover sm:aspect-[1318/438]"
+            class="aspect-[2/1] w-full object-cover sm:aspect-[1318/438]"
           />
         </div>
       </div>
@@ -81,7 +81,7 @@ const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jp
         <div class="min-w-0 lg:pe-2 lg:ps-[34px]">
           <ItemMeta item={item} locale={locale} variant="slider" class="min-h-[38px] ps-5 lg:max-w-[770px]" />
           <h1 class="mt-6 text-[20px] font-bold leading-[1.6] text-ink lg:mt-[29px] lg:text-title-2">{item.data.title}</h1>
-          <div class="knowledge-prose mt-6 lg:mt-[30px]">
+          <div class="knowledge-prose article-body mt-6 lg:mt-[30px]">
             <Content />
           </div>
         </div>
@@ -145,5 +145,57 @@ const ogImage = (await getImage({ src: item.data.cover, width: 1200, format: 'jp
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+  /* Figma ver4 2015:6396 / 6003:2942: 18px bold section headings, 15/32 paragraphs set close together,
+     a light opening quote mark before the quote, and the ERP/CRM table that scrolls sideways on phones. */
+  .article-body :global(h2) {
+    margin-top: 28px;
+    font-size: 18px;
+    line-height: 32px;
+  }
+  .article-body :global(h2 + *) {
+    margin-top: 4px;
+  }
+  .article-body :global(p + p) {
+    margin-top: 8px;
+  }
+  .article-body :global(blockquote) {
+    position: relative;
+    border: 0;
+    background: none;
+    padding: 0 28px;
+    color: var(--color-body);
+  }
+  .article-body :global(blockquote)::before {
+    content: '“';
+    position: absolute;
+    inset-inline-start: 0;
+    top: -6px;
+    font-size: 34px;
+    line-height: 1;
+    color: #c4c8d2;
+  }
+  .article-body :global(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .article-body :global(th),
+  .article-body :global(td) {
+    min-width: 180px;
+  }
+  /* Chrome spreads Arabic letters apart when justifying, and narrow columns justify badly: align to the start there. */
+  :global(html[lang^='ar']) .article-body :global(:is(p, li)) {
+    text-align: start;
+  }
+  @media (max-width: 639px) {
+    .article-body {
+      font-size: 15px;
+      line-height: 30px;
+    }
+    .article-body :global(:is(p, li)) {
+      text-align: start;
+    }
   }
 </style>

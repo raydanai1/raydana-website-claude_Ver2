@@ -54,7 +54,7 @@ export async function getKnowledgeItems(locale: Locale): Promise<KnowledgeItem[]
       const { slug } = splitId(entry.id);
       return { slug, locale, entry, data: entry.data, href: knowledgeItemPath(slug, locale) };
     })
-    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.slug.localeCompare(b.slug));
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime() || a.data.order - b.data.order || a.slug.localeCompare(b.slug));
 }
 
 /** Slugs that have a published version in the given language. */
@@ -64,10 +64,10 @@ export async function getKnowledgeSlugs(locale: Locale): Promise<Set<string>> {
 
 export const itemsInCategory = (items: KnowledgeItem[], category: KnowledgeCategory) => items.filter((i) => i.data.category === category);
 
-/** Featured items for the slider (max 3); the 3 newest when none are featured. */
-export function sliderItems(items: KnowledgeItem[]) {
+/** Slider items (3): featured items first, then the newest of the rest. */
+export function sliderItems(items: KnowledgeItem[], count = 3) {
   const featured = items.filter((i) => i.data.featured);
-  return (featured.length ? featured : items).slice(0, 3);
+  return [...featured, ...items.filter((i) => !i.data.featured)].slice(0, count);
 }
 
 /** Same category first, then the newest of the rest. */

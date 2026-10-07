@@ -12,20 +12,20 @@ const t = useTranslations(locale).contact.cards;
 <!-- Figma 37:574: four 309×370 cards, pastel hexagon icons, outline pill buttons. -->
 <section class="container-x pt-[30px]" aria-labelledby="contact-cards-title">
   <h2 id="contact-cards-title" class="sr-only">{t.title}</h2>
-  <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+  <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
     {
       contactCards.map((card) => (
-        <li class="flex flex-col items-center rounded-[18.19px] bg-white px-5 pb-9 pt-10 text-center shadow-industry lg:min-h-[370px]">
-          <img src={card.icon} alt="" width={card.iconW} height={card.iconH} loading="lazy" class="h-auto w-[81px]" />
-          <h3 class="mt-[15px] text-15 font-bold leading-[34.1px] text-[#575757]">{t[card.key].title}</h3>
+        <li class="flex flex-col items-center rounded-[18.19px] bg-white px-4 pb-6 pt-6 text-center shadow-industry sm:px-5 sm:pb-9 sm:pt-10 lg:min-h-[370px]">
+          <img src={card.icon} alt="" width={card.iconW} height={card.iconH} loading="lazy" class="h-auto w-[64px] sm:w-[81px]" />
+          <h3 class="mt-3 text-15 sm:mt-[15px] font-bold leading-[34.1px] text-[#575757]">{t[card.key].title}</h3>
 
           {card.key === 'address' ? (
-            <p class="mb-3 mt-[14px] max-w-[281px] text-[15.9px] font-medium leading-8 text-[#838897]">{t.address.text}</p>
+            <p class="mb-1.5 mt-2 max-w-[281px] sm:mt-[14px] text-[15.9px] font-medium leading-8 text-[#838897]">{t.address.text}</p>
           ) : (
-            <div class="mt-[9px] flex flex-col text-[15.9px] font-medium leading-[34.1px] text-[#838897]">
+            <div class="mt-1 flex flex-col sm:mt-[9px] text-[15.9px] font-medium leading-[34.1px] text-[#838897]">
               {card.phone && (
                 <a href={`tel:${card.phone.tel}`} class="inline-flex min-h-11 items-center tracking-[2px] transition-colors lg:min-h-0 hover:text-[#555dfa]" aria-label={`${card.phone.fax ? t.faxLabel : t.phoneLabel}: ${card.phone.display}`}>
-                  <span dir="ltr">{localizeDigits(card.phone.display, locale)}</span>
+                  <bdo dir="ltr">{localizeDigits(card.phone.display, locale)}</bdo>
                 </a>
               )}
               {card.email && (
@@ -38,7 +38,7 @@ const t = useTranslations(locale).contact.cards;
 
           <a
             href={card.href}
-            class="mt-auto inline-flex h-12 min-w-[240px] max-w-full items-center justify-center gap-3 rounded-full border border-[#555dfa] px-5 text-base font-medium leading-6 whitespace-nowrap text-[#555dfa] drop-shadow-[0_0_8px_rgba(55,183,195,0.25)] transition-colors hover:bg-[#555dfa]/5 max-lg:mt-6"
+            class="mt-auto inline-flex h-12 min-w-[240px] max-w-full items-center justify-center gap-3 max-sm:w-full max-sm:min-w-0 rounded-full border border-[#555dfa] px-5 text-base font-medium leading-6 whitespace-nowrap text-[#555dfa] drop-shadow-[0_0_8px_rgba(55,183,195,0.25)] transition-colors hover:bg-[#555dfa]/5 max-lg:mt-5"
           >
             {t[card.key].action}
             <img src={contactImages.arrow} alt="" width="12.5" height="11.0459" class="dir-icon h-[11px] w-[12.5px]" />

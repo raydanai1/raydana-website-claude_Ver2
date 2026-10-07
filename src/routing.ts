@@ -78,8 +78,8 @@ async function build(): Promise<Route[]> {
     const items = await getKnowledgeItems(locale);
     for (const item of items) pages.push({ page: `knowledge/${item.slug}`, data: { view: 'article', item }, locales: [locale] });
     for (const category of knowledgeCategories) {
-      // Empty categories get no page (e.g. events while its only item is a draft).
-      const count = Math.ceil(itemsInCategory(items, category).length / KNOWLEDGE_PAGE_SIZE);
+      // Every category has at least one page; an empty one shows the "nothing published yet" message.
+      const count = Math.max(1, Math.ceil(itemsInCategory(items, category).length / KNOWLEDGE_PAGE_SIZE));
       for (let n = 1; n <= count; n++) {
         pages.push({ page: `knowledge/category/${category}/${n}`, data: { view: 'category', category, n }, locales: [locale] });
       }

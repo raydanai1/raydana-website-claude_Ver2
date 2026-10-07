@@ -30,37 +30,57 @@ const t = useTranslations(locale).knowledge;
             aria-label={fill(t.slide, { N: localizeDigits(i + 1, locale) })}
             data-slide
           >
-            <div class="w-full lg:max-w-[612px] lg:pe-0 lg:ps-[25px] xl:ps-[25px]">
+            <!-- Figma 6002:2645: title 24 · intro 18 bold blue · summary 15/32 · button, 10px apart; 615 wide. -->
+            <div class="w-full lg:w-[640px] lg:shrink-0 lg:ps-[25px]">
               <ItemMeta item={item} locale={locale} variant="slider" class="min-h-[38px] ps-5" />
               <h2 class="mt-5 text-[20px] font-bold leading-normal text-ink lg:mt-[25px] lg:text-title-2">
                 <a href={item.href} class="hover:text-primary">{item.data.title}</a>
               </h2>
-              <p class="mt-3 line-clamp-5 text-15 leading-8 text-[#616d8f] lg:mt-[7px] lg:line-clamp-none rtl:lg:text-justify">{item.data.summary}</p>
-              <Button href={item.href} class="mt-6 lg:mt-[11px]" label={item.data.title}>{t.readMore}</Button>
+              {item.data.intro && <p class="mt-[10px] text-[16px] font-bold leading-[1.6] text-primary lg:text-title-3 lg:leading-normal">{item.data.intro}</p>}
+              <p class="mt-[10px] line-clamp-5 text-15 leading-8 text-[#616d8f] lg:line-clamp-none lg:max-w-[584px]">{item.data.summary}</p>
+              <Button href={item.href} class="mt-6 lg:mt-[10px]" label={item.data.title}>{t.readMore}</Button>
             </div>
 
-            <!-- 452×366 hexagon art: pale back hexagon, white card, cover cut to the hexagon, small blue hexagon. -->
-            <a
-              href={item.href}
-              class="relative order-first mx-auto block aspect-[452/366] w-full max-w-[340px] shrink-0 sm:max-w-[400px] lg:order-last lg:me-[35px] lg:ms-0 lg:mt-[4px] lg:w-[452px] lg:max-w-none"
-              tabindex="-1"
-              aria-hidden="true"
-              aria-label={item.data.title}
-            >
-              <img src={knowledgeImages.hexBack} alt="" width="313.501" height="359.555" class="absolute left-[5.365%] top-[1.43%] w-[69.36%]" />
-              <img src={knowledgeImages.hexCard} alt="" width="340.305" height="381.224" class="absolute left-[15.23%] top-[-0.17%] h-[104.16%] w-[75.29%] max-w-none" />
-              <div class="hex-mask absolute left-[18.77%] top-[0.33%] h-[96.6%] w-[68.21%]">
+            {/* sliderImage: Figma 2046:3813 + 6003:2646–2648 (hexagons and three phone screens, one 484×416 picture);
+                otherwise a 452×366 hexagon frame with the cover cut to a hexagon. */}
+            {item.data.sliderImage ? (
+              <a
+                href={item.href}
+                class="mx-auto block w-full max-w-[340px] shrink-0 sm:max-w-[420px] lg:me-[28px] lg:-mt-[4px] lg:ms-0 lg:w-[484px] lg:max-w-none"
+                tabindex="-1"
+                aria-hidden="true"
+              >
                 <Image
-                  src={item.data.cover}
+                  src={item.data.sliderImage}
                   alt=""
-                  widths={[310, 620]}
-                  sizes="(min-width: 1024px) 309px, 70vw"
+                  widths={[420, 968]}
+                  sizes="(min-width: 1024px) 484px, 90vw"
                   loading={i === 0 ? 'eager' : 'lazy'}
-                  class="size-full object-cover"
+                  class="aspect-[484/416] w-full"
                 />
-              </div>
-              <img src={knowledgeImages.hexSmall} alt="" width="106.521" height="120.555" class="absolute left-[74.61%] top-[65.09%] w-[23.57%]" />
-            </a>
+              </a>
+            ) : (
+              <a
+                href={item.href}
+                class="relative mx-auto block aspect-[452/366] w-full max-w-[320px] shrink-0 sm:max-w-[400px] lg:me-[35px] lg:ms-0 lg:mt-[4px] lg:w-[452px] lg:max-w-none"
+                tabindex="-1"
+                aria-hidden="true"
+              >
+                <img src={knowledgeImages.hexBack} alt="" width="313.501" height="359.555" class="absolute left-[5.365%] top-[1.43%] w-[69.36%]" />
+                <img src={knowledgeImages.hexCard} alt="" width="340.305" height="381.224" class="absolute left-[15.23%] top-[-0.17%] h-[104.16%] w-[75.29%] max-w-none" />
+                <div class="hex-mask absolute left-[18.77%] top-[0.33%] h-[96.6%] w-[68.21%]">
+                  <Image
+                    src={item.data.cover}
+                    alt=""
+                    widths={[310, 620]}
+                    sizes="(min-width: 1024px) 309px, 70vw"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    class="size-full object-cover"
+                  />
+                </div>
+                <img src={knowledgeImages.hexSmall} alt="" width="106.521" height="120.555" class="absolute left-[74.61%] top-[65.09%] w-[23.57%]" />
+              </a>
+            )}
           </div>
         ))
       }

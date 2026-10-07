@@ -1,4 +1,5 @@
 ---
+import SnapStrip from './SnapStrip.astro';
 import { licences } from '../../data/about';
 import { type Locale, useTranslations } from '../../i18n';
 
@@ -9,13 +10,13 @@ const { locale } = Astro.props;
 const t = useTranslations(locale).about.licences;
 ---
 
-<!-- Figma 2015:10141: title + five licence logo cards (244×237). -->
-<section class="container-x pt-14 lg:pt-[110px]" aria-labelledby="licences-title">
-  <h2 id="licences-title" class="text-center text-[20px] font-bold leading-normal text-ink md:text-title-2">{t.title}</h2>
-  <ul class="mx-auto mt-6 grid max-w-[1318px] grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:mt-[30px] lg:grid-cols-5 lg:gap-6">
+<!-- Figma ver4 6002:2496: title + seven licence logo cards (244×237) in a row that runs past the page edge. -->
+<section class="pt-14 lg:pt-[110px]" aria-labelledby="licences-title">
+  <h2 id="licences-title" class="container-x text-center text-[20px] font-bold leading-normal text-ink md:text-title-2">{t.title}</h2>
+  <SnapStrip locale={locale} label={t.title} class="mt-5 lg:mt-0" navClass="lg:-mt-[40px] lg:mb-[18px]" gapClass="gap-3 sm:gap-4 lg:gap-6">
     {
       licences.map((item) => (
-        <li class="rounded-[13.515px] border-[0.563px] border-stroke bg-[#fafafa] p-[10px] shadow-[0_9.01px_19.959px_#dbe1f6] sm:pb-10 lg:pb-[54px]">
+        <li class="w-[168px] rounded-[13.515px] border-[0.563px] border-stroke bg-[#fafafa] p-[8px] pb-6 shadow-[0_9.01px_19.959px_#dbe1f6] sm:w-[200px] sm:p-[10px] sm:pb-10 lg:h-[237px] lg:w-[244px]">
           <div class="flex aspect-[223.9/171.6] items-center justify-center rounded-[11.465px] bg-light-3 p-2">
             <img
               src={item.src}
@@ -23,12 +24,12 @@ const t = useTranslations(locale).about.licences;
               title={t.items[item.key]}
               width={item.w}
               loading="lazy"
-              class="h-auto max-h-full"
+              class="h-auto max-h-full object-contain"
               style={`width:${(item.w / 224) * 100}%`}
             />
           </div>
         </li>
       ))
     }
-  </ul>
+  </SnapStrip>
 </section>

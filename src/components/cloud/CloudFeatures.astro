@@ -1,6 +1,6 @@
 ---
-import { cloudImages, cloudTabs } from '../../data/cloud';
-import { type Locale, useTranslations } from '../../i18n';
+import { cloudImages } from '../../data/cloud';
+import type { Locale } from '../../i18n';
 
 interface Tab {
   key: string;
@@ -9,12 +9,11 @@ interface Tab {
 }
 interface Props {
   locale: Locale;
-  /** Defaults to the cloud page content; other pages pass their own title and tabs. */
-  title?: string;
-  tabs?: Tab[];
+  title: string;
+  tabs: Tab[];
   /** Prefix for element ids (must be unique on the page). */
   id?: string;
-  /** Second-column dot (the cloud page uses a slightly smaller one). */
+  /** Second-column dot. */
   dotEnd?: string;
   /** Grid columns of the feature list from 768px. */
   columns?: string;
@@ -27,13 +26,11 @@ interface Props {
   /** Extra title classes (e.g. another colour). */
   titleClass?: string;
 }
-const { locale } = Astro.props;
-const t = useTranslations(locale).cloud.features;
 const {
-  title = t.title,
-  tabs = cloudTabs.map((key) => ({ key, label: t.tabs[key].label, items: t.tabs[key].items })),
+  title,
+  tabs,
   id = 'cloud',
-  dotEnd = cloudImages.dotEnd,
+  dotEnd = cloudImages.dotStart,
   columns = 'md:grid-cols-[638fr_506fr]',
   listWidth = 'max-w-[1179px]',
   listGap = 'lg:mt-[47px]',

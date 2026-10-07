@@ -11,7 +11,8 @@ const t = useTranslations(locale).contact;
 ---
 
 <!-- Figma 43:4756 (background + cubes 43:4755), 28:5302 / 43:4758 / 28:5395 (text), 2023:9331 (form). -->
-<section class="relative -mt-[84px] overflow-hidden bg-light-4 lg:-mt-[118px] lg:h-[679px]" aria-labelledby="contact-hero-title">
+<!-- Pulled up under the sticky header (76 / 84 / 112px tall, as on the homepage) so the band starts at the page top. -->
+<section class="contact-hero relative -mt-[76px] overflow-hidden bg-light-4 sm:-mt-[84px] lg:-mt-[112px] lg:h-[679px]" aria-labelledby="contact-hero-title">
   <!-- Cubes illustration (634×521), mirrored as in Figma; it sits behind the frosted form frame. -->
   <img
     src={contactImages.cubes}
@@ -23,13 +24,13 @@ const t = useTranslations(locale).contact;
     aria-hidden="true"
   />
 
-  <div class="container-x relative flex flex-col gap-6 pb-12 pt-[112px] lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:pb-0 lg:pt-[124px]">
+  <div class="container-x relative flex flex-col gap-5 pb-10 pt-[96px] sm:gap-6 sm:pb-12 sm:pt-[112px] lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:pb-0 lg:pt-[124px]">
     <div class="lg:mt-[105px] lg:w-[384px] lg:shrink-0 lg:pe-[26px] lg:box-content">
-      <h1 id="contact-hero-title" class="text-[22px] font-bold leading-[1.63] text-title sm:text-[26px] lg:text-[28px]">
+      <h1 id="contact-hero-title" class="text-[20px] font-bold leading-[1.6] text-title sm:text-[26px] sm:leading-[1.63] lg:text-[28px]">
         <span class="block">{t.hero.title}</span>
         <span class="block">{t.hero.subtitle}</span>
       </h1>
-      <p class="mt-2 text-[14px] leading-6 text-primary lg:mt-[6px]">{t.hero.note}</p>
+      <p class="mt-1.5 text-[14px] leading-6 text-primary sm:mt-2">{t.hero.note}</p>
     </div>
 
     <!-- Smaller copy of the illustration between the text and the form on tablets and large phones. -->
@@ -44,7 +45,24 @@ const t = useTranslations(locale).contact;
     />
 
     <div class="relative z-10 flex justify-center lg:block">
-      <DemoRequestForm locale={locale} embedded copy={t.form} />
+      <DemoRequestForm locale={locale} embedded copy={t.form} frameClass="max-sm:rounded-[20px] max-sm:p-2" />
     </div>
   </div>
 </section>
+
+<style>
+  /* Phones: tighter form card, single column (from the shared form) and a full-width submit button. */
+  @media (max-width: 639.98px) {
+    .contact-hero :global(#demo-form) {
+      border-radius: 16px;
+      padding: 18px 16px 20px;
+    }
+    .contact-hero :global(#demo-form > div) {
+      margin-top: 16px;
+    }
+    .contact-hero :global(#demo-form > button[type='submit']) {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+</style>

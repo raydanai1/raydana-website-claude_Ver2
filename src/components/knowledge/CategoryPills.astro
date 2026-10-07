@@ -15,11 +15,12 @@ const active = Astro.props.active ?? pills[0]?.category;
 const t = useTranslations(locale).knowledge;
 ---
 
-<!-- Figma 33:10801 (filled, 178×52) and 33:10804 (outline, 192×52). Wraps (centred) on small screens, inside the page gutter. -->
+<!-- Figma ver4 6003:2941: filled 33:10801 and outline 33:10804 / 6003:2824 pills, 52 high, 14 apart.
+     On small screens they stay on one row that scrolls sideways; the active pill is scrolled into view. -->
 {
   pills.length > 0 && (
-    <nav aria-label={t.categories} class={className}>
-      <ul class="flex flex-wrap justify-center gap-[10px] py-2 sm:gap-[14px]">
+    <nav aria-label={t.categories} class:list={['no-scrollbar overflow-x-auto', className]} data-pills>
+      <ul class="mx-auto flex w-max gap-[10px] px-1 py-2 sm:gap-[14px]">
         {pills.map(({ category, href }) => {
           const on = category === active;
           return (
@@ -28,7 +29,7 @@ const t = useTranslations(locale).knowledge;
                 href={href}
                 aria-current={on ? 'true' : undefined}
                 class:list={[
-                  'flex h-12 items-center gap-1 whitespace-nowrap rounded-[33px] px-[14px] text-15 sm:h-[52px] sm:text-base font-medium leading-6 transition duration-200',
+                  'flex h-12 items-center gap-1 whitespace-nowrap rounded-[33px] px-[14px] text-15 font-medium leading-6 transition duration-200 sm:h-[52px] sm:text-base',
                   on
                     ? 'bg-[linear-gradient(90deg,#0968ff_2.756%,#6b68ff)] text-white shadow-[0_0_16px_rgba(55,183,195,0.25)]'
                     : 'border border-[#c4d3fb] bg-[rgba(213,224,252,0.1)] text-[#0f53f8] hover:border-[#0f53f8] hover:bg-[rgba(213,224,252,0.35)]',
@@ -50,3 +51,23 @@ const t = useTranslations(locale).knowledge;
     </nav>
   )
 }
+
+<style>
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  // Keep the active pill visible in the sideways-scrolling row (without moving the page).
+  document.querySelectorAll<HTMLElement>('[data-pills]').forEach((nav) => {
+    const active = nav.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!active || nav.scrollWidth <= nav.clientWidth) return;
+    const nr = nav.getBoundingClientRect();
+    const ar = active.getBoundingClientRect();
+    nav.scrollLeft += ar.left + ar.width / 2 - (nr.left + nr.width / 2);
+  });
+</script>

@@ -17,8 +17,7 @@ export const cloudImages = {
   dots: img('dots-206.svg'), // 24:528 …
   tabArrowWhite: img('tab-arrow-white.svg'),
   tabArrowBlue: img('tab-arrow-blue.svg'),
-  dotStart: img('dot.svg'), // 5:33258 (first column)
-  dotEnd: img('dot-2.svg'), // 5:33273 (second column)
+  dotStart: img('dot.svg'), // 5:33258 (feature-list bullet, used by the module and oil & gas pages)
   demoPhoto: img('demo-photo.webp'), // 17:33534 "image 43"
   demoHex: img('demo-hex.svg'), // 5:32850
   demoHexIcon: img('demo-hex-icon.svg'), // 5:32852
@@ -40,9 +39,6 @@ export const cloudBenefits = [
   { check: img('check-4.svg'), size: 27.94, glass: 0.22, radius: 12 }, // 16:33398
   { check: img('check-5.svg'), size: 27.94, glass: 0.33, radius: 12 }, // 16:33402
 ] as const;
-
-/** Feature tabs, start → end. */
-export const cloudTabs = ['servers', 'storage', 'backup', 'services', 'desktop', 'security', 'network'] as const;
 
 /**
  * Decorative outline clouds and dotted drop lines at the sides of the benefits band

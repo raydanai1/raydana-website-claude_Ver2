@@ -12,14 +12,14 @@ const { locale, ctaHref } = Astro.props;
 const s = useTranslations(locale).services;
 ---
 
-<!-- Figma 2:15359 "Training & deployment" card on the tinted band 2:9424. -->
-<section id={serviceSections.training} class="scroll-mt-28 bg-tint py-10 lg:py-[59px]" aria-labelledby="training-title">
+<!-- Figma ver4 "LERNING" 4001:4146: tinted band 584 high with card 2:15359 (1320×465, image 625 wide). -->
+<section id={serviceSections.training} class="scroll-mt-28 bg-tint py-8 lg:py-[59px]" aria-labelledby="training-title">
   <div class="container-x">
     <div class="grid overflow-hidden rounded-[18px] bg-white shadow-soft lg:min-h-[465px] lg:grid-cols-[695fr_625fr]">
-      <div class="flex flex-col px-5 pb-6 pt-8 sm:px-8 lg:px-[37px] lg:pb-[45px] lg:pt-[43px]">
+      <div class="flex flex-col px-5 pb-6 pt-6 sm:px-8 lg:px-[37px] lg:pb-[46px] lg:pt-[43px]">
         <SectionHeading id="training-title">{s.training.title}</SectionHeading>
-        <p class="mt-5 lg:text-justify text-[14px] leading-8 text-body lg:mt-[30px] lg:text-15">{s.training.body}</p>
-        <QuoteButton href={ctaHref} class="mt-8 lg:mt-auto">{s.quote}</QuoteButton>
+        <p class="mt-4 text-[14px] leading-7 text-body lg:mt-[30px] lg:text-justify lg:text-15 lg:leading-8">{s.training.body}</p>
+        <QuoteButton href={ctaHref} class="mt-6 lg:mt-auto">{s.quote}</QuoteButton>
       </div>
       <img
         src={serviceImages.training}
@@ -27,7 +27,7 @@ const s = useTranslations(locale).services;
         width="1250"
         height="822"
         loading="lazy"
-        class="order-first aspect-[625/400] size-full object-cover lg:order-none lg:aspect-auto"
+        class="order-first aspect-[16/10] w-full rounded-b-[18px] object-cover lg:order-none lg:aspect-auto lg:h-full lg:rounded-none"
       />
     </div>
   </div>

@@ -91,6 +91,10 @@ const ru: RouteSlugs = {
     'financial-software': 'интегрированное-финансовое-по',
     'user-training': 'обучение-пользователей',
     'banknote-recognition-app': 'распознавание-банкнот',
+    'cyber-erp-1405-redesign': 'редизайн-cyber-erp-1405',
+    'next-gen-cybererp-features': 'новое-поколение-cybererp',
+    'erp-future': 'будущее-erp',
+    'erp-trends-1405': 'тренды-erp-1405',
   },
 };
 

@@ -30,7 +30,7 @@ const t = useTranslations(locale).knowledge;
   <Title class="mt-[13px] line-clamp-2 text-15 font-bold leading-8 text-[#173f49]">
     <a href={item.href} class="after:absolute after:inset-0 after:content-[''] hover:text-primary">{item.data.title}</a>
   </Title>
-  <p class="mt-[5px] line-clamp-4 text-15 leading-8 text-[#4c6d75]">{item.data.summary}</p>
+  <p class="mt-[5px] line-clamp-4 text-15 leading-8 text-[#4c6d75] lg:line-clamp-5">{item.data.summary}</p>
   <span class="mt-auto flex pt-5" aria-hidden="true">
     <span class="-ms-[7px] inline-flex h-10 items-center gap-3 rounded-full px-5 text-base font-medium leading-6 text-primary transition-transform group-hover:-translate-x-1 ltr:group-hover:translate-x-1">
       {t.readMore}

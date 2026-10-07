@@ -54,15 +54,18 @@ export const supportHexes = [
   { key: 'newFeatures', color: '#f9c167', x: 167, y: 431, rotate: 14 },
 ] as const;
 
-/** Deployment timeline steps; steps 4–7 share one description in Figma (`stepText`). */
+/**
+ * Deployment timeline steps; steps 4–7 share one description in Figma (`stepText`).
+ * Desktop rhythm from Figma ver4 (4001:4158): `gap` = space above the row, `minH` = card height (px).
+ */
 export const deploymentSteps = [
-  { key: 'prelaunch', text: false, compact: true },
-  { key: 'asis', text: 'own', latin: true },
-  { key: 'tobe', text: 'own', latin: true },
-  { key: 'server', text: 'shared' },
-  { key: 'training', text: 'shared' },
-  { key: 'consulting', text: 'shared' },
-  { key: 'implementation', text: 'shared' },
+  { key: 'prelaunch', text: false, compact: true, gap: 0, minH: 65 },
+  { key: 'asis', text: 'own', latin: true, gap: 41, minH: 172 },
+  { key: 'tobe', text: 'own', latin: true, gap: 6, minH: 147 },
+  { key: 'server', text: 'shared', gap: 10, minH: 154 },
+  { key: 'training', text: 'shared', gap: 0, minH: 147 },
+  { key: 'consulting', text: 'shared', gap: 3, minH: 157 },
+  { key: 'implementation', text: 'shared', gap: 33, minH: 157 },
 ] as const;
 
 export const serviceImages = {

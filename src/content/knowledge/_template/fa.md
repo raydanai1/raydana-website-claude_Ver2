@@ -3,7 +3,7 @@
 # it becomes the page address), replace cover.jpg, then fill in the lines below. See KNOWLEDGE.md at the project root.
 title: عنوان مطلب
 summary: خلاصه یک تا دو جمله‌ای که روی کارت‌ها و در نتایج جستجو نمایش داده می‌شود.
-category: articles # news = تازه‌ترین اخبار علمی | articles = مقالات علمی تخصصی | events = رویدادها
+category: articles # events = رویدادها | articles = مقالات علمی تخصصی | news = اخبار علمی
 date: 2026-09-01 # year-month-day (Gregorian); shown on the site as a Persian date
 cover: ./cover.jpg
 coverAlt: توضیح کوتاه تصویر

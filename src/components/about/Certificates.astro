@@ -1,4 +1,5 @@
 ---
+import SnapStrip from './SnapStrip.astro';
 import { certificates } from '../../data/about';
 import { type Locale, useTranslations } from '../../i18n';
 
@@ -9,43 +10,41 @@ const { locale } = Astro.props;
 const t = useTranslations(locale).about.certificates;
 ---
 
-<!-- Figma 2015:6537 (background), 2015:10117 (title + three certificate cards). -->
-<section class="cert-bg py-12 lg:pb-[87px] lg:pt-[78px]" aria-labelledby="certificates-title">
-  <div class="container-x">
-    <h2 id="certificates-title" class="text-center text-[20px] font-bold leading-normal text-ink md:text-title-2">{t.title}</h2>
-    <ul class="mx-auto mt-8 grid max-w-[1289px] gap-5 md:grid-cols-2 lg:mt-[46px] lg:grid-cols-3 lg:gap-[37px]">
-      {
-        certificates.map((cert) => {
-          const name = t.names[cert.name];
-          const [vendor, ...rest] = cert.course.split(' ');
-          const [course, subtitle] = rest.join(' ').split(': ');
-          return (
-            <li class="mx-auto w-full max-w-[405px] rounded-[11.643px] border-[0.485px] border-stroke bg-[#fafafa] px-[17px] pb-4 pt-4 shadow-[0_7.762px_17.194px_#dbe1f6]">
-              <div class="flex aspect-[371/257] items-center justify-center rounded-[9.877px] bg-light-3 p-[4%]">
-                <img
-                  src={cert.src}
-                  alt={t.imageAlt.replace('{course}', cert.course).replace('{name}', name)}
-                  width="1024"
-                  height="780"
-                  loading="lazy"
-                  class="h-auto mix-blend-darken"
-                  style={`width:${(cert.w / 371) * 100}%`}
-                />
-              </div>
-              <div class="mt-4 flex items-start justify-between gap-3 px-[11px]">
-                <p class="pt-[3px] text-[16px] font-bold leading-[1.47] text-navy">{name}</p>
-                <p class="text-[16px] font-bold leading-[1.47] text-navy" dir="ltr" lang="en">
-                  <span class="text-[#da2e2d]">{vendor}</span> {course}:
-                  <br />
-                  {subtitle}
-                </p>
-              </div>
-            </li>
-          );
-        })
-      }
-    </ul>
-  </div>
+<!-- Figma ver4 6001:2125: seven certificate cards (405×355) in a row that runs past the page edge. -->
+<section class="cert-bg pb-10 pt-12 lg:pb-[60px] lg:pt-[78px]" aria-labelledby="certificates-title">
+  <h2 id="certificates-title" class="container-x text-center text-[20px] font-bold leading-normal text-ink md:text-title-2">{t.title}</h2>
+  <SnapStrip locale={locale} label={t.title} class="mt-6 lg:mt-0" navClass="lg:-mt-[40px] lg:mb-[34px]">
+    {
+      certificates.map((cert) => {
+        const name = t.names[cert.name];
+        const [vendor, ...rest] = cert.course.split(' ');
+        const [course, subtitle] = rest.join(' ').split(': ');
+        return (
+          <li class="flex w-[300px] flex-col rounded-[11.643px] border-[0.485px] border-stroke bg-[#fafafa] px-3 pb-4 pt-3 shadow-[0_7.762px_17.194px_#dbe1f6] sm:w-[340px] lg:h-[355px] lg:w-[405px] lg:px-[17px] lg:pt-4">
+            <div class="flex aspect-[371/257] items-center justify-center rounded-[9.877px] bg-light-3 p-[4%]">
+              <img
+                src={cert.src}
+                alt={t.imageAlt.replace('{course}', cert.course).replace('{name}', name)}
+                width={cert.px[0]}
+                height={cert.px[1]}
+                loading="lazy"
+                class="h-auto mix-blend-darken"
+                style={`width:${(cert.w / 371) * 100}%`}
+              />
+            </div>
+            <div class="mt-4 flex flex-1 items-center justify-between gap-3 px-1 lg:px-[11px]">
+              <p class="shrink-0 text-[15px] font-bold leading-[1.47] text-navy lg:text-[16px]">{name}</p>
+              <p class="text-[13px] font-bold leading-[1.47] text-navy lg:text-[15px]" dir="ltr" lang="en">
+                <span class="text-[#da2e2d]">{vendor}</span> {course}:
+                <br />
+                {subtitle}
+              </p>
+            </div>
+          </li>
+        );
+      })
+    }
+  </SnapStrip>
 </section>
 
 <style>

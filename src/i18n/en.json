@@ -489,7 +489,8 @@
       "title": "Our Products",
       "subtitle": "From scattered data to clear, integrated decision-making",
       "consult": "Expert Consultation",
-      "demo": "Request a Demo"
+      "demo": "Request a Demo",
+      "body": "The CyberERP solution fully covers an organization's management, operational and support processes, including management, finance, cost accounting, shares, budget control, production and production planning, contract management, purchasing and imports, sales and exports, warehousing and inventory control, personnel and human resources, quality control, research and development, maintenance and repairs, and more."
     },
     "modules": {
       "title": "Complete Business Solutions for Every Area",
@@ -513,9 +514,9 @@
       }
     },
     "industries": {
-      "title": "Industry-Specific Solutions",
+      "brand": "Cyber ERP",
+      "title": "Solutions for Organizations and Businesses",
       "kicker": "Solution",
-      "text": "Transparency, control and productivity at enterprise scale by integrating processes and organizational units",
       "items": {
         "government": "Government & Public Organizations",
         "large": "Large Industries",
@@ -525,12 +526,12 @@
         "sme": "Small & Medium Industries"
       },
       "descriptions": {
-        "government": "Integrated finance, budgeting and HR for public bodies, with transparent, regulation-ready reporting",
-        "large": "Control of the supply chain, production and cost of goods across multiple plants and companies",
-        "oil": "Control of project costs, contractors and the supply chain from well to refinery to market",
-        "pension": "Investment, pensioner and fund resource management in one integrated system",
-        "international": "Multi-language, multi-currency editions for companies operating in several countries",
-        "sme": "Fast, affordable deployment of essential modules that grows with your business"
+        "government": "Integrated solutions for government and public organizations, focused on transparency, control and the optimization of organizational processes.",
+        "large": "Comprehensive solutions for integrating processes, managing resources and raising productivity in large industries and organizations.",
+        "oil": "Specialized solutions for managing complex processes, resources and operations across the oil, gas and petrochemical value chain.",
+        "pension": "Integrated solutions for managing the resources, investments and financial and organizational processes of pension funds.",
+        "international": "Flexible, scalable solutions for integrated management of operations and business processes in international markets.",
+        "sme": "Agile, cost-effective solutions for integrating operations and paving the way for business growth."
       }
     },
     "complementary": {
@@ -547,14 +548,15 @@
   },
   "cloud": {
     "meta": {
-      "title": "Cloud Infrastructure Services | Raydana",
-      "description": "Raydana cloud infrastructure for Cyber Cloud ERP: cloud servers, storage, continuous backups, cloud desktop, security and networking, with no physical infrastructure to run."
+      "title": "Cloud Infrastructure | Raydana",
+      "description": "CYBER ERP cloud infrastructure, built on a scalable and stable architecture, provides a secure, integrated platform for running an organization's critical processes and managing its data centrally."
     },
     "hero": {
       "kicker": "Solution",
-      "title": "Cloud Infrastructure Services",
+      "title": "Cloud Infrastructure",
       "product": "(Cyber Cloud ERP)",
-      "body": "With Raydana cloud infrastructure services, Cyber ERP runs on secure, high-performance servers in a domestic data center. Raydana specialists handle installation, updates, backups and security, so your organization can access its data anytime, anywhere, without buying or maintaining servers.",
+      "p1": "CYBER ERP cloud infrastructure, built on a scalable and stable architecture, provides a secure, integrated platform for running an organization's critical processes and managing its data centrally.",
+      "p2": "With flexible cloud resources, high availability and room to grow with the organization, CYBER ERP offers reliable infrastructure for the digital transformation of large and government organizations.",
       "consult": "Expert Consultation",
       "demo": "Request a Demo"
     },
@@ -566,78 +568,8 @@
         "Continuous backups with no coordination required",
         "No physical or network infrastructure to provide",
         "Updates delivered as soon as they are released",
-        "Lower hardware purchase and maintenance costs"
+        "Updates delivered as soon as they are released"
       ]
-    },
-    "features": {
-      "title": "Raydana Cloud Infrastructure Features",
-      "tabs": {
-        "servers": {
-          "label": "Raydana Servers",
-          "items": [
-            "Dedicated and virtual servers with expandable resources",
-            "CPU and memory sized to your users and transaction volume",
-            "Real-time monitoring of server performance and availability",
-            "Hosted in a domestic data center with backup power and cooling",
-            "Resources added with no service downtime",
-            "Servers managed and maintained by Raydana specialists"
-          ]
-        },
-        "storage": {
-          "label": "Cloud Storage",
-          "items": [
-            "Storage that grows with your organization's data",
-            "Storage on high-speed SSD disks",
-            "Data encrypted at rest and in transit",
-            "Secure access to files from any place and device"
-          ]
-        },
-        "backup": {
-          "label": "Backup",
-          "items": [
-            "Automatic daily backups of databases and files",
-            "Backups kept in a separate location",
-            "Fast data recovery if something goes wrong",
-            "No coordination or action needed from users"
-          ]
-        },
-        "services": {
-          "label": "Services",
-          "items": [
-            "Full hosting of the Cyber ERP solution on Raydana's cloud",
-            "Installation, setup and updates by Raydana specialists",
-            "24/7 monitoring of services",
-            "Technical support with fast response"
-          ]
-        },
-        "desktop": {
-          "label": "Cloud Desktop",
-          "items": [
-            "Access a full workspace through a browser or app",
-            "Lower hardware purchase and maintenance costs",
-            "Central management of users and permissions",
-            "Secure remote work for staff"
-          ]
-        },
-        "security": {
-          "label": "Security",
-          "items": [
-            "Firewalls and intrusion detection systems",
-            "Encrypted connections with SSL certificates",
-            "Access control and event logging",
-            "Regular security updates"
-          ]
-        },
-        "network": {
-          "label": "Network",
-          "items": [
-            "Stable, high-speed bandwidth",
-            "Secure VPN connections for branches and offices",
-            "Load balancing for service stability",
-            "Domestic data center with high availability"
-          ]
-        }
-      }
     },
     "demo": {
       "title": "Request a free consultation and demo now.",
@@ -692,27 +624,6 @@
         "Hormozgan",
         "Hamadan",
         "Yazd"
-      ]
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "items": [
-        {
-          "q": "How is the price of Cyber ERP cloud services calculated?",
-          "a": "The price depends on the number of users, the subsystems you need and your storage space. Send a consultation request for an exact quote."
-        },
-        {
-          "q": "Where is our organization's data kept?",
-          "a": "Data is kept in a domestic data center that meets security standards, with regular backups."
-        },
-        {
-          "q": "Can we move from an on-premises version to the cloud version?",
-          "a": "Yes. Raydana specialists move your data and set up the cloud version with no data loss."
-        },
-        {
-          "q": "Do we need special hardware or servers?",
-          "a": "No. You only need an internet connection and a browser; Raydana provides the infrastructure."
-        }
       ]
     }
   },

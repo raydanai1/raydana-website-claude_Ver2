@@ -17,7 +17,8 @@ const embedSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&l
 
 <!-- Figma 37:624: full-width 1432×499 map band, flush with the footer. A static map image (OpenStreetMap tiles, pin at the
      office) is shown first, so the band never stays empty if openstreetmap.org is slow or blocked; the interactive
-     OSM embed loads only when the visitor asks for it. The Google link sits bottom-left in both directions. -->
+     OSM embed loads only when the visitor asks for it. The buttons sit top-left on phones and bottom-left from 1024px, clear of the
+     OSM zoom buttons (top-right) and the attribution (bottom-right) in both directions. -->
 <section id="map" class="relative mx-auto -mb-16 mt-12 max-w-[1432px] scroll-mt-28 lg:-mb-[50px] lg:mt-[59px]" aria-label={t.title} data-map>
   <img
     src="/images/contact/map-static.webp"
@@ -26,13 +27,13 @@ const embedSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&l
     height="499"
     loading="lazy"
     decoding="async"
-    class="block h-[320px] w-full bg-light-4 object-cover lg:h-[499px]"
+    class="block h-[360px] w-full bg-light-4 object-cover sm:h-[400px] lg:h-[499px]"
     data-map-static
   />
   <template data-map-embed>
     <iframe src={embedSrc} title={t.title} referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 size-full border-0"></iframe>
   </template>
-  <div class="absolute bottom-4 left-4 flex flex-wrap gap-2">
+  <div class="absolute left-3 top-3 flex flex-wrap gap-2 lg:bottom-4 lg:left-4 lg:top-auto">
     <a
       href={googleMapsUrl}
       target="_blank"

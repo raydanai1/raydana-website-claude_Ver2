@@ -1,0 +1,129 @@
+---
+/**
+ * Full-bleed card row (Figma ver4 certificates / licences): starts at the content edge and runs past
+ * the page's reading-end edge. Swipe with scroll-snap on touch; arrow buttons on desktop.
+ * Pass the cards as <li> children.
+ */
+import { type Locale, useTranslations } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+  label: string;
+  class?: string;
+  /** Classes for the arrow row (desktop only); it sits above the cards, e.g. lifted into the title row. */
+  navClass?: string;
+  /** Gap between cards. */
+  gapClass?: string;
+}
+const { locale, label, class: className = '', navClass = 'mb-4', gapClass = 'gap-4 lg:gap-6' } = Astro.props;
+const a11y = useTranslations(locale).a11y;
+const arrow =
+  '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+---
+
+<div class:list={['snap-strip', className]} data-strip>
+  <div class:list={['container-x relative z-[1] hidden justify-end gap-3 lg:flex', navClass]} data-strip-nav>
+    <button type="button" class="strip-btn" data-dir="-1" aria-label={a11y.prev}>
+      <Fragment set:html={arrow} />
+    </button>
+    <button type="button" class="strip-btn" data-dir="1" aria-label={a11y.next}>
+      <Fragment set:html={arrow} />
+    </button>
+  </div>
+  <ul class:list={['strip-track flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain', gapClass]} aria-label={label} tabindex="0">
+    <slot />
+  </ul>
+</div>
+
+<style>
+  .strip-track {
+    /* Align the first card with the 1320px content column; the row bleeds to the far edge. */
+    --gutter: max(16px, calc((100% - 1320px) / 2));
+    padding-inline: var(--gutter);
+    padding-block: 8px 24px;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  @media (min-width: 640px) {
+    .strip-track {
+      --gutter: max(24px, calc((100% - 1320px) / 2));
+    }
+  }
+  .strip-track::-webkit-scrollbar {
+    display: none;
+  }
+  .strip-track:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+  .strip-track > :global(li) {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+  .strip-btn {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid var(--color-primary);
+    background: #fff;
+    color: var(--color-primary);
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      opacity 0.2s;
+  }
+  .strip-btn:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  .strip-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  /* "Previous" points toward the reading start, "next" toward the reading end. */
+  :global([dir='ltr']) .strip-btn :global(svg) {
+    transform: none;
+  }
+  :global([dir='rtl']) .strip-btn :global(svg) {
+    transform: scaleX(-1);
+  }
+  :global([dir='ltr']) .strip-btn[data-dir='1'] :global(svg) {
+    transform: scaleX(-1);
+  }
+  :global([dir='rtl']) .strip-btn[data-dir='1'] :global(svg) {
+    transform: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-strip]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.strip-track')!;
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-dir]')];
+    const rtl = getComputedStyle(track).direction === 'rtl';
+    const step = () => {
+      const card = track.querySelector<HTMLElement>('li');
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card ? card.offsetWidth + gap : track.clientWidth * 0.8;
+    };
+    // scrollLeft is 0 at the reading start and goes negative in RTL.
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      const pos = Math.abs(track.scrollLeft);
+      buttons[0].disabled = pos <= 2;
+      buttons[1].disabled = pos >= max - 2;
+      root.querySelector<HTMLElement>('[data-strip-nav]')!.style.visibility = max > 2 ? '' : 'hidden';
+    };
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const dir = Number(btn.dataset.dir) * (rtl ? -1 : 1);
+        track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+      }),
+    );
+    track.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(update).observe(track);
+    update();
+  });
+</script>

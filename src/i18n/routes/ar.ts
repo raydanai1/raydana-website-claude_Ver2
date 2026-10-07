@@ -91,6 +91,10 @@ const ar: RouteSlugs = {
     'financial-software': 'البرمجيات-المالية-المتكاملة',
     'user-training': 'تدريب-المستخدمين',
     'banknote-recognition-app': 'تطبيق-التعرف-على-الأوراق-النقدية',
+    'cyber-erp-1405-redesign': 'إعادة-تصميم-cyber-erp-1405',
+    'next-gen-cybererp-features': 'الجيل-الجديد-من-cybererp',
+    'erp-future': 'مستقبل-erp',
+    'erp-trends-1405': 'اتجاهات-erp-1405',
   },
 };
 

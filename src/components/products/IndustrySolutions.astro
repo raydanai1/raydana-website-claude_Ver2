@@ -1,14 +1,12 @@
 ---
 import { productImages, productIndustries } from '../../data/products';
-import { pagePath, type Locale, type Page, useTranslations } from '../../i18n';
+import { type Locale, useTranslations } from '../../i18n';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = useTranslations(locale).products.industries;
-// Industries that already have a solution page; the other cards stay plain until theirs are built.
-const industryPages: Partial<Record<string, Page>> = { oil: 'oilGas' };
 ---
 
 <!-- Figma 2:5415 (soft gradient), 2:9050 (title), 94:1170 / 94:1171 (6 industry cards). -->
@@ -23,33 +21,32 @@ const industryPages: Partial<Record<string, Page>> = { oil: 'oilGas' };
   />
 
   <div class="container-x pb-14 pt-12 lg:pb-[119px] lg:pt-[96px]">
-    <h2 id="products-industries-title" class="text-center text-[20px] font-bold leading-snug text-title lg:text-title-2 lg:leading-9">{t.title}</h2>
+    <!-- Figma ver4 2:9051: "Cyber ERP" over the localized heading, both lines Bold 24px / normal line height, centred. -->
+    <h2 id="products-industries-title" class="text-center text-[20px] font-bold leading-normal text-title lg:text-title-2">
+      <span class="block" dir="ltr">{t.brand}</span>
+      <span class="block">{t.title}</span>
+    </h2>
 
-    <!-- Column widths 403 / 462 / 403 as in Figma. -->
-    <ul class="mx-auto mt-8 grid max-w-[1316px] grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-[35px] lg:grid-cols-[403fr_462fr_403fr] lg:gap-x-6 lg:gap-y-[39px]">
+    <!-- Figma ver4: three equal 422.67px columns (1316 total), 24px column gap, 40px row gap. -->
+    <!-- Cards are not links: the industry solution pages are not built. -->
+    <ul class="mx-auto mt-6 grid max-w-[1316px] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:mt-[35px] lg:grid-cols-3 lg:gap-x-6 lg:gap-y-10">
       {
-        productIndustries.map((item) => {
-          const page = industryPages[item.key];
-          const Tag = page ? 'a' : 'div';
-          return (
+        productIndustries.map((item) => (
             <li>
-              <Tag
-                href={page ? pagePath(page, locale) : undefined}
-                class:list={['industry-card flex h-full flex-col items-start gap-2 rounded-3xl border border-stroke bg-[#fafafa] p-6 lg:min-h-[326px]', page && 'industry-link group']}
-              >
+              <div class="industry-card flex h-full flex-col items-start gap-[11px] rounded-3xl border border-stroke bg-[#fafafa] p-5 sm:p-6 lg:min-h-[325.5px]">
                 <img src={item.icon} alt="" width="78" height="78" loading="lazy" class="size-[78px]" />
-                <span class="w-full">
-                  <span class="block text-15 font-bold leading-9 text-title">{t.kicker}</span>
-                  <span class="block text-title-3 font-bold leading-9 text-title">{t.items[item.key]}</span>
-                  <span class="mt-[5px] block text-[14px] lg:text-small leading-8 text-muted">{t.descriptions[item.key as keyof typeof t.descriptions]}</span>
+                <!-- Text block sits at the bottom of a 132px area (Figma), so cards with shorter text line up. -->
+                <span class="flex w-full flex-col justify-end gap-[5px] sm:min-h-[132px]">
+                  <span class="block text-15 font-bold leading-8 text-title">{t.kicker}</span>
+                  <span class="block text-title-3 font-bold leading-normal text-title">{t.items[item.key]}</span>
+                  <span class="block text-[14px] leading-6 text-muted">{t.descriptions[item.key as keyof typeof t.descriptions]}</span>
                 </span>
-                <span class="icon-btn group-hover:bg-primary/10" aria-hidden="true">
+                <span class="icon-btn" aria-hidden="true">
                   <img src={productImages.cardArrow} alt="" width="18" height="18" class="dir-icon-rev size-[18px]" />
                 </span>
-              </Tag>
+              </div>
             </li>
-          );
-        })
+        ))
       }
     </ul>
   </div>
@@ -59,15 +56,5 @@ const industryPages: Partial<Record<string, Page>> = { oil: 'oilGas' };
   /* Figma "cart-industrial cattegory" effect: drop shadow 0 14px 10px #EEF0FF. */
   .industry-card {
     filter: drop-shadow(0 14px 10px #eef0ff);
-  }
-  /* Linked cards: same hover as the homepage industry cards (lift + stronger edge). */
-  .industry-link {
-    transition:
-      transform 0.3s,
-      border-color 0.3s;
-  }
-  .industry-link:hover {
-    transform: translateY(-4px);
-    border-color: var(--color-stroke-strong);
   }
 </style>

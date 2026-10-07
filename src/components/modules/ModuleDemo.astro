@@ -1,0 +1,30 @@
+---
+import DemoRequestForm from '../cloud/DemoRequestForm.astro';
+import { demoOverlay, moduleImages } from '../../data/modules';
+import type { Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<!-- Figma 2:15572 + 2:15573: glass-cube photo under a blue radial gradient at 40%. Phones: full-width submit button. -->
+<div class="module-demo contents">
+  <DemoRequestForm
+    locale={locale}
+    photo={moduleImages.demoPhoto}
+    hex={moduleImages.demoHex}
+    hexIcon={moduleImages.demoHexIcon}
+    overlay={demoOverlay}
+    height="lg:min-h-[616px]"
+  />
+</div>
+
+<style>
+  @media (max-width: 639px) {
+    .module-demo :global(form[data-demo-form] button[type='submit']) {
+      width: 100%;
+    }
+  }
+</style>

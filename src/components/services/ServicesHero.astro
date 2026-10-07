@@ -9,7 +9,7 @@ const { locale } = Astro.props;
 const t = useTranslations(locale).services.hero;
 ---
 
-<!-- Figma 2:19788 (background), 2:13097 / 2:13119 / 2:13096 (text). -->
+<!-- Figma ver4 2200:3980: background 2:19788, text block 2200:3978 (592 wide, top 135). -->
 <section class="relative -mt-[84px] overflow-hidden bg-[#eff2f7] lg:-mt-[118px]" aria-labelledby="services-hero-title">
   <div class="absolute inset-0 hidden lg:block" aria-hidden="true">
     <img
@@ -22,11 +22,11 @@ const t = useTranslations(locale).services.hero;
     />
   </div>
 
-  <div class="container-x relative pb-10 pt-[112px] lg:min-h-[582px] lg:pb-16 lg:pt-[154px]">
-    <div class="lg:max-w-[592px]">
-      <h1 id="services-hero-title" class="text-[22px] font-bold leading-snug text-title lg:text-title-2">{t.title}</h1>
-      <p class="mt-3 text-[16px] font-bold leading-snug text-sky lg:mt-[18px] lg:text-title-3">{t.subtitle}</p>
-      <p class="mt-4 lg:text-justify text-[14px] leading-8 text-body lg:mt-5 lg:text-15">{t.body}</p>
+  <div class="container-x relative pb-8 pt-[104px] lg:min-h-[587px] lg:pb-16 lg:pt-[135px]">
+    <div class="lg:ms-6 lg:max-w-[592px]">
+      <h1 id="services-hero-title" class="text-[22px] font-bold leading-snug text-title lg:text-title-2 lg:leading-[42px]">{t.title}</h1>
+      <p class="mt-2 text-[16px] font-bold leading-snug text-sky lg:mt-[13px] lg:text-title-3 lg:leading-[25px]">{t.subtitle}</p>
+      <p class="mt-3 text-[14px] leading-7 text-body lg:mt-[13px] lg:text-justify lg:text-15 lg:leading-8">{t.body}</p>
     </div>
     <img
       src={serviceImages.heroCube}
@@ -34,7 +34,7 @@ const t = useTranslations(locale).services.hero;
       width="500"
       height="560"
       fetchpriority="high"
-      class="mx-auto mt-6 w-[220px] sm:w-[260px] lg:hidden"
+      class="mx-auto mt-4 w-[200px] sm:w-[240px] lg:hidden"
     />
   </div>
 </section>
