@@ -1,0 +1,16 @@
+{
+ "id": "it",
+ "text": {
+  "name": "Information Technology",
+  "tagline": "Manage IT equipment, support requests, and services",
+  "description": "The Information Technology module keeps IT equipment and asset data, support requests, and service history in one shared environment. Logging and routing requests, assigning owners, and tracking status help coordinate the support team. Reviewing equipment history, service costs, and recurring requests also provides a basis for planning maintenance and developing the organization's infrastructure.",
+  "benefits": [
+   "Log and track support requests",
+   "Maintain IT equipment profiles and history",
+   "Assign owners and priorities to requests",
+   "Review the cost and history of services delivered",
+   "Identify recurring requests and issues"
+  ]
+ },
+ "subsystems": {}
+}

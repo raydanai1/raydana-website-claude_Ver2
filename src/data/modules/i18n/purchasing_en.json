@@ -1,0 +1,87 @@
+{
+ "id": "purchasing",
+ "text": {
+  "name": "Purchasing & Procurement",
+  "tagline": "Control over purchasing from requisition to receipt and settlement",
+  "description": "The Cyber ERP Purchasing & Procurement module manages purchase requisitions for goods and services, terms of trade and supplier information in connection with inventory, production, finance and quality control. Consolidating purchase requirements, evaluating and ranking suppliers, and tracking the import process support supply planning. Process links between orders, goods receipt and financial operations make purchase status visible to every department involved.",
+  "benefits": [
+   "Consolidation of requirements from multiple orders or production plans",
+   "Supplier evaluation and ranking",
+   "Purchasing coordinated with inventory and quality control",
+   "Tracking of domestic purchases and the import process",
+   "Supply planning to reduce operational delays"
+  ]
+ },
+ "subsystems": {
+  "procurement": {
+   "text": {
+    "name": "Purchasing & Procurement",
+    "cardText": "Record requisitions, requests for quotation and purchase orders based on departmental needs and delivery to the warehouse.",
+    "tagline": "Tracking purchase needs through to ordering and goods receipt",
+    "description": "The Purchasing & Procurement system receives requests for goods and services from departments and operational processes. Recording requests for quotation and proforma invoices, terms of trade and purchase orders makes the supply path traceable. Goods receipt orders, referenced to the purchase order or contract, link purchasing data to receiving operations.",
+    "benefits": [
+     "Tracking from requisition to purchase order",
+     "Management of domestic and foreign requests for quotation",
+     "Terms of trade and payment recorded",
+     "Orders coordinated with goods receipt"
+    ]
+   }
+  },
+  "supplier-evaluation": {
+   "text": {
+    "name": "Supplier Evaluation",
+    "cardText": "Define questionnaires and quality, price and delivery criteria, and review supplier scores.",
+    "tagline": "Supplier selection based on track record and evaluation criteria",
+    "description": "The Supplier Evaluation system links supplier information and trading history to weighted, criteria-based questionnaires. Defining evaluation periods and schedules, routing questionnaires among the responsible staff and finalizing scores bring structure to supplier selection. Viewing score history and applying the evaluation committee's decisions help keep supplier relationships under control.",
+    "benefits": [
+     "Supplier comparison against defined criteria",
+     "Quality, price and delivery time taken into account",
+     "Tracking of evaluations and response approvals",
+     "Access to score history and past interactions"
+    ]
+   }
+  },
+  "purchase-accounting": {
+   "text": {
+    "name": "Purchase Accounting",
+    "cardText": "Issue purchase invoices with reference to the order, goods receipt order or goods receipt note, and control related amounts.",
+    "tagline": "Recording the financial impact of purchases based on supply documents",
+    "description": "The Purchase Accounting system links purchase invoices to the underlying order and receipt documents. Recording item and amount details and managing surcharges and deductions make it easier to review transaction costs. Linking financial data with purchasing operations supports document tracking and reduces re-entry of data.",
+    "benefits": [
+     "Invoices linked to order and receipt documents",
+     "Access to purchase amount details",
+     "Control over transaction surcharges and deductions",
+     "Less duplicate entry of purchase data"
+    ]
+   }
+  },
+  "imports": {
+   "text": {
+    "name": "Imports",
+    "cardText": "Maintain import information and shipment records, and view payments by order and import number.",
+    "tagline": "Tracking foreign purchase operations and payments",
+    "description": "The Imports system links foreign purchase information to the order, shipping stages and payment documents. Recording import numbers for each shipment of an order and viewing payments by order serial number make it easier to track every consignment. Keeping import operations data in one place provides a shared view of foreign purchase status.",
+    "benefits": [
+     "Tracking of each shipment under an order",
+     "Tracking of import-related payments",
+     "Consignment data linked to the purchase order",
+     "Access to foreign purchase documents"
+    ]
+   }
+  },
+  "business-partners": {
+   "text": {
+    "name": "Suppliers & Customers",
+    "cardText": "Record profiles, groupings, contact and bank details, and interaction history for business partners.",
+    "tagline": "Shared business partner data across the organization's processes",
+    "description": "The Suppliers & Customers system defines individuals and legal entities with their business roles and groups. Keeping contact details, bank accounts, interaction and credit history, and links to floating accounts makes it easier to share business partner data across purchasing, sales and finance.",
+    "benefits": [
+     "Less scattered business partner data",
+     "Grouping of customers and suppliers",
+     "Access to contact and bank details",
+     "Trading history linked to financial accounts"
+    ]
+   }
+  }
+ }
+}

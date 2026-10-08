@@ -1,0 +1,59 @@
+{
+ "id": "quality-control",
+ "text": {
+  "name": "Quality Control",
+  "tagline": "Record tests and control quality across supply and production",
+  "description": "The Cyber ERP Quality Control module lets you define quality indicators, test methods, acceptance limits, and tests for materials, parts, products, and services. Sampling, result recording, and product grading are carried out in connection with inventory and production. Defining actions for out-of-range results, such as stopping production or returning a purchase receipt, together with indicator trend reports and contractor quality evaluation, helps you track the state of quality.",
+  "benefits": [
+   "Define indicators and acceptance limits for tests",
+   "Record and track samples and test results",
+   "Assign product grades based on quality control results",
+   "Coordinate quality actions with inventory and production",
+   "Analyze quality trends and evaluate contractors"
+  ]
+ },
+ "subsystems": {
+  "quality-test-design": {
+   "text": {
+    "name": "Quality Test Design",
+    "cardText": "Design quality sheets and tests, and define actions for out-of-range results.",
+    "tagline": "Define indicators, test methods, and acceptance limits",
+    "description": "The Quality Test Design system defines quality indicators and their classifications, measurement methods, and acceptable limits. Linking tests to item types or applications and defining actions for out-of-range values provides a consistent basis for carrying out quality control.",
+    "benefits": [
+     "Standardize indicators and test methods",
+     "Define acceptance limits for each indicator",
+     "Assign tests to the relevant application",
+     "Specify actions for nonconformities"
+    ]
+   }
+  },
+  "quality-inspection": {
+   "text": {
+    "name": "Inspection",
+    "cardText": "Define samples, run sampling approval workflows, and refer quality checks to specialist groups.",
+    "tagline": "Track sampling and record inspection results",
+    "description": "The Inspection system defines samples taken from production or inventory locations and links the required tests to them. Recording indicator results and referring part quality control requests to the relevant specialist group makes quality reviews easier to track. The recorded information serves as the basis for acceptance decisions and any required action.",
+    "benefits": [
+     "Trace samples and their related tests",
+     "Track sampling authorization approvals",
+     "Refer reviews to specialist groups",
+     "Keep documented inspection results"
+    ]
+   }
+  },
+  "material-product-quality": {
+   "text": {
+    "name": "Raw Material and Product Quality Control",
+    "cardText": "Record quality results, assign product grades, and coordinate quality decisions with inventory and production.",
+    "tagline": "Control material acceptance and finished product quality",
+    "description": "The Raw Material and Product Quality Control system compares test results for incoming and production samples against acceptance limits. Assigning product grades and taking actions such as stopping or continuing production, returning receipts, and notifying related units connects quality control to operations. Indicator trend reports make it possible to review changes in quality.",
+    "benefits": [
+     "Control material quality in the supply process",
+     "Assign product grades based on test results",
+     "Coordinate quality actions with inventory and production",
+     "View quality indicator trends"
+    ]
+   }
+  }
+ }
+}

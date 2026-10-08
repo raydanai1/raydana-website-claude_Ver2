@@ -1,8 +1,8 @@
 /**
  * ERP module and subsystem content. One JSON file per module lives next to this file
- * (src/data/modules/<moduleId>.json); Persian and English text sits in each file's `fa` / `en`.
- * Russian and Arabic live in src/data/modules/i18n/<moduleId>.<ru|ar>.json (same shape, one language) and are
- * merged in below.
+ * (src/data/modules/<moduleId>.json) with the ids, order and Persian text (`fa`).
+ * The other languages live in src/data/modules/i18n/ — English in <moduleId>_en.json, Russian and Arabic in
+ * <moduleId>.<ru|ar>.json (same shape, one language each) — and are merged in below.
  * Page layouts come from the Figma frames «detail-product-modules» (2:15565) and
  * «detail-product-modules-subsystems» (119:5583).
  */
@@ -55,7 +55,7 @@ export interface Module extends Localized<ModuleText>, Extras {
 
 const files = import.meta.glob<Module>('./*.json', { eager: true, import: 'default' });
 
-/** One language of one module file (src/data/modules/i18n/<id>.<lang>.json). */
+/** One language of one module file (src/data/modules/i18n/<id>_en.json or <id>.<ru|ar>.json). */
 interface Translation {
   id: string;
   text: ModuleText;
@@ -73,7 +73,10 @@ interface Translation {
     }
   >;
 }
-const translations = import.meta.glob<Translation>('./i18n/*.json', { eager: true, import: 'default' });
+// English first: the Russian/Arabic merge falls back to the English entry for missing list items.
+const translations = Object.entries(import.meta.glob<Translation>('./i18n/*.json', { eager: true, import: 'default' }))
+  .map(([path, tr]) => ({ lang: path.match(/[._](\w+)\.json$/)?.[1] as Locale | undefined, tr }))
+  .sort((a, b) => Number(b.lang === 'en') - Number(a.lang === 'en'));
 
 /** Put `items[i]` into `list[i][lang]` (lists of per-language pairs). */
 function mergeList<T>(list: Partial<Localized<T>>[] | undefined, items: T[] | undefined, lang: Locale) {
@@ -83,8 +86,7 @@ function mergeList<T>(list: Partial<Localized<T>>[] | undefined, items: T[] | un
 
 function withTranslations(m: Module): Module {
   let out: Module = m;
-  for (const [path, tr] of Object.entries(translations)) {
-    const lang = path.match(/\.(\w+)\.json$/)?.[1] as Locale;
+  for (const { lang, tr } of translations) {
     if (tr.id !== m.id || !lang) continue;
     out = {
       ...out,

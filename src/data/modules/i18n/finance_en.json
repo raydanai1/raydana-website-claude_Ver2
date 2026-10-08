@@ -1,0 +1,227 @@
+{
+ "id": "finance",
+ "text": {
+  "name": "Financial Management",
+  "tagline": "Control over the organization's cash flow, budgets and costs",
+  "description": "The Cyber ERP Financial Management solution brings together accounting, treasury, fixed asset, budget and cost data in connection with the organization's operations. Automatic voucher generation from related areas, management of receipts and payments, budget credit control and actual cost calculation make it possible to oversee financial resources. Closing the books, preparing the balance sheet and income statement, and calculating financial ratios also support the review of the organization's financial performance.",
+  "benefits": [
+   "Fewer duplicate entries through automatic financial vouchers",
+   "Control over receipts, payments and petty cash",
+   "Comparison of resource consumption against budgets and credits",
+   "Calculation of asset depreciation and actual cost",
+   "Performance review with financial statements and ratios"
+  ]
+ },
+ "subsystems": {
+  "general-accounting": {
+   "text": {
+    "name": "General Accounting",
+    "cardText": "Record local- and foreign-currency vouchers and review account activity by floating account, cost center and project.",
+    "tagline": "Recording and reviewing financial events at every account level",
+    "description": "The General Accounting system links the chart of accounts and fiscal years to manual and automatic voucher entry. Account coding and floating accounts, batch voucher management, and ledgers and trial balances make it possible to track account activity and balances. Reports can be reviewed by period, account, cost center and project.",
+    "benefits": [
+     "Fewer duplicate entries through automatic vouchers",
+     "Account analysis at multiple levels",
+     "Tracking of local- and foreign-currency vouchers",
+     "Ledgers and trial balances"
+    ]
+   },
+   "architecture": [
+    {
+     "title": "Strategic goals",
+     "items": [
+      "Optimal allocation of limited economic resources",
+      "Real-time financial transparency for decision-makers",
+      "Accuracy, reliability and compliance with reporting standards"
+     ]
+    },
+    {
+     "title": "Integration with other subsystems",
+     "items": [
+      "Warehouse and procurement: automatic posting of receipts, issues, inventory adjustments and cost of goods",
+      "Sales and revenue: instant revenue recognition, discounts, sales returns and receivables management",
+      "Payroll: posting of personnel costs, statutory deductions, insurance and tax liabilities",
+      "Fixed assets: automatic depreciation, purchase, disposal and revaluation of assets"
+     ]
+    },
+    {
+     "title": "Processing and automation",
+     "items": [
+      "Operational events are pulled in online, with no manual re-entry",
+      "Accounting vouchers are issued by event-driven rules (rule-based engine)",
+      "A real-time snapshot of balances and liquidity"
+     ]
+    },
+    {
+     "title": "Review, analysis and financial intelligence",
+     "items": [
+      "Multi-level trial balances: reports at group, general ledger, subsidiary and detail (floating/central) levels",
+      "Interactive account review: drill down from a trial balance figure to the source document",
+      "Matrix analysis: multi-dimensional views (cost center × project × fiscal period)",
+      "Financial ratio dashboard: live liquidity, profitability, leverage and activity ratios"
+     ]
+    }
+   ],
+   "stakeholders": [
+    {
+     "role": "Managers",
+     "text": "Decisions based on up-to-date data instead of piled-up periodic reports"
+    },
+    {
+     "role": "Investors",
+     "text": "Clearer view of return on capital, liquidity risk and financial health"
+    },
+    {
+     "role": "Finance and audit",
+     "text": "Faster period closing and a transparent audit trail"
+    }
+   ],
+   "process": [
+    {
+     "title": "Automatic vouchers",
+     "details": [
+      "Financial events are pulled from:",
+      "- Treasury",
+      "- Sales",
+      "- Purchasing",
+      "- Warehouse",
+      "- Fixed assets",
+      "- Payroll",
+      "- Cost accounting",
+      "Vouchers in rials, foreign currency, or both"
+     ]
+    },
+    {
+     "title": "Manual vouchers",
+     "details": []
+    },
+    {
+     "title": "Chart of accounts",
+     "details": []
+    },
+    {
+     "title": "Voucher management",
+     "details": []
+    },
+    {
+     "title": "Financial reports",
+     "details": []
+    },
+    {
+     "title": "Account review and analysis",
+     "details": []
+    },
+    {
+     "title": "Financial analysis",
+     "details": []
+    },
+    {
+     "title": "Financial ratios",
+     "details": []
+    },
+    {
+     "title": "Financial statements",
+     "details": []
+    }
+   ]
+  },
+  "financial-management": {
+   "text": {
+    "name": "Financial Management",
+    "cardText": "Manage period-end operations, prepare financial statements and calculate defined ratios.",
+    "tagline": "Closing the books and analyzing financial performance",
+    "description": "By defining profit-and-loss and balance-sheet accounts, the Financial Management system organizes the closing of temporary and permanent accounts. Generating closing and opening entries, preparing the balance sheet and income statement for any chosen period, and calculating financial ratios provide the information needed to review current and prior-period performance.",
+    "benefits": [
+     "Organized account closing process",
+     "Opening and closing entries generated",
+     "Balance sheet and income statement preparation",
+     "Calculation of the financial ratios your organization needs"
+    ]
+   }
+  },
+  "treasury": {
+   "text": {
+    "name": "Treasury",
+    "cardText": "Record cash flows, track the status of checks and manage petty cash operations in connection with accounting.",
+    "tagline": "Control over receipts, payments and treasury instruments",
+    "description": "The Treasury system manages banks and cash funds, receipt and payment slips, and the flow of notes receivable and payable. Recording instrument status changes and petty cash operations, and linking treasury operations to accounting vouchers, helps the finance team track funds and commitments in greater detail.",
+    "benefits": [
+     "Status tracking of notes receivable and payable",
+     "Receipts and payments recorded by bank and cash fund",
+     "Control over petty cash documents and attachments",
+     "Treasury operations linked to accounting entries"
+    ]
+   }
+  },
+  "assets": {
+   "text": {
+    "name": "Fixed Assets",
+    "cardText": "Record asset profiles, locations and transactions, and calculate asset values and depreciation.",
+    "tagline": "Asset records and depreciation calculation",
+    "description": "The Fixed Assets system keeps asset details, groupings, tag numbers and locations alongside depreciation rules. Recording asset transactions and costs that affect asset value helps calculate book value and depreciation. Linking asset accounts to financial operations makes it possible to trace the accounting impact of changes to fixed assets.",
+    "benefits": [
+     "Access to asset profiles and locations",
+     "Depreciation calculated according to defined rules",
+     "Tracking of asset costs and value changes",
+     "Asset transactions linked to accounting"
+    ]
+   }
+  },
+  "consolidated-accounting": {
+   "text": {
+    "name": "Consolidated Accounting",
+    "cardText": "Consolidate the financial data of business units and companies and compare their performance in combined reports.",
+    "tagline": "Bringing together company financial data for combined reporting",
+    "description": "The Consolidated Accounting system gathers the financial data of companies and business units using account mapping. Defining reporting periods and checking the consistency of incoming data make it easier to prepare combined reports and compare performance.",
+    "benefits": [
+     "Less manual collection of company data",
+     "Harmonized reporting headings",
+     "Comparison of unit performance over a common period",
+     "Traceability of figures in consolidated reports"
+    ]
+   }
+  },
+  "cost-accounting": {
+   "text": {
+    "name": "Cost Accounting",
+    "cardText": "Calculate standard and actual costs and show cost allocation details on the product cost card.",
+    "tagline": "Product costing based on materials, labor and overhead",
+    "description": "The Cost Accounting system defines costing periods, cost drivers and allocation bases for service and production centers. Standard costing relies on predetermined rates and planned capacity, while actual costing draws on accounting data and recorded production activity. The product cost card shows the share of materials and operations separately.",
+    "benefits": [
+     "Standard and actual product cost calculation",
+     "Transparent allocation bases for labor and overhead",
+     "Use of actual accounting and production data",
+     "Material and operation shares shown on the product cost card"
+    ]
+   }
+  },
+  "budget-credits": {
+   "text": {
+    "name": "Budget & Credits",
+    "cardText": "Budget expenses and revenues and compare operational documents against allocated credits.",
+    "tagline": "Control over credit allocation and budget consumption",
+    "description": "The Budget & Credits system links budget chapters, programs and line items to accounts and organizational units. Allocation, credit commitment and budget transfers, together with control of purchasing, inventory and payroll amounts, make it possible to track resource consumption. Budget performance and variance reports compare actual results with the approved plan.",
+    "benefits": [
+     "Budgeting by unit and heading",
+     "Tracking of credit allocations and transfers",
+     "Related documents checked against the budget",
+     "Analysis of variances from the approved budget"
+    ]
+   }
+  },
+  "revenue": {
+   "text": {
+    "name": "Revenue",
+    "cardText": "Record revenue items and track invoices and collections in connection with contracts.",
+    "tagline": "Tracking revenue, invoices and receivables",
+    "description": "The Revenue system defines revenue sources and items and keeps invoice, receivable and collection information together. Revenue reports by period, customer or contract help track performance.",
+    "benefits": [
+     "Categorization of revenue sources and items",
+     "Tracking of invoices and outstanding receivables",
+     "Revenue linked to customers and contracts",
+     "Revenue comparison across periods"
+    ]
+   }
+  }
+ }
+}

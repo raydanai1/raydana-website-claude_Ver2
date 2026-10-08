@@ -1,0 +1,16 @@
+{
+ "id": "transportation",
+ "text": {
+  "name": "Transportation",
+  "tagline": "Coordinate transport requests, vehicle assignment and trip tracking",
+  "description": "The Transportation module manages transport requests, vehicle and driver information, vehicle assignment and trip schedules in a shared structure. Recording the route, schedule, mileage and costs of each trip helps track the movement of goods and staff and review fleet utilization. Integration with sales, inventory and finance also aligns transport data and costs with the organization's operations.",
+  "benefits": [
+   "Track every trip from request to completion",
+   "Coordinate vehicle and driver schedules",
+   "Record trip mileage and costs",
+   "Review fleet utilization",
+   "Link transport data to sales, inventory and finance"
+  ]
+ },
+ "subsystems": {}
+}

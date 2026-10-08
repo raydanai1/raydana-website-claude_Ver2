@@ -1,0 +1,101 @@
+{
+ "id": "production-planning",
+ "text": {
+  "name": "Production Planning",
+  "tagline": "Order-driven planning of materials, capacity and production scheduling",
+  "description": "Using orders and sales forecasts, bills of materials and work center capacity, the Cyber ERP Production Planning module calculates material and resource requirements for production. Master and detailed plans, production orders and Gantt charts make it possible to adjust and reschedule operations. Recording production output, material consumption, scrap and downtime in connection with inventory, purchasing and maintenance helps compare plans with actual performance.",
+  "benefits": [
+   "Estimation of the materials and resources production needs",
+   "Planning based on orders and sales forecasts",
+   "Identification of capacity constraints and production bottlenecks",
+   "Rescheduling when capacity changes or downtime occurs",
+   "Control over material consumption, scrap and production output"
+  ]
+ },
+ "subsystems": {
+  "materials-planning": {
+   "text": {
+    "name": "Material Requirements Planning",
+    "cardText": "Calculate material requirements and shortages and raise supply requests to carry out production plans.",
+    "tagline": "Material requirements based on the production plan and stock",
+    "description": "Using the production plan and bills of materials, the Material Requirements Planning system estimates requirements for raw materials and semi-finished goods. Checking stock and netting requirements form the basis for identifying shortages and raising material or purchase requests. Integration with inventory and procurement makes it easier to follow up the materials needed for production plans.",
+    "benefits": [
+     "Material requirements derived from the bill of materials",
+     "Stock on hand considered when calculating requirements",
+     "Identification of material shortages in plans",
+     "Supply requests coordinated with inventory and purchasing"
+    ]
+   }
+  },
+  "operations-planning": {
+   "text": {
+    "name": "Operations Planning",
+    "cardText": "Set production plans and work orders, view Gantt charts and reschedule when conditions change.",
+    "tagline": "Scheduling production operations across work centers",
+    "description": "The Operations Planning system schedules production plans based on the sequence of activities and available resources. Planning methods and Gantt charts make it possible to set when and at which work center each job is performed. Recording a baseline and comparing revised plans helps review changes and plan deviations.",
+    "benefits": [
+     "Schedules shown on a Gantt chart",
+     "Coordination of operation sequence and capacity",
+     "Rescheduling when conditions change",
+     "Plans compared against the baseline"
+    ]
+   }
+  },
+  "product-engineering": {
+   "text": {
+    "name": "Product Engineering",
+    "cardText": "Maintain bills of materials and manufacturing operations as the basis for planning and resource estimation.",
+    "tagline": "Defining product structure, materials and manufacturing operations",
+    "description": "The Product Engineering system defines the materials and operations required to make a product in the bill of materials and engineering data. Recording product attributes and production resources, and using bill of materials templates, make it easier to prepare product master data. This information is the basis for material requirements calculation and operations planning.",
+    "benefits": [
+     "Integrated product manufacturing data",
+     "Clearly defined materials and operations",
+     "Use of bill of materials templates",
+     "Master data for production planning"
+    ]
+   }
+  },
+  "production-capacity": {
+   "text": {
+    "name": "Capacity Planning",
+    "cardText": "Compare workload with work center capacity to identify bottlenecks and available time.",
+    "tagline": "Reviewing work center capacity and production constraints",
+    "description": "The Capacity Planning system reviews work center capacity against production plans. Identifying idle or overloaded work centers and calculating available capacity helps assess whether orders can be accepted. Taking downtime and capacity changes into account also makes it possible to adjust production plans.",
+    "benefits": [
+     "Identification of overloaded work centers",
+     "Review of idle production capacity",
+     "Support for order acceptance decisions",
+     "Plans aligned with capacity changes"
+    ]
+   }
+  },
+  "production-control": {
+   "text": {
+    "name": "Production Control",
+    "cardText": "Record production output, material consumption, scrap and downtime by work order and work center.",
+    "tagline": "Recording actual performance and tracking production variances",
+    "description": "The Production Control system records production time and quantity, materials consumed, substitute items and scrap. Recording shop-floor personnel, operating parameters and the causes of downtime or reduced capacity makes performance details available. Reports on plan status and material consumption make it possible to review plan execution and the causes of variances.",
+    "benefits": [
+     "Access to actual production figures",
+     "Tracking of consumed and substitute materials",
+     "Analysis of scrap and downtime",
+     "Work order execution compared with the plan"
+    ]
+   }
+  },
+  "product-development": {
+   "text": {
+    "name": "Product Development (R&D)",
+    "cardText": "Define research objectives and stages and product templates, and issue production orders for prototypes or new products.",
+    "tagline": "Recording research projects and building new products",
+    "description": "The Product Development system records product attributes and variants, as well as the objectives and stages of research projects. New product requests and bill of materials templates prepare the information needed for manufacturing. Issuing production orders and reviewing production output, scrap and downtime make it easier to follow up development activities.",
+    "benefits": [
+     "Research objectives and stages kept on record",
+     "Definition of product attributes and variants",
+     "Manufacturing templates for new products",
+     "Tracking of build results and production output"
+    ]
+   }
+  }
+ }
+}

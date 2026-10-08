@@ -1,0 +1,16 @@
+{
+ "id": "services",
+ "text": {
+  "name": "Services",
+  "tagline": "Track service requests, work execution, and related costs",
+  "description": "The Services module manages requests from customers or internal units, the service type, the person responsible, and work scheduling in a single shared process. Recording completed activities, consumed resources, and the status of each request helps you track service delivery. Integration with contracts and finance links costs and service invoicing to work records and makes it possible to review team performance.",
+  "benefits": [
+   "Record and track service requests",
+   "Assign responsible staff and schedule activities",
+   "Keep a service history for each customer or unit",
+   "Record consumed resources and service delivery costs",
+   "Align services with contracts and invoicing"
+  ]
+ },
+ "subsystems": {}
+}

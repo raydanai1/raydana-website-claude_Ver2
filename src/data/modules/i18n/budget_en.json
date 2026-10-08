@@ -1,0 +1,16 @@
+{
+ "id": "budget",
+ "text": {
+  "name": "Budget Management",
+  "tagline": "Control appropriations and compare the approved budget with actual performance",
+  "description": "The Cyber ERP Budget Management module links the structure of budget chapters, programs, and budget lines to accounting headings and organizational units. Expense and revenue budgeting, appropriation allocation, budget funding, and budget transfers let you track approved resources. Checking the amounts of purchasing, inventory, and payroll documents against the budget, along with budget closing and variance reports, helps you review resource consumption and unit performance.",
+  "benefits": [
+   "Expense and revenue budgeting by organizational unit",
+   "Track allocations, funding commitments, and budget transfers",
+   "Check operational documents against the relevant budget",
+   "Compare the approved budget with actual performance",
+   "Analyze variances by account heading and cost center"
+  ]
+ },
+ "subsystems": {}
+}

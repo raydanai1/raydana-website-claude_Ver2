@@ -1,0 +1,16 @@
+{
+ "id": "contracts",
+ "text": {
+  "name": "Contract Management",
+  "tagline": "Track contract obligations, line items, receipts, and payments",
+  "description": "The Cyber ERP Contract Management module manages contract requests, approval stages, the main contract, and amendments in connection with projects, purchasing, and budgeting. Recording goods and service line items, delivery phases, guarantees, additions and deductions, and receipt and payment milestones links a contract's operational and financial information. Issuing orders, invoices, and receipt or payment orders based on the contract, along with control reports in sales, purchasing, inventory, and treasury, helps you track the fulfillment of obligations.",
+  "benefits": [
+   "Record contract requests and track approval stages",
+   "Maintain the main contract, amendments, and attached text",
+   "Control contract line items and delivery stages",
+   "Track guarantees and receipt and payment milestones",
+   "Link contracts to orders, invoices, and treasury operations"
+  ]
+ },
+ "subsystems": {}
+}

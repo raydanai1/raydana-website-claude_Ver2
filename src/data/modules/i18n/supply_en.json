@@ -1,0 +1,16 @@
+{
+ "id": "supply",
+ "text": {
+  "name": "Supply",
+  "tagline": "Align material and item requirements with inventory and operational plans",
+  "description": "The Supply module gathers item and material requirements from sales orders, the production plan, and departmental requests, and compares them with available inventory and required dates. Reviewing supply methods (from inventory, purchasing, or production) and tracking request status helps coordinate operational units. Consolidating requirements and seeing delays also provides a basis for setting supply priorities and reducing disruptions to plan execution.",
+  "benefits": [
+   "Consolidate item and material requirements from different units",
+   "Review inventory alongside required dates",
+   "Select and track the supply method for each requirement",
+   "Coordinate requests with purchasing, inventory, and production",
+   "Identify delays and prioritize supply"
+  ]
+ },
+ "subsystems": {}
+}

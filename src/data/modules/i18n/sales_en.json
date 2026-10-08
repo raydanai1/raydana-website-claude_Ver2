@@ -1,0 +1,59 @@
+{
+ "id": "sales",
+ "text": {
+  "name": "Orders & Sales",
+  "tagline": "Integrated tracking of orders, deliveries, invoicing and collections",
+  "description": "The Cyber ERP Orders & Sales module connects order entry, sourcing decisions, goods delivery, invoicing and sales returns. Local- and foreign-currency price lists, payment terms, discounts and commissions, together with real-time stock visibility and customer credit checks, help keep transactions under control. Reports on order status, invoice settlement and sales comparisons provide a basis for tracking sales performance and planning purchasing and production.",
+  "benefits": [
+   "Stock visibility at the time of order entry",
+   "Order tracking through to delivery and invoicing",
+   "Control over pricing, discounts and payment terms",
+   "Customer credit checks and invoice settlement status",
+   "Sales analysis by item, customer and region"
+  ]
+ },
+ "subsystems": {
+  "sales-orders": {
+   "text": {
+    "name": "Sales & Orders",
+    "cardText": "Record orders, set sales terms and sourcing methods, and track the delivery status of goods to customers.",
+    "tagline": "Order tracking from entry through sourcing and delivery",
+    "description": "The Sales & Orders system records domestic and export orders along with pricing, payment and delivery terms. Visibility of stock and customer credit, choosing whether to source from inventory or production, and issuing purchase requisitions and delivery orders make orders easier to follow up. Sales and transaction-flow reports show order status and customer performance.",
+    "benefits": [
+     "Control over sales terms and customer credit",
+     "Stock visibility during order entry",
+     "Orders linked to sourcing and delivery",
+     "Sales analysis by customer and item"
+    ]
+   }
+  },
+  "sales-accounting": {
+   "text": {
+    "name": "Sales Accounting",
+    "cardText": "Issue invoices and sales returns, apply discounts and deductions, and track invoice settlement.",
+    "tagline": "Invoice and settlement control linked to sales operations",
+    "description": "The Sales Accounting system records invoices with reference to the order, contract, delivery order or stock issue. Management of local- and foreign-currency amounts, discounts, commissions, and surcharges and deductions, together with batch settlement and sales return entry, keeps the financial data of each transaction organized. Automatic generation of related vouchers links sales to accounting.",
+    "benefits": [
+     "Invoices linked to source sales documents",
+     "Control over discounts, surcharges and deductions",
+     "Settlement tracking across multiple customer invoices",
+     "Sales returns and related vouchers recorded"
+    ]
+   }
+  },
+  "exports": {
+   "text": {
+    "name": "Exports",
+    "cardText": "Record proforma invoices, customs declarations, bills of lading and export shipping and clearance documents.",
+    "tagline": "Tracking export documents and shipment stages",
+    "description": "The Exports system keeps insurance details, proforma invoices, customs declarations and product shipping schedules alongside certificates of origin and bills of lading. Recording delivery permits, customs broker details, and packing and bale lists helps track each stage of a shipment. A document archive provides access to the records of every export operation.",
+    "benefits": [
+     "Centralized access to export documents",
+     "Tracking of shipping schedules and delivery permits",
+     "Clearance and bill of lading details recorded",
+     "Packing and bale lists kept on file"
+    ]
+   }
+  }
+ }
+}

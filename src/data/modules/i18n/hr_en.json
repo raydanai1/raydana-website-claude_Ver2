@@ -1,0 +1,185 @@
+{
+ "id": "hr",
+ "text": {
+  "name": "Human Resources",
+  "tagline": "Unified employee data from hire to retire",
+  "description": "The Cyber ERP Human Resources module keeps organizational structure, personnel records, employment and pay orders, time and attendance, and leave and missions in one connected system. Configurable formulas and calculation tables align payroll with your organization's regulations and pay factors. Recruitment, training, performance evaluation, and welfare features also help track employee status and support workforce planning.",
+  "benefits": [
+   "Eliminate duplicate entry of employee data",
+   "Align personnel administration, time and attendance, and payroll",
+   "Calculate pay based on defined formulas and factors",
+   "Track training, evaluations, and welfare services",
+   "Access employee records for personnel decisions"
+  ]
+ },
+ "subsystems": {
+  "formula-tables": {
+   "text": {
+    "name": "Formula and Table Management",
+    "cardText": "Build formulas and calculation tables with validation, test runs, and edit history.",
+    "tagline": "Define and control HR calculation rules",
+    "description": "The Formula and Table Management system provides HR parameters, mathematical functions, and multi-input tables for defining calculations. Validating a formula and test-running it for a single employee helps keep calculations under control. Recording the date, reason, editor, and supporting documents for each change makes calculation rule changes traceable.",
+    "benefits": [
+     "Align formulas with organizational rules",
+     "Test formulas before use",
+     "Reuse tables and formulas",
+     "Track the history of calculation changes"
+    ]
+   }
+  },
+  "organization-structure": {
+   "text": {
+    "name": "Organizational Structure",
+    "cardText": "Maintain companies, organizational units, jobs, positions, and job descriptions in a connected structure.",
+    "tagline": "Define your structure, jobs, and organizational capacity",
+    "description": "The Organizational Structure system links the structure of companies and units with jobs and organizational positions. Job descriptions and documents with validity periods are stored to support structure management. Viewing the capacity and occupancy status of jobs and positions supports planning and the issuance of personnel orders.",
+    "benefits": [
+     "Access a unified organizational structure",
+     "Maintain valid job descriptions and documents",
+     "Review job and position capacity",
+     "Align organizational structure with personnel data"
+    ]
+   }
+  },
+  "personnel": {
+   "text": {
+    "name": "Personnel Records",
+    "cardText": "Record employees' personal details, work and education history, skills, and bank accounts.",
+    "tagline": "A unified file of employee information and history",
+    "description": "The Personnel Records system keeps employees' personal information and history in a shared file. Recording education, training, skills, and other details, along with viewing employment orders and payslips, makes each person's history easy to access. Integration with training and personnel administration, plus custom factors, puts employee data to work across HR processes.",
+    "benefits": [
+     "Reduce fragmentation of employee data",
+     "Access training records and skills",
+     "View employment orders and payslips",
+     "Record custom data that affects calculations"
+    ]
+   }
+  },
+  "personnel-administration": {
+   "text": {
+    "name": "Personnel Administration",
+    "cardText": "Define employment types and issue individual and group orders with related pay and work factors.",
+    "tagline": "Manage employee employment and pay orders",
+    "description": "The Personnel Administration system links employment types and pay and work factors to employee orders. Specifying the job, position, organizational unit, cost centers, and projects in the employment order, and recording the effective date of pay orders, establishes the basis for calculations. Group order issuance and checks on capacity and job-position relationships make personnel changes easier to manage.",
+    "benefits": [
+     "Organize employment and pay orders",
+     "Apply pay changes by effective date",
+     "Issue orders for employee groups",
+     "Allocate employee costs to cost centers and projects"
+    ]
+   }
+  },
+  "attendance": {
+   "text": {
+    "name": "Time and Attendance",
+    "cardText": "Record clock-ins and clock-outs and calculate attendance, overtime, lateness, and absence based on shift rules.",
+    "tagline": "Calculate work time based on shifts and work calendars",
+    "description": "The Time and Attendance system defines shifts and work calendars for employment types or individuals. Clock-in and clock-out data is received from the software or time clock devices and can be corrected. Calculating attendance factors at the daily and pay-period level prepares the data needed to review work time and calculate payroll.",
+    "benefits": [
+     "Support multiple calendars and shifts",
+     "Record and correct clock-in and clock-out data",
+     "Calculate daily and periodic attendance factors",
+     "Align work time data with payroll"
+    ]
+   }
+  },
+  "leave-missions": {
+   "text": {
+    "name": "Leave and Missions",
+    "cardText": "Manage requests and approvals, and record leave taken and employee mission expenses.",
+    "tagline": "Track leave and mission requests, authorizations, and records",
+    "description": "The Leave and Missions system links leave rules and limits to requests, approvals, and authorizations. Recorded leave is reflected in work time calculations. Travel details and mission expenses are kept together with authorization and completion records, so the status of each request and its costs can be tracked.",
+    "benefits": [
+     "Track request and authorization steps",
+     "Enforce leave usage rules",
+     "Apply leave to work time calculations",
+     "Keep mission records and expenses"
+    ]
+   }
+  },
+  "payroll": {
+   "text": {
+    "name": "Payroll",
+    "cardText": "Calculate earnings and deductions, issue payslips, and produce payroll reports and accounting vouchers.",
+    "tagline": "Calculate pay from orders and approved work time",
+    "description": "The Payroll system uses attendance factors, orders, and one-time earnings and deductions to calculate pay for each period. Payslips, payment, insurance, and tax reports, and automatic accounting vouchers based on finalized payroll, keep payroll finance operations in sync. Effective dating of factors and comparative reports make it easier to review changes in pay.",
+    "benefits": [
+     "Align calculations with orders and work time",
+     "Record one-time earnings and deductions",
+     "Produce payslips and pay-period reports",
+     "Generate payroll accounting vouchers automatically"
+    ]
+   }
+  },
+  "employee-self-service": {
+   "text": {
+    "name": "Employee Self-Service",
+    "cardText": "View permitted record information and submit and track leave, training, and welfare requests.",
+    "tagline": "Employee access to personal information and requests",
+    "description": "The Employee Self-Service system lets employees view permitted personnel record information and clock-in and clock-out data, and request corrections. Employees can submit and track requests for leave, missions, welfare benefits, product purchases, or training courses. Recording personnel events and taking part in tests and surveys make it easier for employees to engage with organizational services.",
+    "benefits": [
+     "Direct access to permitted personal information",
+     "Submit and track employee requests",
+     "Fewer visits to correct attendance records",
+     "Access to training and welfare services"
+    ]
+   }
+  },
+  "recruitment": {
+   "text": {
+    "name": "Recruitment",
+    "cardText": "Record applicant resumes and history, and manage assessments and recruitment stages.",
+    "tagline": "Track applicants across recruitment projects",
+    "description": "The Recruitment system records applicants' details, contact information, and work, education, and training history separately from employee records. Defining recruitment projects and processes, with one or more assessors, makes it possible to track each applicant's status through the hiring stages. Stored records and analytical reports help in reviewing applicants.",
+    "benefits": [
+     "Centralized applicant data",
+     "Track the status of each recruitment project",
+     "Coordinate assessor activities",
+     "Access recruitment records and reports"
+    ]
+   }
+  },
+  "employee-welfare": {
+   "text": {
+    "name": "Employee Welfare",
+    "cardText": "Plan the use of welfare benefits and facilities, and link installments to payslips.",
+    "tagline": "Manage employee welfare facilities, loans, and repayments",
+    "description": "The Employee Welfare system defines welfare resources and facilities and loan types, along with eligibility conditions, limits, and repayment terms. Employee requests are prioritized and allocated, and loan installments and related costs are recorded in connection with payroll and accounting. Usage and repayment reports show each person's benefit history.",
+    "benefits": [
+     "Control eligibility for welfare facilities",
+     "Plan and prioritize requests",
+     "Calculate and track loan installments",
+     "Link repayments to payroll and accounting"
+    ]
+   }
+  },
+  "training": {
+   "text": {
+    "name": "Training",
+    "cardText": "Define courses and prerequisites, schedule classes, record attendance, run exams, and issue certificates.",
+    "tagline": "Plan courses, classes, and employee training records",
+    "description": "The Training system records courses, training packages, instructors, and venues along with their costs and required resources. Turning courses into classes, scheduling sessions, and recording employee attendance and exam results make training delivery traceable. Allocating monetary and hourly training credits and issuing completion certificates help manage training resources and records.",
+    "benefits": [
+     "Coordinate courses, instructors, and venues",
+     "Control training costs and credits",
+     "Record attendance and exam results",
+     "Keep training records and completion certificates"
+    ]
+   }
+  },
+  "evaluation": {
+   "text": {
+    "name": "Performance Evaluation",
+    "cardText": "Define questionnaires and scores, plan evaluations, and analyze results for employees and applicants.",
+    "tagline": "Run evaluations based on criteria and questionnaires",
+    "description": "The Performance Evaluation system defines criteria, response types, and question scores in questionnaires. Individual and group programs can include multiple questionnaires and evaluators, and can be run for employees, job applicants, or instructors. Periodic, training, and 360-degree evaluations, along with results reporting, support performance review.",
+    "benefits": [
+     "Define criteria and clear scoring",
+     "Coordinate multiple evaluators and questionnaires",
+     "Run periodic and group programs",
+     "Analyze test and evaluation results"
+    ]
+   }
+  }
+ }
+}

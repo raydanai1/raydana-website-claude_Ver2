@@ -1,0 +1,59 @@
+{
+ "id": "maintenance",
+ "text": {
+  "name": "Maintenance & Repairs",
+  "tagline": "Plan servicing and repairs based on equipment condition",
+  "description": "The Cyber ERP Maintenance & Repairs module records equipment profiles, maintenance operations, failure symptoms and causes, and repair history. Defining preventive activities based on time or equipment parameters, logging emergency repair requests, and scheduling work orders around available labor and parts help organize maintenance activities. Integration with warehouse and production, along with reporting on indicators such as MTBF and MTTR, makes it possible to review downtime and maintenance performance.",
+  "benefits": [
+   "Issue work orders for preventive activities",
+   "Track requests and emergency repairs",
+   "Plan labor, tools, and parts",
+   "Record equipment failure history and parts usage",
+   "Analyze downtime and maintenance performance indicators"
+  ]
+ },
+ "subsystems": {
+  "preventive-maintenance": {
+   "text": {
+    "name": "Preventive Maintenance",
+    "cardText": "Define periodic activities and issue work orders based on time or equipment parameters.",
+    "tagline": "Plan servicing before failures occur",
+    "description": "The Preventive Maintenance system defines servicing, inspection, and maintenance operations along with the materials, tools, and skills they require. Issuing work orders based on time intervals or equipment parameters, and planning labor and parts, keeps activities organized. Recording completed work and reporting overdue activities make it possible to track the maintenance plan.",
+    "benefits": [
+     "Schedule periodic maintenance activities",
+     "Prepare the required parts and labor",
+     "Record the service history of each asset",
+     "Track uncompleted work orders"
+    ]
+   }
+  },
+  "emergency-repairs": {
+   "text": {
+    "name": "Emergency Repairs",
+    "cardText": "Log unplanned repair requests and track work orders, parts used, and downtime.",
+    "tagline": "Respond to failures and record repair history",
+    "description": "The Emergency Repairs system records failure requests with their symptoms and causes and links them to repair work orders. Team scheduling, parts supply, and recording of work performed make the failure response process traceable. Reports on downtime and failure causes help review maintenance performance.",
+    "benefits": [
+     "Track failures from request to repair",
+     "Assign teams and parts to work orders",
+     "Record downtime and technician activity",
+     "Analyze failure symptoms and causes"
+    ]
+   }
+  },
+  "equipment-specifications": {
+   "text": {
+    "name": "Equipment Specifications",
+    "cardText": "Define equipment, technical specifications, parameters, and related maintenance operations for each machine.",
+    "tagline": "Shared profiles and structure for machinery and equipment",
+    "description": "The Equipment Specifications system maintains the group and level structure of machinery and the profile of each machine. Recording the manufacturer, installation location, criticality, and technical parameters, and linking them to maintenance operations, creates a shared reference for planning servicing and repairs.",
+    "benefits": [
+     "Access technical equipment profiles",
+     "Classify the machinery structure",
+     "Record controllable parameters for each machine",
+     "Link equipment to maintenance operations"
+    ]
+   }
+  }
+ }
+}

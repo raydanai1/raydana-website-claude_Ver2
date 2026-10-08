@@ -1,0 +1,59 @@
+{
+ "id": "office-automation",
+ "text": {
+  "name": "Office Automation",
+  "tagline": "Route and track organizational correspondence and requests",
+  "description": "The Office Automation module manages letter registration, correspondence referrals, request workflows, and administrative records in a shared environment. Specifying recipients, the person responsible for action, and approval stages helps track work across departments. Searching correspondence, accessing attachments, and viewing processing status also reduce the time needed to find information and follow up on administrative tasks.",
+  "benefits": [
+   "Register and search organizational correspondence",
+   "Refer letters and requests to the responsible person",
+   "Track action and approval stages",
+   "Keep attachments and processing records",
+   "Coordinate administrative workflows across departments"
+  ]
+ },
+ "subsystems": {
+  "office-inbox": {
+   "text": {
+    "name": "Workflow Inbox",
+    "cardText": "Receive and refer tasks, assign responsibility for action, and track processing status.",
+    "tagline": "Track tasks and administrative referrals in one inbox",
+    "description": "The Workflow Inbox puts organizational tasks and referrals in the hands of the person responsible for handling them. Viewing referral history, action status, and pending tasks makes it easier to coordinate across departments and follow up on requests.",
+    "benefits": [
+     "Access all referred tasks in one place",
+     "Track responsibility and action status",
+     "View workflow history",
+     "Reduce scattered administrative follow-ups"
+    ]
+   }
+  },
+  "correspondence": {
+   "text": {
+    "name": "Secretariat",
+    "cardText": "Register incoming and outgoing letters, keep attachments, and search correspondence.",
+    "tagline": "Register and keep the organization's correspondence records",
+    "description": "The Secretariat system registers incoming and outgoing letters along with sender, recipient, and attachment details. Keeping records and searching correspondence makes it easier to access documentation and follow up on letters.",
+    "benefits": [
+     "Organize the correspondence register",
+     "Access letter attachments and history",
+     "Search letters by their details",
+     "Simplify follow-up on organizational correspondence"
+    ]
+   }
+  },
+  "internal-messages": {
+   "text": {
+    "name": "Internal Messaging",
+    "cardText": "Send messages to users and groups and keep a history of work communications.",
+    "tagline": "Exchange messages and track communication within the organization",
+    "description": "The Internal Messaging system enables work messages to be exchanged between employees and organizational groups within the system. Keeping messages and related attachments makes it easier to retrieve records and coordinate work.",
+    "benefits": [
+     "Exchange messages in a shared organizational environment",
+     "Access the history of work communications",
+     "Send information to the relevant users",
+     "Simplify coordination of day-to-day work"
+    ]
+   }
+  }
+ }
+}
