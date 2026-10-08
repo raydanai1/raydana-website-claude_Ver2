@@ -9,7 +9,6 @@ const ru: RouteSlugs = {
     products: 'продукты',
     services: 'услуги',
     cloud: 'облачная-инфраструктура',
-    oilGas: 'решения/нефть-газ-нефтехимия',
     contact: 'контакты',
     about: 'о-компании',
     knowledge: 'база-знаний',

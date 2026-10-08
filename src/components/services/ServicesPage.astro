@@ -8,15 +8,15 @@ import TrainingSection from './TrainingSection.astro';
 import CustomizationSection from './CustomizationSection.astro';
 import SupportSection from './SupportSection.astro';
 import DeploymentSection from './DeploymentSection.astro';
-import { homePath, type Locale, useTranslations } from '../../i18n';
+import { pagePath, type Locale, useTranslations } from '../../i18n';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = useTranslations(locale);
-// The quote buttons lead to the same demo section as the homepage CTA.
-const ctaHref = `${homePath(locale)}#demo`;
+// The quote buttons lead to the contact page, like the site's other "request a demo" buttons.
+const ctaHref = pagePath('contact', locale);
 ---
 
 <Layout locale={locale} page="services" title={t.services.meta.title} description={t.services.meta.description}>

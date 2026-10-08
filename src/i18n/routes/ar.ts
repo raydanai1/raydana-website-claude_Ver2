@@ -9,7 +9,6 @@ const ar: RouteSlugs = {
     products: 'المنتجات',
     services: 'الخدمات',
     cloud: 'البنية-السحابية',
-    oilGas: 'الحلول/النفط-والغاز-والبتروكيماويات',
     contact: 'اتصل-بنا',
     about: 'من-نحن',
     knowledge: 'قاعدة-المعرفة',

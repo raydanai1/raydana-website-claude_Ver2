@@ -14,53 +14,54 @@ const d = s.deployment;
 ---
 
 <!--
-  Figma 2:13130 (methodology card) and the timeline: 2:15205 (title), 2:15307…2:15346 (steps),
-  2:15545 (hexagon number badges), 94:1007 (dotted line + dots), 2:15368 / 2:15371 (final delivery).
+  Figma ver4 4001:4160: band 1752 high; methodology card 2:13130 (637×1523, start side, 69px from the
+  band top) and the timeline 4001:4158: title 2:15082/2:15097/2:15205, steps 2:15307…2:15346 (rhythm in
+  deploymentSteps), hexagon number badges, dotted line 94:1007, final delivery 2:15368 / 2:15371.
 -->
-<section id={serviceSections.deployment} class="scroll-mt-28 overflow-x-clip bg-tint py-12 lg:pb-5 lg:pt-[67px]" aria-labelledby="deployment-title">
-  <div class="container-x grid items-start gap-12 lg:grid-cols-[637fr_653fr] lg:gap-[30px]">
+<section id={serviceSections.deployment} class="scroll-mt-28 overflow-x-clip bg-tint py-12 lg:pb-[160px] lg:pt-[69px]" aria-labelledby="deployment-title">
+  <div class="container-x grid items-start gap-12 lg:grid-cols-[637fr_651fr] lg:gap-[30px]">
     <!-- Methodology card (start side) -->
-    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-8 pt-8 shadow-soft sm:px-8 lg:px-[35px] lg:pb-[36px] lg:pt-[34px]">
+    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-8 pt-8 shadow-soft sm:px-8 lg:pb-[36px] lg:pe-[36px] lg:ps-[37px] lg:pt-[40px]">
       <SectionHeading id="deployment-title">{d.title}</SectionHeading>
-      <p class="mt-4 lg:text-justify text-[14px] leading-8 text-body lg:text-15">{d.body}</p>
+      <p class="mt-4 text-[14px] leading-8 text-body lg:mt-[16px] lg:text-justify lg:text-15">{d.body}</p>
       <img
         src={serviceImages.deployment}
         alt={d.imageAlt}
         width="740"
         height="465"
         loading="lazy"
-        class="mt-5 aspect-[559/180] w-full rounded-[14px] object-cover"
+        class="order-first -mx-5 -mt-8 mb-5 aspect-[16/10] w-[calc(100%+40px)] max-w-none rounded-[18px] object-cover sm:-mx-8 sm:w-[calc(100%+64px)] lg:order-none lg:mx-0 lg:mb-0 lg:mt-[31px] lg:aspect-[559/180] lg:w-full lg:max-w-full lg:rounded-[14px]"
       />
       <h3 class="mt-10 text-[16px] font-bold leading-snug text-title lg:mt-[46px] lg:text-title-3">{d.functionsTitle}</h3>
-      <ul class="mt-6 space-y-4 lg:space-y-[18px]">
+      <ul class="mt-6 space-y-4 lg:mt-[31px] lg:space-y-[21px]">
         {
           d.functions.map((item) => (
-            <li class="flex items-center gap-4">
+            <li class="flex items-center gap-4 lg:gap-[13px]">
               <img src={serviceImages.check} alt="" width="50" height="50" class="size-[50px] shrink-0" />
               <span class="text-[14px] font-bold leading-6 text-body">{item}</span>
             </li>
           ))
         }
       </ul>
-      <p class="mt-8 lg:text-justify text-[14px] leading-8 text-body lg:text-15">{d.itil}</p>
-      <QuoteButton href={ctaHref} class="mt-8 lg:mt-[22px]">{s.quote}</QuoteButton>
+      <p class="mt-8 text-[14px] leading-8 text-body lg:-mx-[5px] lg:mt-[39px] lg:text-justify lg:text-15">{d.itil}</p>
+      <QuoteButton href={ctaHref} class="mt-8 lg:me-[4px] lg:ms-[5px] lg:mt-[20px] lg:w-auto">{s.quote}</QuoteButton>
     </div>
 
     <!-- Timeline (end side) -->
     <div>
-      <div class="tilt-wrap mx-auto mt-4 max-w-[572px] lg:mt-[37px] lg:me-[28px] lg:ms-auto">
-        <span class="tilt-back" aria-hidden="true"></span>
-        <h3 class="tilt-card px-5 py-5 text-[15px] font-bold leading-[30px] text-title lg:px-6 lg:py-[11px] lg:text-[16px] lg:leading-[34px]">
+      <div class="tilt-wrap mx-auto mt-4 max-w-[572px] lg:me-auto lg:ms-[28px] lg:mt-[32px] lg:w-[571px] lg:max-w-[calc(100%-28px)]">
+        <span class="tilt-back lg:![inset-inline-end:-21px] lg:![inset-inline-start:21px] lg:!bottom-[32px] lg:!top-[-32px]" aria-hidden="true"></span>
+        <h3 class="tilt-card px-5 py-5 text-[15px] font-bold leading-[30px] text-title lg:min-h-[101px] lg:pb-[20px] lg:pe-[4px] lg:ps-[28px] lg:pt-[12px] lg:text-[16px] lg:leading-[34px]">
           {d.timelineTitle}
         </h3>
       </div>
 
-      <div class="relative mt-10 lg:mt-[86px]">
+      <div class="relative mt-10 lg:mt-[78px]">
         <span
-          class="absolute bottom-[70px] top-0 start-[11px] border-s-2 border-dotted border-[#9ec4ce] lg:start-[calc(50%-1px)]"
+          class="absolute bottom-[70px] top-0 start-[11px] border-s-2 border-dotted border-[#9ec4ce] lg:-top-[78px] lg:bottom-[143px] lg:start-[calc(50%-1px)]"
           aria-hidden="true"
         ></span>
-        <ol class="relative flex flex-col gap-4 lg:gap-[10px]">
+        <ol class="relative flex flex-col gap-4 lg:gap-0">
           {
             deploymentSteps.map((step, i) => {
               const startSide = i % 2 === 0;
@@ -68,7 +69,7 @@ const d = s.deployment;
               const title = d.steps[step.key].title;
               const text = step.text === 'own' ? (d.steps[step.key] as { text: string }).text : step.text === 'shared' ? d.stepText : '';
               return (
-                <li class="grid grid-cols-[24px_1fr] items-center gap-x-3 lg:grid-cols-[1fr_26px_1fr] lg:gap-x-[13px]">
+                <li class="grid grid-cols-[24px_1fr] items-center gap-x-3 lg:mt-[var(--gap)] lg:grid-cols-[1fr_26px_1fr] lg:gap-x-[13px]" style={`--gap:${step.gap}px;--minh:${step.minH}px`}>
                   <img
                     src={serviceImages.timelineDot}
                     alt=""
@@ -80,7 +81,7 @@ const d = s.deployment;
                     class:list={[
                       'col-start-2 row-start-1 rounded-[18px] bg-white shadow-soft',
                       startSide ? 'lg:col-start-1 lg:justify-self-end' : 'lg:col-start-3 lg:justify-self-start',
-                      'compact' in step ? 'flex items-center gap-2 justify-self-start px-[22px] py-[18px]' : 'w-full px-[18px] pb-6 pt-4 lg:min-h-[147px] lg:w-[300px] lg:ps-[18px] lg:pe-6',
+                      'compact' in step ? 'flex items-center gap-2 justify-self-start px-[22px] py-[18px] lg:h-[65px] lg:w-[179px] lg:gap-[6px] lg:py-0 lg:pe-2 lg:ps-[13px]' : 'w-full px-[18px] pb-6 pt-4 lg:min-h-[var(--minh)] lg:w-[300px] lg:pe-[27px] lg:ps-[18px] lg:pt-[14px]',
                     ]}
                   >
                     {'compact' in step ? (
@@ -90,13 +91,13 @@ const d = s.deployment;
                       </>
                     ) : (
                       <>
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3 lg:gap-2" dir={'latin' in step ? 'ltr' : undefined}>
                           <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#ebf3ff] text-[22px] font-bold leading-none text-[#0167fe]">{n}</span>
                           <h4 class:list={['font-bold leading-normal text-title', 'latin' in step ? 'text-[20px]' : 'text-title-3']} dir="auto">
                             {title}
                           </h4>
                         </div>
-                        <p class="mt-2 text-[14px] leading-6 text-muted">{text}</p>
+                        <p class="mt-2 text-[14px] leading-6 text-muted lg:ms-[10px] lg:mt-[2px]">{text}</p>
                       </>
                     )}
                   </div>

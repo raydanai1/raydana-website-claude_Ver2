@@ -27,7 +27,7 @@ const t = useTranslations(locale).services.grid;
               href={linked ? `#${card.section}` : undefined}
               class:list={[
                 'group flex h-full flex-col items-center gap-2 rounded-2xl border-[0.86px] border-stroke bg-white px-2 pb-4 pt-3 text-center shadow-industry',
-                'sm:min-h-[102px] sm:flex-row sm:gap-1.5 sm:rounded-[20px] sm:pb-0 sm:pe-[14px] sm:ps-[9px] sm:pt-0 sm:text-start lg:h-[102px]',
+                'sm:min-h-[102px] sm:flex-row sm:gap-0 sm:rounded-[20px] sm:pb-0 sm:pe-[15px] sm:ps-[11px] sm:pt-0 sm:text-start lg:h-[102px]',
                 linked && 'transition duration-300 hover:-translate-y-1 hover:border-stroke-strong',
               ]}
             >
@@ -41,7 +41,7 @@ const t = useTranslations(locale).services.grid;
                   </>
                 )}
               </span>
-              <span class="text-[13px] font-bold leading-5 text-title [overflow-wrap:anywhere] sm:flex-1 sm:px-1 sm:text-15 sm:leading-6">{t.items[card.key]}</span>
+              <span class="text-[13px] font-bold leading-5 text-title [overflow-wrap:anywhere] sm:flex-1 sm:ps-1.5 sm:text-15 sm:leading-6">{t.items[card.key]}</span>
               <span class="icon-btn hidden group-hover:bg-light-4 sm:inline-flex" aria-hidden="true">
                 <img src={serviceImages.cardArrow} alt="" width="18" height="18" class="dir-icon-rev size-[18px]" />
               </span>

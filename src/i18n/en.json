@@ -25,12 +25,55 @@
   },
   "nav": {
     "products": "Products",
-    "solutions": "Solutions & Industries",
     "services": "Services",
     "knowledge": "Knowledge Base",
     "about": "About Us",
     "contact": "Contact",
     "portal": "Customer Portal"
+  },
+  "megamenu": {
+    "label": "Products and solutions menu",
+    "tabs": {
+      "areas": "Business solutions by area",
+      "industries": "Industry solutions",
+      "products": "Complementary products"
+    },
+    "areas": {
+      "finance": "Finance",
+      "accounting": "Accounting management",
+      "hr": "Human resources",
+      "supply": "Supply",
+      "purchasing": "Purchasing",
+      "productionEquipment": "Production & equipment",
+      "warehouse": "Warehouse",
+      "budget": "Budget management",
+      "services": "Services",
+      "production": "Production",
+      "contracts": "Contract management",
+      "transportation": "Transportation",
+      "sales": "Sales",
+      "maintenance": "Maintenance & repair",
+      "quality": "Quality control",
+      "it": "Information technology"
+    },
+    "industries": {
+      "government": "Government & public sector",
+      "large": "Large enterprises",
+      "oil": "Oil, gas & petrochemicals",
+      "pension": "Pension funds",
+      "international": "International",
+      "sme": "Small & medium enterprises"
+    },
+    "products": {
+      "cloud": "Cloud computing infrastructure",
+      "bpms": "Business process management (BPMS)",
+      "bi": "Business intelligence (BI)",
+      "ai": "Artificial intelligence (AI)",
+      "rb": "Report builder",
+      "dashboard": "Management dashboard",
+      "eform": "Electronic form builder (E-FORM)",
+      "ar": "Augmented reality (AR)"
+    }
   },
   "cta": {
     "consult": "Talk to an Expert",
@@ -320,7 +363,7 @@
     "demoTitle": "Request a free consultation and demo today."
   },
   "footer": {
-    "about": "Raydana Engineering was founded in 2000 to build modern, integrated enterprise systems. Our aim — to make information technology more than just comprehensive software — led us to create localized, web-based solutions that let managers and users improve their business from anywhere, at any time.",
+    "about": "Raydana Engineering was founded in 2002 to build modern, integrated enterprise systems. Our aim — to make information technology more than just comprehensive software — led us to create localized, web-based solutions that let managers and users improve their business from anywhere, at any time.",
     "linksTitle": "Raydana CYBER ERP",
     "links": {
       "products": "Products",
@@ -368,7 +411,7 @@
         "development": "Software Development",
         "support": "Support & Maintenance",
         "feasibility": "Feasibility & Implementation",
-        "consulting": "Consulting & Analysis",
+        "consulting": "Consulting, Analysis & Design",
         "installation": "Installation & Setup"
       }
     },
@@ -627,149 +670,6 @@
       ]
     }
   },
-  "solutionOilGas": {
-    "meta": {
-      "title": "Oil, Gas & Petrochemical Industry Solution | Raydana",
-      "description": "CYBER ERP for the oil, gas and petrochemical industries: precise, real-time control of project costs and integrated supply-chain management from well to refinery to market."
-    },
-    "hero": {
-      "kicker": "Solution for the",
-      "title": "Oil, Gas & Petrochemical Industries",
-      "lead": "Smart integration, operational agility: ERP that masters the oil, gas and petrochemical value chain",
-      "body": "Precise, real-time control of high project costs and integrated management of a complex supply chain (from well to refinery to market) that prevents unplanned downtime and maximizes profitability.",
-      "consult": "Expert Consultation",
-      "demo": "Request a Demo"
-    },
-    "basket": {
-      "title": "Oil, Gas & Petrochemical Product Suite",
-      "includes": "Includes {n} subsystems",
-      "modules": {
-        "accounting": "Accounting Management Solution",
-        "warehouse": "Warehouse",
-        "finance": "Finance",
-        "quality": "Quality Control",
-        "sales": "Orders & Sales",
-        "budget": "Budget Management"
-      }
-    },
-    "benefits": {
-      "title": "Benefits of the CYBER ERP Oil & Gas Solution",
-      "items": {
-        "records": "Journal entries and detailed financial reporting",
-        "cheques": "Issuing and receiving cheques, petty cash, and bank advices",
-        "closing": "Closing the financial accounts",
-        "assets": "Fixed-asset registration, upkeep and depreciation",
-        "budgetControl": "Budget and credit control",
-        "projectCosts": "Real-time control of project and contractor costs",
-        "multiCurrency": "Multi-currency management",
-        "contractors": "Contractor progress billing and settlement",
-        "inventory": "Spare parts stock control",
-        "hse": "Integration with HSE",
-        "consolidated": "Consolidated group reports",
-        "maintenance": "Equipment maintenance"
-      }
-    },
-    "features": {
-      "title": "Features of the CYBER ERP Oil & Gas Solution",
-      "tabs": {
-        "finance": {
-          "label": "Finance",
-          "items": [
-            "Real-time control of project and contractor costs",
-            "Multi-currency management and revaluation for international deals",
-            "Product cost price by operating unit",
-            "Consolidated financial reports for group companies"
-          ]
-        },
-        "hr": {
-          "label": "Human Resources",
-          "items": [
-            "Accurate work-time calculation and integration of staff attendance with payroll, HSE and office automation",
-            "Management of inter-site dispatch, long assignments, accommodation and transport",
-            "Connection to the national oil information system",
-            "Grading in performance reviews and employee career paths",
-            "Work-time control with strong support for shifts/rosters and attendance calculations",
-            "Integration and coordination with other units"
-          ]
-        },
-        "sales": {
-          "label": "Sales",
-          "items": [
-            "Management of domestic and export sales contracts",
-            "Formula pricing based on global benchmark rates",
-            "Tracking of loading, shipping and delivery of cargoes",
-            "Customer portal for placing and tracking orders"
-          ]
-        },
-        "purchasing": {
-          "label": "Purchasing",
-          "items": [
-            "Supplier management and qualification",
-            "Domestic and foreign purchasing with letter-of-credit tracking",
-            "Tenders and requests for quotation",
-            "Purchase requests linked automatically to warehouse and budget"
-          ]
-        },
-        "accounting": {
-          "label": "Accounting",
-          "items": [
-            "Automatic journal entries from every subsystem",
-            "Project and cost-centre accounting",
-            "Asset management and depreciation of heavy equipment",
-            "Statutory and tax reports"
-          ]
-        },
-        "production": {
-          "label": "Production",
-          "items": [
-            "Planning for continuous and batch production",
-            "Daily production statistics for each unit",
-            "Control of raw material, utility and waste consumption",
-            "Connection to quality control and the laboratory"
-          ]
-        },
-        "equipment": {
-          "label": "Equipment",
-          "items": [
-            "Preventive maintenance (PM) of equipment",
-            "Equipment records and repair history",
-            "Work orders and planned shutdowns",
-            "Spare parts and critical stock control"
-          ]
-        },
-        "warehouse": {
-          "label": "Warehouse",
-          "items": [
-            "Multiple warehouses across remote sites",
-            "Item coding with serial and batch tracking",
-            "Reorder points and low-stock alerts",
-            "Stock counts and inventory movement reports"
-          ]
-        }
-      }
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "items": [
-        {
-          "q": "How is the price of the CYBER ERP oil & gas solution calculated?",
-          "a": "The price depends on the subsystems you choose, the number of users and the deployment type (on your own servers or in the cloud). Fill in the demo request form to receive a quote."
-        },
-        {
-          "q": "Is the solution suitable for companies with several operating sites?",
-          "a": "Yes. All sites, warehouses and offices work on one integrated web-based system, and managers see the data in real time."
-        },
-        {
-          "q": "Can it connect to the organization's existing systems?",
-          "a": "Yes. CYBER ERP exchanges data with other company systems and the related national systems through web services."
-        },
-        {
-          "q": "What does implementation involve?",
-          "a": "Implementation starts with a study of your processes, followed by installation, data migration, user training and post-launch support."
-        }
-      ]
-    }
-  },
   "contact": {
     "meta": {
       "title": "Contact Us | Raydana",
@@ -984,9 +884,6 @@
         "foreign": "Ministry of Foreign Affairs"
       }
     },
-    "testimonials": {
-      "title": "Customer success stories"
-    },
     "certificates": {
       "title": "Our certificates",
       "names": {
@@ -1002,7 +899,9 @@
         "council": "Supreme Council of Informatics",
         "knowledge": "Knowledge-based company certification",
         "nezam": "Computer Guild Organization (Nezam Senfi)",
-        "afta": "AFTA Strategic Management Center (cyber security)"
+        "afta": "AFTA Strategic Management Center (cyber security)",
+        "isi": "Legal member of the Iranian Informatics Society",
+        "mimt": "Ministry of Industry, Mine and Trade"
       }
     },
     "history": {
@@ -1041,6 +940,11 @@
         ],
         "bi3": [
           "Business intelligence"
+        ],
+        "next": [
+          "ERP release 8",
+          "ERP AI release 1",
+          "ERP BI release 3"
         ]
       }
     }

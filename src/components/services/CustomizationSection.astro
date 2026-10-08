@@ -2,7 +2,13 @@
 import SectionHeading from './SectionHeading.astro';
 import QuoteButton from './QuoteButton.astro';
 import Hexagon from './Hexagon.astro';
-import { customizationBenefits, customizationSteps, serviceImages, serviceSections } from '../../data/services';
+import {
+  customizationBenefits,
+  customizationDiagramWidth as W,
+  customizationSteps,
+  serviceImages,
+  serviceSections,
+} from '../../data/services';
 import { type Locale, useTranslations } from '../../i18n';
 
 interface Props {
@@ -10,57 +16,82 @@ interface Props {
 }
 const { locale } = Astro.props;
 const c = useTranslations(locale).services.customization;
+
+// Figma px → % of the diagram width, so the diagram keeps its shape on narrower desktops.
+const pct = (px: number) => `${((px / W) * 100).toFixed(3)}%`;
+const box = (start: number, width: number) => `margin-inline-start:${pct(start)};width:${pct(width)}`;
 ---
 
 <!--
-  Figma ver4 4001:4148: text card 2:15059 (648 wide, end side) and "diagram-right" 4001:4147
-  (612 wide, rebuilt in HTML). Phones: card first (photo on top), then the steps on one numbered line.
+  Figma ver4 4001:4148: text card 2:15059 (648×959, end side, 18px below the diagram top) and
+  "diagram-right" 4001:4147 (612.7×995, start side). The diagram is laid out in flow from the
+  measured gaps (so longer translations push it down instead of overlapping); each gap holds its
+  connector line. Phones: card first (photo on top), then the steps on one numbered line.
 -->
-<section id={serviceSections.customization} class="scroll-mt-28 py-8 lg:pb-[103px] lg:pt-[50px]" aria-labelledby="customization-title">
-  <div class="container-x grid gap-8 lg:grid-cols-[612fr_648fr] lg:gap-[56px]">
+<section id={serviceSections.customization} class="scroll-mt-28 py-8 lg:pb-[51px] lg:pt-[50px]" aria-labelledby="customization-title">
+  <div class="container-x grid gap-8 lg:grid-cols-[612.7fr_648.3fr] lg:gap-[56px]">
     <!-- Card: end side on desktop, first on mobile. -->
-    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-6 pt-6 shadow-soft sm:px-8 lg:order-2 lg:mt-[18px] lg:self-start lg:px-[42px] lg:pb-[47px] lg:pt-[40px]">
+    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-6 pt-6 shadow-soft sm:px-8 lg:order-2 lg:mt-[18px] lg:self-start lg:pb-[31px] lg:pe-[45px] lg:ps-[37px] lg:pt-[36px]">
       <SectionHeading id="customization-title">{c.title}</SectionHeading>
-      <p class="mt-4 text-[14px] leading-7 text-body lg:mt-5 lg:text-justify lg:text-15 lg:leading-8">{c.intro}</p>
+      <p class="mt-4 text-[14px] leading-7 text-body lg:mt-[17px] lg:text-justify lg:text-15 lg:leading-8">{c.intro}</p>
       <img
         src={serviceImages.customization}
         alt={c.imageAlt}
         width="740"
         height="494"
         loading="lazy"
-        class="order-first -mx-5 -mt-6 mb-5 aspect-[16/10] max-w-none rounded-[18px] object-cover sm:-mx-8 lg:order-none lg:mx-0 lg:mb-0 lg:mt-6 lg:aspect-[564/241] lg:w-full lg:max-w-full lg:rounded-[15px]"
+        class="order-first -mx-5 -mt-6 mb-5 aspect-[16/10] w-[calc(100%+40px)] max-w-none rounded-[18px] object-cover sm:-mx-8 sm:w-[calc(100%+64px)] lg:order-none lg:mx-0 lg:mb-0 lg:mt-[7px] lg:aspect-[564/241] lg:w-full lg:max-w-full lg:rounded-[15px]"
       />
-      <h3 class="mt-6 text-[15px] font-bold leading-6 text-dark lg:mt-8 lg:text-[16px]">{c.benefitsTitle}</h3>
-      <ul class="mt-3 list-disc space-y-1 ps-5 text-[14px] font-bold leading-6 text-ink lg:mt-4 lg:space-y-0.5 lg:ps-[21px]">
+      <h3 class="mt-6 text-[15px] font-bold leading-6 text-dark lg:mt-[34px] lg:text-[16px]">{c.benefitsTitle}</h3>
+      <ul class="mt-3 list-disc space-y-1 ps-5 text-[14px] font-bold leading-6 text-ink lg:mt-4 lg:space-y-0 lg:ps-[21px]">
         {customizationBenefits.map((key) => <li class="ps-1">{c.benefits[key]}</li>)}
       </ul>
-      <p class="mt-6 text-[14px] font-medium leading-7 text-ink lg:mt-[51px] lg:text-15">{c.integration}</p>
-      <QuoteButton class="mt-6 lg:mt-[58px] lg:min-h-[88px] lg:!text-[16px] lg:!leading-6">{c.summary}</QuoteButton>
+      <p class="mt-6 text-[14px] font-medium leading-7 text-ink lg:mt-[59px] lg:text-15 lg:leading-[28px]">{c.integration}</p>
+      <QuoteButton class="mt-6 lg:-me-[5px] lg:-ms-[10px] lg:mt-[52px] lg:min-h-[89px] lg:w-auto lg:!text-[16px] lg:!leading-6">{c.summary}</QuoteButton>
     </div>
 
-    <!-- Process flow, desktop: tilted labels on a centred line (Figma diagram-right). -->
-    <div class="relative mx-auto hidden w-full max-w-[612px] flex-col items-center lg:order-1 lg:flex">
-      <div class="absolute bottom-24 top-8 left-1/2 w-px bg-[#c3c6d4]" aria-hidden="true"></div>
-
-      <div class="relative mt-5 flex min-h-[65px] w-[355px] max-w-full items-center justify-center rounded-[11px] border border-[#c3c6d4] bg-white px-6 pt-1">
-        <Hexagon color="#f90087" class="absolute -top-[21px] left-1/2 h-[37px] w-[35px] -translate-x-1/2" />
+    <!-- Process flow, desktop (Figma diagram-right): title box, then per step a gap, the tilted label, a gap, the description. -->
+    <div class="relative hidden lg:order-1 lg:block">
+      <div class="relative mt-5 flex min-h-[65px] items-center justify-center rounded-[11px] border border-[#c3c6d4] bg-white px-5" style={box(134.3, 355.2)}>
+        <Hexagon color="#f90087" class="absolute -top-[20px] left-1/2 h-[37px] w-[35px] -translate-x-1/2" />
         <h3 class="text-center text-15 font-bold leading-8 text-title">{c.flowTitle}</h3>
       </div>
 
-      <ol class="relative mt-[59px] flex w-full flex-col items-center gap-[54px]">
+      <ol>
         {
           customizationSteps.map((step, i) => (
-            <li class="flex w-full flex-col items-center">
-              <div class="tilt-wrap w-fit max-w-[calc(100%-24px)]">
-                <span class="tilt-back" aria-hidden="true" />
-                {i === 0 && <Hexagon color="#7350ff" class="absolute -top-[48px] left-1/2 h-[51px] w-[47px] -translate-x-1/2" />}
-                <h4 class="tilt-card flex min-h-[66px] items-center gap-3 px-4 py-2 text-[14px] leading-6 text-body">
-                  {step.icon && <img src={step.icon} alt="" width="40" height="40" class="size-10 shrink-0" />}
+            <li>
+              <div class="relative" style={`height:${step.label.gap}px`} aria-hidden="true">
+                <svg class="absolute inset-0 size-full overflow-visible rtl:-scale-x-100" viewBox={`0 0 ${W} ${step.label.gap}`} preserveAspectRatio="none">
+                  <line x1={step.label.line[0]} y1="0" x2={step.label.line[1]} y2={step.label.gap} stroke="#c3c6d4" vector-effect="non-scaling-stroke" />
+                </svg>
+                {i === 0 && (
+                  <span class="absolute top-[19px] z-10 flex w-0 justify-center" style={`inset-inline-start:${pct(318.4)}`}>
+                    <Hexagon color="#7350ff" class="h-[51px] w-[47px] shrink-0" />
+                  </span>
+                )}
+              </div>
+              <div class="tilt-wrap" style={box(step.label.start, step.label.width)}>
+                <span class="tilt-back" style="top:-18px;bottom:18px" aria-hidden="true" />
+                <h4
+                  class="tilt-card flex min-h-[57px] items-center gap-[10px] pe-3 text-[14px] leading-6 text-body [rotate:var(--tilt)] [transform:none] ltr:[rotate:calc(var(--tilt)*-1)]"
+                  style={`--tilt:${step.label.rotate}deg;padding-inline-start:${step.icon ? 15 : 62}px`}
+                >
+                  {step.icon && <img src={step.icon} alt="" width="40" height="40" class="shrink-0" style={`width:${step.iconSize}px;height:${step.iconSize}px`} />}
                   <span>{c.steps[step.key].title}</span>
                 </h4>
               </div>
-              <div class="relative mt-[14px] w-full max-w-[584px] rounded-[11px] border border-[#c3c6d4] bg-white px-[21px] pb-3 pt-[17px]">
-                <Hexagon color="#00bf6f" class="absolute -top-[9px] left-1/2 h-[17px] w-4 -translate-x-1/2" />
+              <div class="relative" style={`height:${step.desc.gap}px`} aria-hidden="true">
+                <svg class="absolute inset-0 size-full overflow-visible rtl:-scale-x-100" viewBox={`0 0 ${W} ${step.desc.gap}`} preserveAspectRatio="none">
+                  <line x1={step.desc.line[0]} y1="0" x2={step.desc.line[1]} y2={step.desc.gap} stroke="#c3c6d4" vector-effect="non-scaling-stroke" />
+                </svg>
+              </div>
+              <div class="relative rounded-[11px] border border-[#c3c6d4] bg-white px-[21px] pb-3 pt-[17px]" style={`${box(step.desc.start, step.desc.width)};min-height:${step.desc.minH}px`}>
+                {step.desc.dot !== undefined && (
+                  <span class="absolute -top-[9px] flex w-0 justify-center" style={`inset-inline-start:${pct(step.desc.dot - step.desc.start)}`} aria-hidden="true">
+                    <Hexagon color="#00bf6f" class="h-[17px] w-4 shrink-0" />
+                  </span>
+                )}
                 <p class="text-[14px] leading-6 text-body">{c.steps[step.key].text}</p>
               </div>
             </li>

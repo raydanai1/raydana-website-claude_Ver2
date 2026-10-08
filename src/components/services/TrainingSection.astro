@@ -16,10 +16,10 @@ const s = useTranslations(locale).services;
 <section id={serviceSections.training} class="scroll-mt-28 bg-tint py-8 lg:py-[59px]" aria-labelledby="training-title">
   <div class="container-x">
     <div class="grid overflow-hidden rounded-[18px] bg-white shadow-soft lg:min-h-[465px] lg:grid-cols-[695fr_625fr]">
-      <div class="flex flex-col px-5 pb-6 pt-6 sm:px-8 lg:px-[37px] lg:pb-[46px] lg:pt-[43px]">
+      <div class="flex flex-col px-5 pb-6 pt-6 sm:px-8 lg:pb-[45px] lg:pe-[32px] lg:ps-[37px] lg:pt-[43px]">
         <SectionHeading id="training-title">{s.training.title}</SectionHeading>
-        <p class="mt-4 text-[14px] leading-7 text-body lg:mt-[30px] lg:text-justify lg:text-15 lg:leading-8">{s.training.body}</p>
-        <QuoteButton href={ctaHref} class="mt-6 lg:mt-auto">{s.quote}</QuoteButton>
+        <p class="mt-4 text-[14px] leading-7 text-body lg:mt-[29px] lg:text-15 lg:leading-8">{s.training.body}</p>
+        <QuoteButton href={ctaHref} class="mt-6 lg:mt-auto lg:me-[5px] lg:w-auto">{s.quote}</QuoteButton>
       </div>
       <img
         src={serviceImages.training}

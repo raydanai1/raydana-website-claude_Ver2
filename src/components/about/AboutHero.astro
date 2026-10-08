@@ -11,15 +11,15 @@ const t = useTranslations(locale).about.hero;
 const contactHref = pagePath('contact', locale);
 ---
 
-<!-- Figma 2015:10110 (title), 2015:6640 (text), 2015:6633 (buttons), 2015:10187 (video card). -->
+<!-- Figma ver4 6001:2131 (text block: title, paragraph, buttons), 2015:10187 (video card). -->
 <section class="container-x pb-10 pt-6 lg:pb-[41px] lg:pt-[33px]" aria-labelledby="about-hero-title">
-  <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-    <div class="lg:max-w-[593px] xl:me-0 xl:ms-[25px] xl:pt-[3px]">
-      <h1 id="about-hero-title" class="text-[24px] font-bold leading-[1.45] text-ink sm:text-[28px] lg:text-[32px] lg:leading-[44px] xl:rtl:max-w-[440px] xl:rtl:ms-auto">
+  <div class="flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+    <div class="lg:max-w-[592px] xl:me-0 xl:ms-[25px] xl:pt-[20px]">
+      <h1 id="about-hero-title" class="text-[20px] font-bold leading-[1.5] text-ink sm:text-[22px] lg:text-[24px] lg:leading-normal xl:rtl:whitespace-nowrap">
         {t.title}
       </h1>
-      <p class="mt-4 text-[15px] font-medium leading-[1.87] text-[#616d8f] lg:mt-[21px] lg:text-base rtl:text-justify">{t.body}</p>
-      <div class="mt-7 flex flex-wrap gap-[10px] lg:mt-[41px]">
+      <p class="mt-4 text-[15px] font-medium leading-[1.87] text-[#616d8f] lg:mt-[22px] lg:text-base rtl:text-justify">{t.body}</p>
+      <div class="hero-btns mt-6 grid grid-cols-2 gap-[10px] sm:flex sm:flex-wrap lg:mt-[22px]">
         <Button href={contactHref}>{t.consult}</Button>
         <Button href={contactHref} variant="outline">{t.demo}</Button>
       </div>
@@ -61,3 +61,18 @@ const contactHref = pagePath('contact', locale);
     </div>
   </div>
 </section>
+
+<style>
+  /* Phones: two equal buttons side by side; long labels (ru/en) wrap inside the pill instead of clipping. */
+  @media (max-width: 639.98px) {
+    .hero-btns > :global(a) {
+      min-width: 0;
+      gap: 6px;
+      padding-inline: 10px;
+      font-size: 14px;
+      line-height: 1.25;
+      white-space: normal;
+      text-align: center;
+    }
+  }
+</style>

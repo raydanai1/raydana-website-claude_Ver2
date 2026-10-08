@@ -1,11 +1,10 @@
 /** Shape of one language's URL slug file (src/i18n/routes/<lang>.ts). */
 export interface RouteSlugs {
-  /** Top-level pages. A slug may contain "/" to nest, e.g. "solutions/oil-gas". */
+  /** Top-level pages. A slug may contain "/" to nest, e.g. "solutions/industry". */
   pages: {
     products: string;
     services: string;
     cloud: string;
-    oilGas: string;
     contact: string;
     about: string;
     knowledge: string;

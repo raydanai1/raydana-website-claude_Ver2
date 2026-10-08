@@ -13,20 +13,20 @@ const s = useTranslations(locale).services;
 const ringMask = `mask:url(${serviceImages.ring}) center/contain no-repeat;-webkit-mask:url(${serviceImages.ring}) center/contain no-repeat;`;
 ---
 
-<!-- Figma 2:15555 / 2:15562 / 2:15563 (text card) and 2:15373, 94:1010… (hexagon ring cluster). -->
-<section id={serviceSections.support} class="scroll-mt-28 py-12 lg:pb-[104px] lg:pt-[81px]" aria-labelledby="support-title">
-  <div class="container-x grid items-start gap-10 lg:grid-cols-[1fr_603px] xl:gap-[52px] lg:gap-6">
-    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-8 pt-8 shadow-soft sm:px-8 lg:order-2 lg:min-h-[680px] lg:px-[41px] lg:pb-[50px] lg:pt-[55px]">
+<!-- Figma ver4 4001:4151: text card 4001:4150 (637×680, end side) and ring cluster 4001:4156 (603×605, start side, 37.5px lower). -->
+<section id={serviceSections.support} class="scroll-mt-28 py-12 lg:pb-[85px] lg:pt-[51px]" aria-labelledby="support-title">
+  <div class="container-x grid items-start gap-10 lg:grid-cols-[603fr_637fr] lg:gap-[77px]">
+    <div class="flex flex-col rounded-[18px] bg-white px-5 pb-8 pt-8 shadow-soft sm:px-8 lg:order-2 lg:min-h-[680px] lg:pb-[52px] lg:pe-[27px] lg:ps-[46px] lg:pt-[59px]">
       <SectionHeading id="support-title">{s.support.title}</SectionHeading>
-      <p class="mt-5 text-15 font-bold leading-8 text-primary">{s.support.intro}</p>
-      <ul class="mt-2 list-disc ps-[22px] text-[14px] leading-8 text-body lg:text-15">
+      <p class="mt-5 text-15 font-bold leading-8 text-primary lg:mt-[28px]">{s.support.intro}</p>
+      <ul class="mt-2 list-disc ps-[22px] text-[14px] leading-8 text-body lg:-ms-[9px] lg:mt-[10px] lg:text-15">
         {s.support.items.map((item) => <li>{item}</li>)}
       </ul>
-      <QuoteButton href={ctaHref} class="mt-8 lg:mt-auto">{s.quote}</QuoteButton>
+      <QuoteButton href={ctaHref} class="mt-8 lg:-ms-[23px] lg:me-[14px] lg:mt-auto lg:w-auto">{s.quote}</QuoteButton>
     </div>
 
     <!-- Desktop: scattered rings as in Figma. Mobile/tablet: a grid of ring badges. -->
-    <ul class="grid grid-cols-2 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-3 lg:relative lg:mx-auto lg:mt-[-4px] lg:block lg:h-[605px] lg:w-[603px] lg:max-w-full">
+    <ul class="grid grid-cols-2 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-3 lg:relative lg:mx-auto lg:mt-[37.5px] lg:block lg:h-[605px] lg:w-[603px] lg:max-w-full">
       {
         supportHexes.map((hex) => (
           <li
@@ -34,7 +34,7 @@ const ringMask = `mask:url(${serviceImages.ring}) center/contain no-repeat;-webk
             style={`--x:${hex.x}px;--y:${hex.y}px`}
           >
             <span class="absolute inset-0" style={`background:${hex.color};${ringMask}transform:rotate(${hex.rotate}deg)`} />
-            <span class="relative w-[92px] text-center text-[14px] font-bold leading-6 text-title">{s.support.hexes[hex.key]}</span>
+            <span class="relative w-[80px] text-center text-[14px] font-bold leading-6 text-title [text-wrap:balance] ltr:w-[104px] ltr:text-[13px] ltr:leading-5">{s.support.hexes[hex.key]}</span>
           </li>
         ))
       }

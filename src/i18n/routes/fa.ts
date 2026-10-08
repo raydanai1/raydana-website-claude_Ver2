@@ -11,7 +11,6 @@ const fa: RouteSlugs = {
     products: 'محصولات',
     services: 'خدمات',
     cloud: 'زیرساخت-ابری',
-    oilGas: 'راهکارها/صنایع-نفت-گاز-پتروشیمی',
     contact: 'تماس-با-ما',
     about: 'درباره-ما',
     knowledge: 'پایگاه-دانش',

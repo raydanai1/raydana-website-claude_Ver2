@@ -1,7 +1,8 @@
 /**
  * Apache / cPanel rules. Built as /htaccess.txt and renamed to /.htaccess after the build
  * (see the "raydana-htaccess" integration in astro.config.mjs).
- * - 301 redirects from the old Persian URLs (/products/…, /services/ …) to the new Persian slugs.
+ * - 301 redirects from the old Persian URLs (/products/…, /services/ …) to the new Persian slugs, and from
+ *   removed pages (the oil & gas solution page) to the products page.
  * - A not-found page per language.
  * The forwarding HTML pages stay in place as a fallback for hosts that ignore .htaccess.
  */
@@ -35,7 +36,7 @@ ErrorDocument 404 /ar/404/index.html
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# Old Persian URLs → new Persian URLs (permanent)
+# Old URLs → new URLs (permanent)
 ${legacy.join('\n')}
 ${fallback.length ? `\n# Pages of a language not translated yet → English (temporary)\n${fallback.join('\n')}\n` : ''}</IfModule>
 `;

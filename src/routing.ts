@@ -9,7 +9,7 @@ import { KNOWLEDGE_PAGE_SIZE, getKnowledgeItems, itemsInCategory, knowledgeCateg
 import { fallbackLocale, fullLocales, locales, pagePath, type Locale, type Page } from './i18n';
 
 export type PageView =
-  | { view: 'home' | 'services' | 'products' | 'cloud' | 'oilGas' | 'contact' | 'about' | 'knowledge' }
+  | { view: 'home' | 'services' | 'products' | 'cloud' | 'contact' | 'about' | 'knowledge' }
   | { view: 'module'; moduleId: string }
   | { view: 'subsystem'; moduleId: string; subsystemId: string }
   | { view: 'article'; item: KnowledgeItem }
@@ -38,7 +38,6 @@ function legacyFaPath(page: Page): string | undefined {
     services: 'services/',
     products: 'products/',
     cloud: 'cloud/',
-    oilGas: 'solutions/oil-gas-petrochemical/',
     contact: 'contact/',
     about: 'about/',
     knowledge: 'knowledge/',
@@ -54,6 +53,17 @@ function legacyFaPath(page: Page): string | undefined {
   return undefined;
 }
 
+/**
+ * URLs of pages that were removed, per language → the page that replaces them (301).
+ * The oil & gas solution page (frame dropped in Figma ver4) now goes to the products page.
+ */
+const removedPages: { locale: Locale; paths: string[]; to: Page }[] = [
+  { locale: 'fa', paths: ['/راهکارها/صنایع-نفت-گاز-پتروشیمی/', '/solutions/oil-gas-petrochemical/'], to: 'products' },
+  { locale: 'en', paths: ['/en/solutions/oil-gas-petrochemical/'], to: 'products' },
+  { locale: 'ru', paths: ['/ru/решения/нефть-газ-нефтехимия/'], to: 'products' },
+  { locale: 'ar', paths: ['/ar/الحلول/النفط-والغاز-والبتروكيماويات/'], to: 'products' },
+];
+
 let cache: Promise<Route[]> | undefined;
 
 export function getRoutes(): Promise<Route[]> {
@@ -64,7 +74,7 @@ export function getRoutes(): Promise<Route[]> {
 async function build(): Promise<Route[]> {
   const routes: Route[] = [];
   const pages: { page: Page; data: PageView; locales: readonly Locale[] }[] = [];
-  const staticViews = ['home', 'services', 'products', 'cloud', 'oilGas', 'contact', 'about', 'knowledge'] as const;
+  const staticViews = ['home', 'services', 'products', 'cloud', 'contact', 'about', 'knowledge'] as const;
   for (const view of staticViews) pages.push({ page: view, data: { view }, locales: fullLocales });
 
   for (const m of modules) {
@@ -108,6 +118,10 @@ async function build(): Promise<Route[]> {
     const old = legacyFaPath(p.page);
     const now = pagePath(p.page, 'fa');
     if (old && old !== now) routes.push({ kind: 'redirect', path: old, locale: 'fa', to: now, reason: 'legacy' });
+  }
+
+  for (const r of removedPages) {
+    for (const path of r.paths) routes.push({ kind: 'redirect', path, locale: r.locale, to: pagePath(r.to, r.locale), reason: 'legacy' });
   }
 
   const seenPaths = new Set<string>();

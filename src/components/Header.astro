@@ -3,9 +3,12 @@
  * Site header (Figma 93:902) with the four-language menu (Figma 4001:4127).
  * Desktop: floating white bar, menu in the middle. Mobile: logo + language + menu button; the drawer holds
  * the menu, search and "Request a demo".
+ * "Products" opens the megamenu (Figma 6004:3053 / 6004:3054 / 6004:3055); in the drawer its tabs are expandable sections.
  */
 import Logo from './ui/Logo.astro';
 import Button from './ui/Button.astro';
+import { megamenuTabs } from '../data/megamenu';
+import { getModule } from '../data/modules';
 import { fullLocales, homePath, localeInfo, locales, pagePath, type Locale, type Page, useTranslations } from '../i18n';
 
 interface Props {
@@ -21,11 +24,8 @@ const isFull = (l: Locale) => (fullLocales as readonly Locale[]).includes(l);
 // Same page in every language, unless the page passes its own targets.
 const languageLinks = locales.map((l) => ({ locale: l, href: switchHrefs?.[l] ?? pagePath(page, l), ...localeInfo[l] }));
 
-// Homepage sections are linked by anchor; from other pages they go through the homepage.
-const home = page === 'home' ? '' : homePath(locale);
 const navItems = [
   { label: t.nav.products, href: pagePath('products', locale), page: 'products' },
-  { label: t.nav.solutions, href: `${home}#industries` },
   { label: t.nav.services, href: pagePath('services', locale), page: 'services' },
   { label: t.nav.knowledge, href: pagePath('knowledge', locale), page: 'knowledge' },
   { label: t.nav.about, href: pagePath('about', locale), page: 'about' },
@@ -34,6 +34,17 @@ const navItems = [
 // Module and subsystem pages belong to the products menu item, articles to the knowledge base.
 const section = page.includes('/') ? page.split('/')[0] : page;
 const demoHref = pagePath('contact', locale);
+
+// Megamenu links: a module page where the module exists, otherwise the page named in the data (default: products).
+const mm = t.megamenu;
+const megamenu = megamenuTabs.map((tab) => ({
+  ...tab,
+  label: mm.tabs[tab.key],
+  links: tab.items.map((item) => ({
+    label: (mm[tab.key] as Record<string, string>)[item.key],
+    href: item.module && getModule(item.module) ? pagePath(`products/${item.module}`, locale) : pagePath(item.page ?? 'products', locale),
+  })),
+}));
 const searchAction = pagePath('knowledge', isFull(locale) ? locale : 'en');
 ---
 
@@ -53,14 +64,76 @@ const searchAction = pagePath('knowledge', isFull(locale) ? locale : 'en');
       <a href={homePath(locale)} class="flex size-12 shrink-0 items-center justify-center rounded-lg hover:bg-light" aria-label={t.a11y.home}>
         <img src="/images/home/header/home.svg" alt="" width="24" height="24" />
       </a>
+      <!-- Products: opens the megamenu, which spans the whole header bar. -->
+      <button
+        type="button"
+        id="megamenu-toggle"
+        class:list={[
+          'flex h-12 shrink-0 items-center whitespace-nowrap rounded-lg p-[11px] text-base font-medium leading-6 text-ink transition-colors hover:text-primary aria-expanded:text-primary ltr:px-1.5 ltr:text-[14px] ltr:min-[87.5rem]:px-2 ltr:min-[87.5rem]:text-[15px]',
+          section === 'products' && 'text-primary',
+        ]}
+        aria-expanded="false"
+        aria-controls="megamenu"
+        data-mega-toggle
+      >
+        {t.nav.products}
+      </button>
+      <div
+        id="megamenu"
+        class="mega-panel absolute inset-x-0 top-[calc(100%+12px)] z-50 hidden rounded-[12px] bg-white text-start shadow-[0_24px_80px_0_rgba(154,167,193,0.25)]"
+        role="region"
+        aria-label={mm.label}
+        data-mega-panel
+      >
+        <div class="flex min-h-[244px] items-stretch pb-[22px] pe-[44px] ps-[23px] pt-[30px]">
+          <div class="flex min-w-[321px] shrink-0 flex-col gap-[13px] border-e-[0.5px] border-[#c1c6d6] pe-[19px]" role="tablist" aria-orientation="vertical" aria-label={t.nav.products}>
+            {
+              megamenu.map((tab, i) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`mega-tab-${tab.key}`}
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  aria-controls={`mega-panel-${tab.key}`}
+                  tabindex={i === 0 ? 0 : -1}
+                  class="mega-tab flex min-h-12 w-full items-center justify-between gap-2 rounded-[39px] bg-[#eceff8] px-5 py-2 text-start text-base font-bold leading-[1.3] whitespace-nowrap text-violet transition-colors aria-selected:bg-[#6568ff] aria-selected:text-white"
+                  data-mega-tab
+                >
+                  {tab.label}
+                  <img src="/images/megamenu/chevron.svg" alt="" width="12" height="12" class="mega-chevron dir-icon-rev size-3 shrink-0" />
+                  <img src="/images/megamenu/chevron-white.svg" alt="" width="12" height="12" class="mega-chevron-on dir-icon-rev hidden size-3 shrink-0" />
+                </button>
+              ))
+            }
+          </div>
+          <div class="ms-5 min-w-0 flex-1">
+            {
+              megamenu.map((tab, i) => (
+                <div id={`mega-panel-${tab.key}`} role="tabpanel" aria-labelledby={`mega-tab-${tab.key}`} hidden={i !== 0} data-mega-tabpanel>
+                  <p class="ms-[10px] inline-block border-b-2 border-[#6568ff] pb-[9px] pt-[3px] text-base font-bold leading-[1.47] text-ink">{tab.label}</p>
+                  <ul class="mt-[6px] grid grid-flow-col gap-x-[45px] gap-y-1 [grid-template-columns:repeat(3,minmax(0,273px))]" style={`grid-template-rows:repeat(${tab.rows},auto)`}>
+                    {tab.links.map((l) => (
+                      <li class="ms-[34px] list-disc text-[#616d8f]">
+                        <a href={l.href} class="flex min-h-11 items-center py-2.5 pe-2.5 text-base font-medium leading-[1.47] transition-colors hover:text-violet focus-visible:text-violet">
+                          {l.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
       {
-        navItems.map((item, i) => (
+        navItems.slice(1).map((item, i, rest) => (
           <a
             href={item.href}
             aria-current={item.page === section ? 'page' : undefined}
             class:list={[
               'flex h-12 shrink-0 items-center whitespace-nowrap rounded-lg p-[11px] font-medium leading-6 text-ink transition-colors hover:text-primary aria-[current=page]:text-primary ltr:px-1.5 ltr:min-[87.5rem]:px-2',
-              i === navItems.length - 1 ? 'text-sm' : 'text-base ltr:text-[14px] ltr:min-[87.5rem]:text-[15px]',
+              i === rest.length - 1 ? 'text-sm' : 'text-base ltr:text-[14px] ltr:min-[87.5rem]:text-[15px]',
             ]}
           >
             {item.label}
@@ -165,15 +238,35 @@ const searchAction = pagePath('knowledge', isFull(locale) ? locale : 'en');
       </form>
       <nav class="flex flex-col" aria-label={t.a11y.menu}>
         {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              aria-current={item.page === section ? 'page' : undefined}
-              class="flex min-h-12 items-center border-b border-neutral-200 text-base font-medium text-ink hover:text-primary aria-[current=page]:text-primary"
-              data-menu-link
-            >
-              {item.label}
-            </a>
+          navItems.map((item, i) => (
+            <>
+              <a
+                href={item.href}
+                aria-current={item.page === section ? 'page' : undefined}
+                class="flex min-h-12 items-center border-b border-neutral-200 text-base font-medium text-ink hover:text-primary aria-[current=page]:text-primary"
+                data-menu-link
+              >
+                {item.label}
+              </a>
+              {i === 0 &&
+                megamenu.map((tab) => (
+                  <details class="mega-acc border-b border-neutral-200">
+                    <summary class="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 ps-4 text-[15px] font-medium text-ink hover:text-primary [&::-webkit-details-marker]:hidden">
+                      {tab.label}
+                      <img src="/images/megamenu/chevron.svg" alt="" width="12" height="12" class="mega-acc-icon size-3 shrink-0 rotate-90 transition-transform" />
+                    </summary>
+                    <ul class="list-disc pb-2 ps-10 text-[#616d8f]">
+                      {tab.links.map((l) => (
+                        <li>
+                          <a href={l.href} class="flex min-h-11 items-center text-[15px] font-medium hover:text-violet" data-menu-link>
+                            {l.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ))}
+            </>
           ))
         }
       </nav>
@@ -200,6 +293,73 @@ const searchAction = pagePath('knowledge', isFull(locale) ? locale : 'en');
     menu.querySelectorAll('[data-menu-close], [data-menu-link]').forEach((el) => el.addEventListener('click', () => setOpen(false)));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !menu.classList.contains('hidden')) setOpen(false);
+    });
+  }
+
+  // Products megamenu: opens on hover and on click / Enter / Space; Esc, an outside click or tabbing past it closes it.
+  const megaToggle = document.querySelector<HTMLButtonElement>('[data-mega-toggle]');
+  const megaPanel = document.querySelector<HTMLElement>('[data-mega-panel]');
+  if (megaToggle && megaPanel) {
+    const parts = [megaToggle, megaPanel];
+    const inside = (node: EventTarget | null) => node instanceof Node && parts.some((p) => p.contains(node));
+    const tabs = [...megaPanel.querySelectorAll<HTMLButtonElement>('[data-mega-tab]')];
+    const panels = [...megaPanel.querySelectorAll<HTMLElement>('[data-mega-tabpanel]')];
+    const isOpen = () => !megaPanel.classList.contains('hidden');
+    const setMega = (open: boolean) => {
+      megaPanel.classList.toggle('hidden', !open);
+      megaToggle.setAttribute('aria-expanded', String(open));
+    };
+    const select = (i: number, focus = false) => {
+      tabs.forEach((tab, j) => {
+        tab.setAttribute('aria-selected', String(i === j));
+        tab.tabIndex = i === j ? 0 : -1;
+        panels[j].hidden = i !== j;
+      });
+      if (focus) tabs[i].focus();
+    };
+    const hover = window.matchMedia('(hover: hover)');
+    let timer: number | undefined;
+    parts.forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        clearTimeout(timer);
+        if (hover.matches) setMega(true);
+      });
+      el.addEventListener('mouseleave', () => {
+        if (hover.matches) timer = window.setTimeout(() => setMega(false), 200);
+      });
+      el.addEventListener('focusout', (e) => {
+        if (e.relatedTarget && !inside(e.relatedTarget)) setMega(false);
+      });
+    });
+    // A mouse click right after hovering keeps the menu open; Enter / Space (detail 0) and taps toggle it.
+    megaToggle.addEventListener('click', (e) => {
+      clearTimeout(timer);
+      setMega(e.detail > 0 && hover.matches ? true : !isOpen());
+    });
+    megaToggle.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowDown') return;
+      e.preventDefault();
+      setMega(true);
+      tabs.find((tab) => tab.tabIndex === 0)?.focus();
+    });
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('mouseenter', () => select(i));
+      tab.addEventListener('keydown', (e) => {
+        const next = ({ ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: tabs.length - 1 } as Record<string, number>)[e.key];
+        if (next === undefined) return;
+        e.preventDefault();
+        select((next + tabs.length) % tabs.length, true);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (isOpen() && !inside(e.target)) setMega(false);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        setMega(false);
+        megaToggle.focus();
+      }
     });
   }
 
@@ -238,3 +398,23 @@ const searchAction = pagePath('knowledge', isFull(locale) ? locale : 'en');
     });
   }
 </script>
+
+<style>
+  /* Keeps the pointer inside the menu while it crosses the 12px gap under the header bar. */
+  .mega-panel::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 100%;
+    height: 12px;
+  }
+  .mega-tab[aria-selected='true'] .mega-chevron {
+    display: none;
+  }
+  .mega-tab[aria-selected='true'] .mega-chevron-on {
+    display: block;
+  }
+  .mega-acc[open] .mega-acc-icon {
+    rotate: -90deg;
+  }
+</style>

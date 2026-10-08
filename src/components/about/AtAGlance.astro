@@ -29,7 +29,7 @@ const t = useTranslations(locale).about.glance;
       <ul class="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {
           glanceCards.map((key) => (
-            <li class="relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] pb-6 shadow-banner lg:min-h-[231px]">
+            <li class="relative rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] pb-4 shadow-banner sm:pb-6 lg:min-h-[231px]">
               <div class="flex items-center gap-1 ps-4 pt-3">
                 <span class="relative flex size-[65px] shrink-0 items-center justify-center">
                   <img src={aboutImages.glanceHex} alt="" width="56.29" height="62.56" class="absolute h-[62.56px] w-[56.29px]" />
@@ -37,7 +37,7 @@ const t = useTranslations(locale).about.glance;
                 </span>
                 <h3 class="text-15 font-bold leading-8 text-title">{t.cards[key].title}</h3>
               </div>
-              <p class="mt-1 flex min-h-[70px] items-center pe-[22px] ps-[23px] text-sm leading-6 text-muted lg:mt-[16px]">
+              <p class="mt-1 flex items-center sm:min-h-[70px] pe-[22px] ps-[23px] text-sm leading-6 text-muted lg:mt-[16px]">
                 {t.cards[key].text}
               </p>
             </li>
@@ -49,11 +49,11 @@ const t = useTranslations(locale).about.glance;
         {
           glanceStats.map((stat) => (
             <li class="flex flex-col items-center text-center">
-              <span class="relative size-[132px] shrink-0 sm:size-[176px]">
+              <span class="relative size-[112px] shrink-0 sm:size-[176px]">
                 <img src={aboutImages.ringInner} alt="" width="152" height="152" class="absolute left-[6.82%] top-[6.82%] size-[86.36%]" />
                 <img src={stat.ring} alt="" width="175.77" height="176" class="ring-arc absolute inset-0 size-full" />
                 <span
-                  class="absolute inset-0 flex items-center justify-center text-[26px] font-bold sm:text-[32px]"
+                  class="absolute inset-0 flex items-center justify-center text-[22px] font-bold sm:text-[32px]"
                   style={`color:${stat.color}`}
                   dir="ltr"
                   data-count={stat.value}

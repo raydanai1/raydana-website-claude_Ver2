@@ -9,7 +9,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale).about;
 const card =
-  'rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] px-5 pb-8 pt-8 shadow-[0_8px_16px_rgba(215,219,240,0.5)] sm:px-8 lg:px-[36px] lg:pb-12 lg:pt-[36px]';
+  'rounded-2xl border-[0.856px] border-stroke bg-[#fafafa] px-4 pb-6 pt-6 shadow-[0_8px_16px_rgba(215,219,240,0.5)] sm:px-8 sm:pb-8 sm:pt-8 lg:px-[36px] lg:pb-12 lg:pt-[36px]';
 ---
 
 <!-- Figma 2015:10281 (values card) + photo 2018:14350, 2015:10282 (mission card) + photo 2018:14349. -->
@@ -24,7 +24,7 @@ const card =
       loading="lazy"
       class="mt-5 h-[140px] w-full rounded-[9px] object-cover sm:h-[180px] lg:mt-[17px] lg:h-[137px]"
     />
-    <ul class="mt-8 space-y-4 lg:mt-[54px] lg:space-y-[14px]">
+    <ul class="mt-6 space-y-4 lg:mt-[54px] lg:space-y-[14px]">
       {
         valueItems.map((key) => (
           <li>
@@ -46,7 +46,7 @@ const card =
       loading="lazy"
       class="mt-5 h-[140px] w-full rounded-[9px] object-cover sm:h-[180px] lg:mt-[17px] lg:h-[137px]"
     />
-    <p class="mt-8 text-15 leading-8 text-body lg:mt-[39px]">{t.mission.body}</p>
+    <p class="mt-6 text-15 leading-8 text-body lg:mt-[39px]">{t.mission.body}</p>
     <ul class="mt-5 space-y-3 lg:mt-[22px] lg:space-y-[6px]">
       {
         missionItems.map((key) => (

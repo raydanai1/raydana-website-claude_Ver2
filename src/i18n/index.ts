@@ -68,7 +68,7 @@ export function homePath(locale: Locale): string {
  * e.g. `products/finance` or `products/finance/general-accounting`; knowledge base articles by
  * `knowledge/<folder name>` and category listings by `knowledge/category/<category>` (+ `/<n>` for page n).
  */
-export type StaticPage = 'home' | 'services' | 'products' | 'cloud' | 'oilGas' | 'contact' | 'about' | 'knowledge';
+export type StaticPage = 'home' | 'services' | 'products' | 'cloud' | 'contact' | 'about' | 'knowledge';
 export type Page = StaticPage | `products/${string}` | `knowledge/${string}`;
 
 const slug = (map: Record<string, string>, id: string) => map[id] ?? id;

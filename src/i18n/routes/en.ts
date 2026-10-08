@@ -9,7 +9,6 @@ const en: RouteSlugs = {
     products: 'products',
     services: 'services',
     cloud: 'cloud',
-    oilGas: 'solutions/oil-gas-petrochemical',
     contact: 'contact',
     about: 'about',
     knowledge: 'knowledge',
